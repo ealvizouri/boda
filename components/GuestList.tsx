@@ -3,10 +3,11 @@ import { prisma } from '@/lib/prisma'
 export default async function GuestList() {
   const rsvps = await prisma.rsvp.findMany({
     orderBy: { submittedAt: 'desc' },
+    include: { guests: true },
   })
 
   const attending = rsvps.filter(r => r.attending)
-  const totalGuests = attending.reduce((acc, r) => acc + (r.guestCount || 1), 0)
+  const totalGuests = attending.reduce((acc, r) => acc + r.guests.length, 0)
 
   return (
     <section id="guests" className="py-24 px-6 bg-papaya-whip-800">
@@ -34,8 +35,7 @@ export default async function GuestList() {
                 <tr className="border-b border-muted-olive-800">
                   <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">Nombre</th>
                   <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">Asistencia</th>
-                  <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4 hidden sm:table-cell">Invitados</th>
-                  <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 hidden md:table-cell">Menú</th>
+                  <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 hidden sm:table-cell">Invitados</th>
                 </tr>
               </thead>
               <tbody>
@@ -53,11 +53,8 @@ export default async function GuestList() {
                         {r.attending ? 'Asistirá' : 'No podrá'}
                       </span>
                     </td>
-                    <td className="py-3 pr-4 text-deep-space-blue-400 hidden sm:table-cell">
-                      {r.attending ? r.guestCount : '—'}
-                    </td>
-                    <td className="py-3 text-deep-space-blue-400 hidden md:table-cell">
-                      {r.attending ? r.meal : '—'}
+                    <td className="py-3 text-deep-space-blue-400 hidden sm:table-cell">
+                      {r.attending ? r.guests.length : '—'}
                     </td>
                   </tr>
                 ))}

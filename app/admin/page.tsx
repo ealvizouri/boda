@@ -1,32 +1,54 @@
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
-import { auth, signOut } from '@/auth'
-import { redirect } from 'next/navigation'
-import { prisma } from '@/lib/prisma'
+import { auth, signOut } from "@/auth";
+import { redirect } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+import { createInvitation } from "@/app/actions";
+import React from "react";
 
-export default async function AdminPage() {
-  const session = await auth()
-  if (!session) redirect('/admin/login')
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ code?: string }>;
+}) {
+  const session = await auth();
+  if (!session) redirect("/admin/login");
 
-  const rsvps = await prisma.rsvp.findMany({
-    orderBy: { submittedAt: 'desc' },
-  })
+  const { code: newCode } = await searchParams;
 
-  const attending = rsvps.filter(r => r.attending)
-  const notAttending = rsvps.filter(r => !r.attending)
-  const totalGuests = attending.reduce((acc, r) => acc + (r.guestCount || 1), 0)
+  const [rsvps, invitations] = await Promise.all([
+    prisma.rsvp.findMany({
+      orderBy: { submittedAt: "desc" },
+      include: { guests: true, invitation: true },
+    }),
+    prisma.invitation.findMany({
+      orderBy: { createdAt: "desc" },
+      include: { _count: { select: { rsvps: true } } },
+    }),
+  ]);
 
-  const mealCounts = attending.reduce<Record<string, number>>((acc, r) => {
-    acc[r.meal] = (acc[r.meal] || 0) + 1
-    return acc
-  }, {})
+  const attending = rsvps.filter((r) => r.attending);
+  const notAttending = rsvps.filter((r) => !r.attending);
+  const totalGuests = attending.reduce((acc, r) => acc + r.guests.length, 0);
+
+  async function handleCreateInvitation(formData: FormData) {
+    "use server";
+    const recipient = (formData.get("recipient") as string)?.trim();
+    const maxGuests = Number(formData.get("maxGuests"));
+    if (!recipient || !maxGuests) return;
+    const inv = await createInvitation(recipient, maxGuests);
+    redirect(`/admin?code=${inv.code}`);
+  }
 
   return (
     <div className="min-h-screen bg-papaya-whip-900">
       {/* Header */}
       <header className="bg-deep-space-blue px-6 py-4 flex items-center justify-between">
         <div>
-          <a href="/" className="font-display text-xl text-papaya-whip tracking-wide">
+          <a
+            href="/"
+            className="font-display text-xl text-papaya-whip tracking-wide"
+          >
             M <span className="text-brick-red italic">&amp;</span> J
           </a>
           <span className="ml-3 font-sans text-xs tracking-[0.3em] uppercase text-steel-blue-300">
@@ -35,8 +57,8 @@ export default async function AdminPage() {
         </div>
         <form
           action={async () => {
-            'use server'
-            await signOut({ redirectTo: '/admin/login' })
+            "use server";
+            await signOut({ redirectTo: "/admin/login" });
           }}
         >
           <button
@@ -49,36 +71,141 @@ export default async function AdminPage() {
       </header>
 
       <main className="max-w-5xl mx-auto px-6 py-12">
+        {/* New code banner */}
+        {newCode && (
+          <div className="mb-8 card border-l-4 border-muted-olive bg-muted-olive-900">
+            <p className="font-sans text-sm text-deep-space-blue">
+              Código creado:{" "}
+              <strong className="font-mono text-lg tracking-widest text-brick-red">
+                {newCode}
+              </strong>{" "}
+              — compártelo con tus invitados.
+            </p>
+          </div>
+        )}
+
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {[
-            { label: 'Total RSVPs', value: rsvps.length },
-            { label: 'Asistirán', value: attending.length },
-            { label: 'No asistirán', value: notAttending.length },
-            { label: 'Total invitados', value: totalGuests },
+            { label: "Total RSVPs", value: rsvps.length },
+            { label: "Asistirán", value: attending.length },
+            { label: "No asistirán", value: notAttending.length },
+            { label: "Total invitados", value: totalGuests },
           ].map(({ label, value }) => (
             <div key={label} className="card text-center py-6">
-              <p className="font-display text-4xl font-light text-brick-red">{value}</p>
-              <p className="mt-1 font-sans text-xs tracking-widest uppercase text-muted-olive-300">{label}</p>
+              <p className="font-display text-4xl font-light text-brick-red">
+                {value}
+              </p>
+              <p className="mt-1 font-sans text-xs tracking-widest uppercase text-muted-olive-300">
+                {label}
+              </p>
             </div>
           ))}
         </div>
 
-        {/* Meal breakdown */}
-        {Object.keys(mealCounts).length > 0 && (
-          <div className="card mb-8">
-            <h2 className="font-display text-2xl font-light text-deep-space-blue mb-4">
-              Preferencias de menú
-            </h2>
-            <div className="flex flex-wrap gap-3">
-              {Object.entries(mealCounts).map(([meal, count]) => (
-                <span key={meal} className="font-sans text-xs tracking-wider px-3 py-1.5 bg-muted-olive-800 text-muted-olive-200">
-                  {meal} — <strong>{count}</strong>
-                </span>
-              ))}
+        {/* Invitations */}
+        <div className="card mb-8">
+          <h2 className="font-display text-2xl font-light text-deep-space-blue mb-6">
+            Pases de Invitación
+          </h2>
+
+          {/* Create form */}
+          <form
+            action={handleCreateInvitation}
+            className="flex flex-wrap gap-3 mb-6 pb-6 border-b border-muted-olive-800"
+          >
+            <div className="flex-1 min-w-40">
+              <label className="block font-sans text-xs tracking-widest uppercase text-muted-olive-300 mb-1">
+                Destinatario
+              </label>
+              <input
+                name="recipient"
+                type="text"
+                required
+                placeholder="Familia García"
+                className="w-full bg-transparent border-b border-muted-olive-700 focus:border-brick-red outline-none py-1.5 font-sans text-sm text-deep-space-blue placeholder-deep-space-blue-400 transition-colors"
+              />
             </div>
-          </div>
-        )}
+            <div className="w-28">
+              <label className="block font-sans text-xs tracking-widest uppercase text-muted-olive-300 mb-1">
+                Lugares
+              </label>
+              <select
+                name="maxGuests"
+                defaultValue={2}
+                className="w-full bg-transparent border-b border-muted-olive-700 focus:border-brick-red outline-none py-1.5 font-sans text-sm text-deep-space-blue transition-colors"
+              >
+                {[1, 2, 3, 4, 5, 6, 8, 10].map((n) => (
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="self-end">
+              <button type="submit" className="btn-primary py-1.5 px-4 text-xs">
+                Crear pase
+              </button>
+            </div>
+          </form>
+
+          {invitations.length === 0 ? (
+            <p className="font-sans font-light text-deep-space-blue-400 text-center py-4">
+              Aún no hay pases creados.
+            </p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full font-sans text-sm">
+                <thead>
+                  <tr className="border-b border-muted-olive-800">
+                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
+                      Código
+                    </th>
+                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
+                      Destinatario
+                    </th>
+                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
+                      Lugares
+                    </th>
+                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
+                      RSVPs
+                    </th>
+                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3">
+                      Creado
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {invitations.map((inv) => (
+                    <tr
+                      key={inv.id}
+                      className="border-b border-muted-olive-900 last:border-0"
+                    >
+                      <td className="py-3 pr-4 font-mono font-bold tracking-widest text-brick-red">
+                        {inv.code}
+                      </td>
+                      <td className="py-3 pr-4 text-deep-space-blue">
+                        {inv.recipient}
+                      </td>
+                      <td className="py-3 pr-4 text-deep-space-blue-400">
+                        {inv.maxGuests}
+                      </td>
+                      <td className="py-3 pr-4 text-deep-space-blue-400">
+                        {inv._count.rsvps}
+                      </td>
+                      <td className="py-3 text-deep-space-blue-400 whitespace-nowrap">
+                        {new Date(inv.createdAt).toLocaleDateString("es-MX", {
+                          day: "numeric",
+                          month: "short",
+                        })}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
 
         {/* Full RSVP table */}
         <div className="card">
@@ -94,46 +221,82 @@ export default async function AdminPage() {
               <table className="w-full font-sans text-sm">
                 <thead>
                   <tr className="border-b border-muted-olive-800">
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">Nombre</th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">Asistencia</th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">Invitados</th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">Menú</th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">Mensaje</th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3">Fecha</th>
+                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
+                      Nombre
+                    </th>
+                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
+                      Asistencia
+                    </th>
+                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
+                      Teléfono
+                    </th>
+                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
+                      Invitados
+                    </th>
+                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
+                      Mensaje
+                    </th>
+                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3">
+                      Fecha
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {rsvps.map(r => (
-                    <tr key={r.id} className="border-b border-muted-olive-900 last:border-0">
-                      <td className="py-3 pr-4 text-deep-space-blue font-medium">{r.name}</td>
-                      <td className="py-3 pr-4">
-                        <span
-                          className={`inline-block px-2 py-0.5 text-xs tracking-wider uppercase
-                            ${r.attending
-                              ? 'bg-muted-olive-800 text-muted-olive-200'
-                              : 'bg-brick-red-900 text-brick-red-600'
+                  {rsvps.map((r) => (
+                    <React.Fragment key={r.id}>
+                      <tr className="border-b border-muted-olive-900">
+                        <td className="py-3 pr-4 text-deep-space-blue font-medium">
+                          {r.name}
+                        </td>
+                        <td className="py-3 pr-4">
+                          <span
+                            className={`inline-block px-2 py-0.5 text-xs tracking-wider uppercase
+                            ${
+                              r.attending
+                                ? "bg-muted-olive-800 text-muted-olive-200"
+                                : "bg-brick-red-900 text-brick-red-600"
                             }`}
+                          >
+                            {r.attending ? "Asistirá" : "No podrá"}
+                          </span>
+                        </td>
+                        <td className="py-3 pr-4 text-deep-space-blue-400">
+                          {r.phone || "—"}
+                        </td>
+                        <td className="py-3 pr-4 text-deep-space-blue-400">
+                          {r.attending ? r.guests.length : "—"}
+                        </td>
+                        <td className="py-3 pr-4 text-deep-space-blue-400 max-w-xs truncate">
+                          {r.message || "—"}
+                        </td>
+                        <td className="py-3 text-deep-space-blue-400 whitespace-nowrap">
+                          {new Date(r.submittedAt).toLocaleDateString("es-MX", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </td>
+                      </tr>
+                      {r.attending && r.guests.length > 0 && (
+                        <tr
+                          key={`${r.id}-guests`}
+                          className="border-b border-muted-olive-900 last:border-0 bg-papaya-whip-800"
                         >
-                          {r.attending ? 'Asistirá' : 'No podrá'}
-                        </span>
-                      </td>
-                      <td className="py-3 pr-4 text-deep-space-blue-400">
-                        {r.attending ? r.guestCount : '—'}
-                      </td>
-                      <td className="py-3 pr-4 text-deep-space-blue-400">
-                        {r.attending ? r.meal : '—'}
-                      </td>
-                      <td className="py-3 pr-4 text-deep-space-blue-400 max-w-xs truncate">
-                        {r.message || '—'}
-                      </td>
-                      <td className="py-3 text-deep-space-blue-400 whitespace-nowrap">
-                        {new Date(r.submittedAt).toLocaleDateString('es-MX', {
-                          day: 'numeric',
-                          month: 'short',
-                          year: 'numeric',
-                        })}
-                      </td>
-                    </tr>
+                          <td colSpan={6} className="py-2 px-4">
+                            <div className="flex flex-wrap gap-3">
+                              {r.guests.map((g) => (
+                                <span
+                                  key={g.id}
+                                  className="font-sans text-xs text-deep-space-blue"
+                                >
+                                  {g.name}
+                                </span>
+                              ))}
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
                   ))}
                 </tbody>
               </table>
@@ -142,5 +305,5 @@ export default async function AdminPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

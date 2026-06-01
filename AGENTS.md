@@ -35,6 +35,7 @@ components/
   GuestList.tsx     — admin guest list component
 lib/
   prisma.ts         — Prisma client singleton
+  cn.ts             — `cn(...classes)` utility: merges Tailwind classes via clsx + tailwind-merge
 prisma/
   schema.prisma     — single `Rsvp` model (PostgreSQL)
 auth.ts             — NextAuth config (credentials provider)
@@ -43,18 +44,38 @@ auth.ts             — NextAuth config (credentials provider)
 ## Data model
 
 ```prisma
+model Invitation {
+  id        String   @id          // 5 random uppercase letters, e.g. "RMKJX"
+  family    String
+  maxGuests Int      @default(2)
+  createdAt DateTime @default(now())
+  rsvps     Rsvp[]
+}
+
 model Rsvp {
-  id          String   @id @default(cuid())
-  name        String
-  attending   Boolean
-  guestCount  Int      @default(0)
-  meal        String   @default("")
-  message     String   @default("")
-  submittedAt DateTime @default(now())
+  id           String      @id @default(cuid())
+  invitation   Invitation? @relation(fields: [invitationId], references: [id])
+  invitationId String?
+  name         String
+  phone        String?
+  attending    Boolean
+  message      String      @default("")
+  submittedAt  DateTime    @default(now())
+  guests       Guest[]
+}
+
+model Guest {
+  id     String @id @default(cuid())
+  rsvpId String
+  rsvp   Rsvp   @relation(fields: [rsvpId], references: [id], onDelete: Cascade)
+  name   String
+  meal   String @default("")
 }
 ```
 
-Table name: `rsvps`
+Tables: `invitations`, `rsvps`, `guests`
+
+Invitation codes are generated as 5 random uppercase letters in `app/actions.ts:createInvitation()`. Guests enter the code to unlock the RSVP form. The admin creates invitations via the admin panel and shares codes with guests (e.g. via WhatsApp).
 
 ## Environment variables
 

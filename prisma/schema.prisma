@@ -6,14 +6,36 @@ datasource db {
   provider = "postgresql"
 }
 
+model Invitation {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  recipient String
+  maxGuests Int      @default(2)
+  createdAt DateTime @default(now())
+  rsvps     Rsvp[]
+
+  @@map("invitations")
+}
+
 model Rsvp {
-  id          String   @id @default(cuid())
-  name        String
-  attending   Boolean
-  guestCount  Int      @default(0)
-  meal        String   @default("")
-  message     String   @default("")
-  submittedAt DateTime @default(now())
+  id           String      @id @default(cuid())
+  invitation   Invitation? @relation(fields: [invitationId], references: [id], onDelete: Restrict)
+  invitationId String?
+  name         String
+  phone        String?
+  attending    Boolean
+  message      String      @default("")
+  submittedAt  DateTime    @default(now())
+  guests       Guest[]
 
   @@map("rsvps")
+}
+
+model Guest {
+  id     String @id @default(cuid())
+  rsvpId String
+  rsvp   Rsvp   @relation(fields: [rsvpId], references: [id], onDelete: Restrict)
+  name   String
+
+  @@map("guests")
 }
