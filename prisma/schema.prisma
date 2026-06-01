@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Rsvp {
+  id          String   @id @default(cuid())
+  name        String
+  attending   Boolean
+  guestCount  Int      @default(0)
+  meal        String   @default("")
+  message     String   @default("")
+  submittedAt DateTime @default(now())
+
+  @@map("rsvps")
+}

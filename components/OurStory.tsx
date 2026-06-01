@@ -2,7 +2,7 @@ const milestones = [
   {
     year: '2019',
     title: 'El Primer Encuentro',
-    body: "Dos desconocidos se cruzaron en la reunión de un amigo en común. Ninguno sabía que ese encuentro fortuito cambiaría sus vidas para siempre.",
+    body: 'Dos desconocidos se cruzaron en la reunión de un amigo en común. Ninguno sabía que ese encuentro fortuito cambiaría sus vidas para siempre.',
   },
   {
     year: '2020',
@@ -44,9 +44,7 @@ export default function OurStory() {
         <ol className="relative border-l border-muted-olive-200 ml-6">
           {milestones.map(({ year, title, body }, i) => (
             <li key={i} className="mb-12 ml-8 last:mb-0">
-              {/* Dot */}
               <span className="absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full bg-brick-red border-2 border-deep-space-blue" />
-
               <span className="font-sans text-xs tracking-[0.3em] uppercase text-muted-olive mb-1 block">
                 {year}
               </span>

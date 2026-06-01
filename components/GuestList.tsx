@@ -1,26 +1,9 @@
-import { useState, useEffect } from 'react'
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
-import { db } from '../firebase'
+import { prisma } from '@/lib/prisma'
 
-export default function GuestList() {
-  const [rsvps, setRsvps] = useState([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const q = query(collection(db, 'rsvps'), orderBy('submittedAt', 'desc'))
-    const unsub = onSnapshot(
-      q,
-      snapshot => {
-        setRsvps(snapshot.docs.map(d => ({ id: d.id, ...d.data() })))
-        setLoading(false)
-      },
-      err => {
-        console.error(err)
-        setLoading(false)
-      }
-    )
-    return unsub
-  }, [])
+export default async function GuestList() {
+  const rsvps = await prisma.rsvp.findMany({
+    orderBy: { submittedAt: 'desc' },
+  })
 
   const attending = rsvps.filter(r => r.attending)
   const totalGuests = attending.reduce((acc, r) => acc + (r.guestCount || 1), 0)
@@ -33,20 +16,14 @@ export default function GuestList() {
             <span className="font-display italic text-muted-olive text-2xl">celebrando juntos</span>
           </div>
           <h2 className="section-heading">Lista de Invitados</h2>
-          {!loading && (
-            <p className="mt-4 font-sans font-light text-deep-space-blue-400">
-              <span className="font-medium text-brick-red">{attending.length}</span> confirmaciones
-              &nbsp;·&nbsp;
-              <span className="font-medium text-brick-red">{totalGuests}</span> invitados asistirán
-            </p>
-          )}
+          <p className="mt-4 font-sans font-light text-deep-space-blue-400">
+            <span className="font-medium text-brick-red">{attending.length}</span> confirmaciones
+            &nbsp;·&nbsp;
+            <span className="font-medium text-brick-red">{totalGuests}</span> invitados asistirán
+          </p>
         </div>
 
-        {loading ? (
-          <div className="text-center py-16">
-            <div className="inline-block w-8 h-8 border-2 border-brick-red border-t-transparent rounded-full animate-spin" />
-          </div>
-        ) : rsvps.length === 0 ? (
+        {rsvps.length === 0 ? (
           <div className="card text-center text-deep-space-blue-400 font-sans font-light py-12">
             Aún no hay respuestas. ¡Sé el primero!
           </div>

@@ -1,10 +1,20 @@
+'use client'
+
 import { useState } from 'react'
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
-import { db } from '../firebase'
+import { useRouter } from 'next/navigation'
+import { submitRsvp } from '@/app/actions'
 
 const MEAL_OPTIONS = ['Sin preferencia', 'Pollo', 'Pescado', 'Vegetariano', 'Vegano']
 
-const initialState = {
+interface FormState {
+  name: string
+  attending: boolean | null
+  guestCount: number
+  meal: string
+  message: string
+}
+
+const initialState: FormState = {
   name: '',
   attending: null,
   guestCount: 1,
@@ -12,29 +22,32 @@ const initialState = {
   message: '',
 }
 
-export default function RsvpForm() {
-  const [form, setForm] = useState(initialState)
-  const [status, setStatus] = useState('idle') // idle | submitting | success | error
+type Status = 'idle' | 'submitting' | 'success' | 'error'
 
-  function update(field, value) {
+export default function RsvpForm() {
+  const [form, setForm] = useState<FormState>(initialState)
+  const [status, setStatus] = useState<Status>('idle')
+  const router = useRouter()
+
+  function update<K extends keyof FormState>(field: K, value: FormState[K]) {
     setForm(prev => ({ ...prev, [field]: value }))
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!form.name.trim() || form.attending === null) return
     setStatus('submitting')
     try {
-      await addDoc(collection(db, 'rsvps'), {
-        name: form.name.trim(),
+      await submitRsvp({
+        name: form.name,
         attending: form.attending,
-        guestCount: form.attending ? Number(form.guestCount) : 0,
+        guestCount: form.guestCount,
         meal: form.meal,
-        message: form.message.trim(),
-        submittedAt: serverTimestamp(),
+        message: form.message,
       })
       setStatus('success')
       setForm(initialState)
+      router.refresh()
     } catch (err) {
       console.error(err)
       setStatus('error')
@@ -47,9 +60,7 @@ export default function RsvpForm() {
         <div className="max-w-lg mx-auto text-center">
           <div className="card">
             <div className="text-5xl mb-6">💌</div>
-            <h3 className="font-display text-3xl font-light text-deep-space-blue mb-3">
-              ¡Gracias!
-            </h3>
+            <h3 className="font-display text-3xl font-light text-deep-space-blue mb-3">¡Gracias!</h3>
             <p className="font-sans font-light text-deep-space-blue-400 mb-6">
               Tu respuesta ha sido registrada. Esperamos celebrar este día especial contigo.
             </p>
@@ -79,7 +90,6 @@ export default function RsvpForm() {
         </div>
 
         <form onSubmit={handleSubmit} className="card flex flex-col gap-6">
-          {/* Name */}
           <div>
             <label className="block font-sans text-xs tracking-widest uppercase text-muted-olive-300 mb-2">
               Nombre completo *
@@ -94,7 +104,6 @@ export default function RsvpForm() {
             />
           </div>
 
-          {/* Attending */}
           <div>
             <label className="block font-sans text-xs tracking-widest uppercase text-muted-olive-300 mb-3">
               ¿Asistirás? *
@@ -120,7 +129,6 @@ export default function RsvpForm() {
             </div>
           </div>
 
-          {/* Guest count & meal — only when attending */}
           {form.attending === true && (
             <>
               <div>
@@ -129,7 +137,7 @@ export default function RsvpForm() {
                 </label>
                 <select
                   value={form.guestCount}
-                  onChange={e => update('guestCount', e.target.value)}
+                  onChange={e => update('guestCount', Number(e.target.value))}
                   className="w-full bg-transparent border-b border-muted-olive-700 focus:border-brick-red outline-none py-2 font-sans text-deep-space-blue transition-colors"
                 >
                   {[1, 2, 3, 4, 5].map(n => (
@@ -155,7 +163,6 @@ export default function RsvpForm() {
             </>
           )}
 
-          {/* Message */}
           <div>
             <label className="block font-sans text-xs tracking-widest uppercase text-muted-olive-300 mb-2">
               Mensaje para los novios (opcional)

@@ -17,7 +17,16 @@ const SparkleIcon = () => (
   </svg>
 )
 
-function EventCard({ tag, title, time, venue, address, extra, icon: Icon }) {
+interface EventCardProps {
+  tag: string
+  title: string
+  time: string
+  venue: string
+  address: string
+  extra?: string
+}
+
+function EventCard({ tag, title, time, venue, address, extra }: EventCardProps) {
   return (
     <div className="card flex flex-col gap-6">
       <div className="flex flex-col items-center text-center gap-2">
@@ -91,7 +100,7 @@ export default function Details() {
 
         <div className="mt-12 card text-center">
           <p className="font-display italic text-steel-blue text-xl mb-2">
-            "Un amor así merece ser celebrado."
+            &ldquo;Un amor así merece ser celebrado.&rdquo;
           </p>
           <p className="font-sans text-xs tracking-widest uppercase text-muted-olive-300">
             Cena, baile &amp; alegría sin fin

@@ -1,8 +1,10 @@
-import Hero from './components/Hero'
-import Details from './components/Details'
-import OurStory from './components/OurStory'
-import RsvpForm from './components/RsvpForm'
-import GuestList from './components/GuestList'
+export const dynamic = 'force-dynamic'
+
+import Hero from '@/components/Hero'
+import Details from '@/components/Details'
+import OurStory from '@/components/OurStory'
+import RsvpForm from '@/components/RsvpForm'
+import GuestList from '@/components/GuestList'
 
 const NAV_LINKS = [
   { href: '#details', label: 'Detalles' },
@@ -11,10 +13,9 @@ const NAV_LINKS = [
   { href: '#guests', label: 'Invitados' },
 ]
 
-export default function App() {
+export default function Home() {
   return (
     <div className="min-h-screen">
-      {/* Sticky nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-papaya-whip/90 backdrop-blur-sm border-b border-muted-olive-800">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <a href="#home" className="font-display text-xl text-deep-space-blue tracking-wide">

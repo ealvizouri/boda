@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme {
+  /* molten-lava */
+  --color-molten-lava:     #780000;
+  --color-molten-lava-100: #180000;
+  --color-molten-lava-200: #310000;
+  --color-molten-lava-300: #490000;
+  --color-molten-lava-400: #620000;
+  --color-molten-lava-500: #780000;
+  --color-molten-lava-600: #c80000;
+  --color-molten-lava-700: #ff1616;
+  --color-molten-lava-800: #ff6464;
+  --color-molten-lava-900: #ffb1b1;
+
+  /* brick-red */
+  --color-brick-red:     #c1121f;
+  --color-brick-red-100: #260406;
+  --color-brick-red-200: #4d070c;
+  --color-brick-red-300: #730b12;
+  --color-brick-red-400: #990e17;
+  --color-brick-red-500: #c1121f;
+  --color-brick-red-600: #eb2330;
+  --color-brick-red-700: #f05a64;
+  --color-brick-red-800: #f59198;
+  --color-brick-red-900: #fac8cb;
+
+  /* papaya-whip */
+  --color-papaya-whip:     #fdf0d5;
+  --color-papaya-whip-100: #593c04;
+  --color-papaya-whip-200: #b17908;
+  --color-papaya-whip-300: #f5ae22;
+  --color-papaya-whip-400: #f9cf7b;
+  --color-papaya-whip-500: #fdf0d5;
+  --color-papaya-whip-600: #fdf2dc;
+  --color-papaya-whip-700: #fef5e5;
+  --color-papaya-whip-800: #fef9ed;
+  --color-papaya-whip-900: #fffcf6;
+
+  /* deep-space-blue */
+  --color-deep-space-blue:     #003049;
+  --color-deep-space-blue-100: #00090e;
+  --color-deep-space-blue-200: #00131d;
+  --color-deep-space-blue-300: #001c2b;
+  --color-deep-space-blue-400: #002539;
+  --color-deep-space-blue-500: #003049;
+  --color-deep-space-blue-600: #00679f;
+  --color-deep-space-blue-700: #00a0f7;
+  --color-deep-space-blue-800: #50c2ff;
+  --color-deep-space-blue-900: #a7e0ff;
+
+  /* steel-blue */
+  --color-steel-blue:     #669bbc;
+  --color-steel-blue-100: #122028;
+  --color-steel-blue-200: #233f51;
+  --color-steel-blue-300: #355f79;
+  --color-steel-blue-400: #477fa2;
+  --color-steel-blue-500: #669bbc;
+  --color-steel-blue-600: #85afc9;
+  --color-steel-blue-700: #a4c3d7;
+  --color-steel-blue-800: #c2d7e4;
+  --color-steel-blue-900: #e1ebf2;
+
+  /* muted-olive */
+  --color-muted-olive:     #adc178;
+  --color-muted-olive-100: #242b14;
+  --color-muted-olive-200: #495527;
+  --color-muted-olive-300: #6d803b;
+  --color-muted-olive-400: #92aa4e;
+  --color-muted-olive-500: #adc178;
+  --color-muted-olive-600: #bdcd92;
+  --color-muted-olive-700: #ced9ad;
+  --color-muted-olive-800: #dee6c9;
+  --color-muted-olive-900: #eff2e4;
+
+  /* fonts — next/font injects --font-cormorant and --font-raleway */
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-sans:    var(--font-raleway), system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-papaya-whip font-sans text-deep-space-blue;
+  }
+}
+
+@layer components {
+  .section-heading {
+    @apply font-display text-4xl md:text-5xl font-light tracking-widest text-deep-space-blue uppercase;
+  }
+
+  .ornament {
+    @apply flex items-center gap-4 justify-center;
+  }
+
+  .ornament::before,
+  .ornament::after {
+    content: '';
+    @apply block h-px w-16 bg-muted-olive;
+  }
+
+  .btn-primary {
+    @apply bg-brick-red text-papaya-whip-900 font-sans font-medium tracking-widest uppercase text-sm px-8 py-3 transition-all duration-300;
+
+    &:hover {
+      @apply bg-molten-lava shadow-lg;
+    }
+
+    &:focus {
+      @apply outline-none ring-2 ring-brick-red ring-offset-2;
+    }
+  }
+
+  .card {
+    @apply bg-white/60 backdrop-blur-sm border border-muted-olive-800 p-8;
+  }
+}
