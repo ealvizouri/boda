@@ -32,6 +32,13 @@ export async function createInvitation(recipient: string, maxGuests: number) {
 export async function lookupInvitation(code: string) {
   return prisma.invitation.findUnique({
     where: { code: code.trim().toUpperCase() },
+    include: {
+      rsvps: {
+        orderBy: { submittedAt: 'desc' },
+        take: 1,
+        include: { guests: true },
+      },
+    },
   });
 }
 
@@ -59,6 +66,7 @@ export async function submitRsvp(data: RsvpPayload) {
         `Tu invitación permite máximo ${invitation.maxGuests} persona${invitation.maxGuests !== 1 ? "s" : ""}`,
       );
     }
+    await prisma.rsvp.deleteMany({ where: { invitationId: data.invitationId } });
   }
 
   await prisma.rsvp.create({
@@ -80,3 +88,4 @@ export async function submitRsvp(data: RsvpPayload) {
   });
   revalidatePath("/");
 }
+

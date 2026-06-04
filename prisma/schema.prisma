@@ -34,7 +34,7 @@ model Rsvp {
 model Guest {
   id     String @id @default(cuid())
   rsvpId String
-  rsvp   Rsvp   @relation(fields: [rsvpId], references: [id], onDelete: Restrict)
+  rsvp   Rsvp   @relation(fields: [rsvpId], references: [id], onDelete: Cascade)
   name   String
 
   @@map("guests")

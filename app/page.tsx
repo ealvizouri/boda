@@ -4,13 +4,11 @@ import Hero from '@/components/Hero'
 import Details from '@/components/Details'
 import OurStory from '@/components/OurStory'
 import RsvpForm from '@/components/RsvpForm'
-import GuestList from '@/components/GuestList'
 
 const NAV_LINKS = [
   { href: '#details', label: 'Detalles' },
   { href: '#story', label: 'Nuestra Historia' },
   { href: '#rsvp', label: 'Confirmación' },
-  { href: '#guests', label: 'Invitados' },
 ]
 
 export default function Home() {
@@ -44,7 +42,6 @@ export default function Home() {
         <Details />
         <OurStory />
         <RsvpForm />
-        <GuestList />
       </main>
 
       <footer className="bg-deep-space-blue-100 py-12 text-center">

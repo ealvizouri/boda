@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { lookupInvitation, submitRsvp } from '@/app/actions'
@@ -18,7 +18,8 @@ interface FormValues {
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
-type InvitationData = { id: string; recipient: string; maxGuests: number }
+type ExistingRsvp = { name: string; phone: string | null; attending: boolean; message: string; guests: { name: string }[] }
+type InvitationData = { id: string; recipient: string; maxGuests: number; existingRsvp: ExistingRsvp | null }
 
 export default function RsvpForm() {
   const router = useRouter()
@@ -31,10 +32,17 @@ export default function RsvpForm() {
   const [codeError, setCodeError] = useState('')
   const [invitation, setInvitation] = useState<InvitationData | null>(null)
 
-  const { register, handleSubmit, control, reset } = useForm<FormValues>({
+  const { register, handleSubmit, control, reset, watch, setValue } = useForm<FormValues>({
     defaultValues: { name: '', phone: '', message: '', guests: [] },
   })
-  const { fields, append, remove, replace } = useFieldArray({ control, name: 'guests' })
+  const { fields, replace } = useFieldArray({ control, name: 'guests' })
+
+  const nameValue = watch('name')
+  useEffect(() => {
+    if (attending === true && fields.length > 0) {
+      setValue('guests.0.name', nameValue)
+    }
+  }, [nameValue, attending, fields.length, setValue])
 
   async function handleCodeLookup() {
     const code = codeInput.trim().toUpperCase()
@@ -43,13 +51,26 @@ export default function RsvpForm() {
     setCodeError('')
     try {
       const inv = await lookupInvitation(code)
+
       if (!inv) {
         setCodeError('Código no válido. Verifica tu invitación física.')
         setInvitation(null)
       } else {
-        setInvitation(inv)
-        replace([{ name: '' }])
-        setAttending(null)
+        const existing = inv.rsvps[0] ?? null
+        setInvitation({ id: inv.id, recipient: inv.recipient, maxGuests: inv.maxGuests, existingRsvp: existing })
+        if (existing) {
+          setValue('name', existing.name)
+          setValue('phone', existing.phone ?? '')
+          setValue('message', existing.message)
+          setAttending(existing.attending)
+          replace(Array.from({ length: inv.maxGuests }, (_, i) => ({ name: existing.guests[i]?.name ?? '' })))
+        } else {
+          setValue('name', inv.recipient)
+          setValue('phone', '')
+          setValue('message', '')
+          setAttending(null)
+          replace(Array.from({ length: inv.maxGuests }, () => ({ name: '' })))
+        }
       }
     } finally {
       setCodeLoading(false)
@@ -58,9 +79,6 @@ export default function RsvpForm() {
 
   function handleAttending(value: boolean) {
     setAttending(value)
-    if (value && fields.length === 0) {
-      append({ name: '' })
-    }
   }
 
   async function onSubmit(data: FormValues) {
@@ -74,7 +92,7 @@ export default function RsvpForm() {
         phone: data.phone || undefined,
         attending,
         message: data.message,
-        guests: attending ? data.guests : [],
+        guests: attending ? data.guests.filter(g => g.name.trim()) : [],
       })
       setStatus('success')
       router.refresh()
@@ -160,6 +178,9 @@ export default function RsvpForm() {
               <p className="mt-1 font-sans text-xs text-muted-olive-300">
                 ✓ Invitación para <strong className="text-deep-space-blue">{invitation.recipient}</strong>{' '}
                 · {invitation.maxGuests} lugar{invitation.maxGuests !== 1 ? 'es' : ''}
+                {invitation.existingRsvp && (
+                  <span className="ml-2 text-brick-red">· Editando respuesta anterior</span>
+                )}
               </p>
             )}
             {!invitation && (
@@ -230,39 +251,23 @@ export default function RsvpForm() {
                     Invitados que asistirán
                   </label>
                   {fields.map((field, idx) => (
-                    <div key={field.id} className="flex gap-3 items-end">
-                      <div className="flex-1">
-                        <label className="block font-sans text-xs text-muted-olive-400 mb-1">
-                          Invitado {idx + 1}
-                        </label>
-                        <input
-                          type="text"
-                          {...register(`guests.${idx}.name`, { required: true })}
-                          placeholder="Nombre completo"
-                          className="w-full bg-transparent border-b border-muted-olive-700 focus:border-brick-red outline-none py-2 font-sans text-deep-space-blue placeholder-deep-space-blue-400 transition-colors"
-                        />
-                      </div>
-                      {fields.length > 1 && (
-                        <button
-                          type="button"
-                          onClick={() => remove(idx)}
-                          className="pb-2 font-sans text-lg text-muted-olive-400 hover:text-brick-red transition-colors leading-none"
-                          aria-label="Eliminar invitado"
-                        >
-                          ×
-                        </button>
-                      )}
+                    <div key={field.id} className="flex-1">
+                      <label className="block font-sans text-xs text-muted-olive-400 mb-1">
+                        {idx === 0 ? 'Tú' : `Invitado ${idx + 1}`}
+                      </label>
+                      <input
+                        type="text"
+                        {...register(`guests.${idx}.name`)}
+                        placeholder={idx === 0 ? 'Nombre completo' : 'Dejar en blanco si no asiste'}
+                        readOnly={idx === 0}
+                        className={`w-full bg-transparent border-b outline-none py-2 font-sans text-deep-space-blue placeholder-deep-space-blue-400 transition-colors ${
+                          idx === 0
+                            ? 'border-muted-olive-800 text-deep-space-blue-400 cursor-default'
+                            : 'border-muted-olive-700 focus:border-brick-red'
+                        }`}
+                      />
                     </div>
                   ))}
-                  {fields.length < invitation.maxGuests && (
-                    <button
-                      type="button"
-                      onClick={() => append({ name: '' })}
-                      className="self-start font-sans text-xs tracking-widest uppercase text-brick-red underline underline-offset-4 hover:text-molten-lava transition-colors"
-                    >
-                      + Agregar invitado
-                    </button>
-                  )}
                 </div>
               )}
 
@@ -290,7 +295,7 @@ export default function RsvpForm() {
                 disabled={status === 'submitting' || attending === null}
                 className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {status === 'submitting' ? 'Enviando…' : 'Enviar mi confirmación'}
+                {status === 'submitting' ? 'Enviando…' : invitation?.existingRsvp ? 'Actualizar mi confirmación' : 'Enviar mi confirmación'}
               </button>
             </>
           )}
