@@ -3,10 +3,11 @@ export const dynamic = "force-dynamic";
 import { auth, signOut } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { createInvitation } from "@/app/actions";
 import { InvitationsTable } from "./InvitationsTable";
 import { RsvpsTable } from "./RsvpsTable";
 import { ConfirmedTableArrange } from "./ConfirmedTableArrange";
+import { CreateInvitationForm } from "./CreateInvitationForm";
+import { Button } from "antd";
 
 export default async function AdminPage({
   searchParams,
@@ -38,15 +39,6 @@ export default async function AdminPage({
   const notAttending = rsvps.filter((r) => !r.attending);
   const totalGuests = attending.reduce((acc, r) => acc + r.guests.length, 0);
 
-  async function handleCreateInvitation(formData: FormData) {
-    "use server";
-    const recipient = (formData.get("recipient") as string)?.trim();
-    const maxGuests = Number(formData.get("maxGuests"));
-    if (!recipient || !maxGuests) return;
-    const inv = await createInvitation(recipient, maxGuests);
-    redirect(`/admin?code=${inv.code}`);
-  }
-
   return (
     <div className="min-h-screen bg-papaya-whip-900">
       {/* Header */}
@@ -68,12 +60,13 @@ export default async function AdminPage({
             await signOut({ redirectTo: "/admin/login" });
           }}
         >
-          <button
-            type="submit"
-            className="font-sans text-xs tracking-widest uppercase cursor-pointer text-white hover:text-brick-red transition-colors"
+          <Button
+            htmlType="submit"
+            type="text"
+            className="font-sans text-xs tracking-widest uppercase text-white! hover:text-brick-red! transition-colors p-0! h-auto!"
           >
             Salir
-          </button>
+          </Button>
         </form>
       </header>
 
@@ -116,45 +109,7 @@ export default async function AdminPage({
             Pases de Invitación
           </h2>
 
-          {/* Create form */}
-          <form
-            action={handleCreateInvitation}
-            className="flex flex-wrap gap-3 mb-6 pb-6 border-b border-muted-olive-800"
-          >
-            <div className="flex-1 min-w-40">
-              <label className="block font-sans text-xs tracking-widest uppercase text-muted-olive-300 mb-1">
-                Destinatario
-              </label>
-              <input
-                name="recipient"
-                type="text"
-                required
-                placeholder="Familia García"
-                className="w-full bg-transparent border-b border-muted-olive-700 focus:border-brick-red outline-none py-1.5 font-sans text-sm text-deep-space-blue placeholder-deep-space-blue-400 transition-colors"
-              />
-            </div>
-            <div className="w-28">
-              <label className="block font-sans text-xs tracking-widest uppercase text-muted-olive-300 mb-1">
-                Lugares
-              </label>
-              <select
-                name="maxGuests"
-                defaultValue={2}
-                className="w-full bg-transparent border-b border-muted-olive-700 focus:border-brick-red outline-none py-1.5 font-sans text-sm text-deep-space-blue transition-colors"
-              >
-                {[1, 2, 3, 4, 5, 6, 8, 10].map((n) => (
-                  <option key={n} value={n}>
-                    {n}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="self-end">
-              <button type="submit" className="btn-primary py-1.5 px-4 text-xs">
-                Crear pase
-              </button>
-            </div>
-          </form>
+          <CreateInvitationForm />
 
           <InvitationsTable invitations={invitations} />
         </div>

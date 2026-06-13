@@ -3,21 +3,20 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Form, Input, Button } from "antd";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("admin");
-  const [password, setPassword] = useState("p4ssword");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [form] = Form.useForm();
 
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  async function handleFinish(values: { username: string; password: string }) {
     setLoading(true);
     setError(false);
     const result = await signIn("credentials", {
-      username,
-      password,
+      username: values.username,
+      password: values.password,
       redirect: false,
     });
     setLoading(false);
@@ -27,7 +26,7 @@ export default function LoginPage() {
     } else {
       setError(true);
     }
-  };
+  }
 
   return (
     <div className="min-h-screen bg-papaya-whip-900 flex items-center justify-center px-6">
@@ -44,32 +43,46 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="card flex flex-col gap-5">
-          <div>
-            <label className="block font-sans text-xs tracking-widest uppercase text-muted-olive-300 mb-2">
-              Usuario
-            </label>
-            <input
-              type="text"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full bg-transparent border-b border-muted-olive-700 focus:border-brick-red outline-none py-2 font-sans text-deep-space-blue transition-colors"
+        <Form
+          form={form}
+          onFinish={handleFinish}
+          initialValues={{ username: "admin", password: "p4ssword" }}
+          layout="vertical"
+          className="card flex flex-col gap-5"
+        >
+          <Form.Item
+            name="username"
+            label={
+              <span className="font-sans text-xs tracking-widest uppercase text-muted-olive-300">
+                Usuario
+              </span>
+            }
+            rules={[{ required: true }]}
+            colon={false}
+            className="mb-0"
+          >
+            <Input
+              variant="underlined"
+              className="font-sans text-deep-space-blue"
             />
-          </div>
+          </Form.Item>
 
-          <div>
-            <label className="block font-sans text-xs tracking-widest uppercase text-muted-olive-300 mb-2">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-transparent border-b border-muted-olive-700 focus:border-brick-red outline-none py-2 font-sans text-deep-space-blue transition-colors"
+          <Form.Item
+            name="password"
+            label={
+              <span className="font-sans text-xs tracking-widest uppercase text-muted-olive-300">
+                Contraseña
+              </span>
+            }
+            rules={[{ required: true }]}
+            colon={false}
+            className="mb-0"
+          >
+            <Input.Password
+              variant="underlined"
+              className="font-sans text-deep-space-blue"
             />
-          </div>
+          </Form.Item>
 
           {error && (
             <p className="font-sans text-sm text-brick-red-600">
@@ -77,14 +90,17 @@ export default function LoginPage() {
             </p>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? "Ingresando…" : "Ingresar"}
-          </button>
-        </form>
+          <Form.Item className="mb-0">
+            <Button
+              htmlType="submit"
+              loading={loading}
+              block
+              className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "Ingresando…" : "Ingresar"}
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
     </div>
   );

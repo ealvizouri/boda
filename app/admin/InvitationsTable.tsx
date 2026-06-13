@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Table, Input, Popconfirm } from "antd";
+import { Table, Input, Popconfirm, Button, Select } from "antd";
 import type { TableColumnType } from "antd";
 import { updateInvitation, deleteInvitation } from "@/app/actions";
 import { useClipboard } from "@/hooks/useClipboard";
@@ -97,7 +97,7 @@ export function InvitationsTable({
       ...codeFilter,
       render: (_, inv) =>
         editingId === inv.id ? (
-          <input
+          <Input
             value={editValues.code}
             onChange={(e) =>
               setEditValues((v) => ({
@@ -106,18 +106,21 @@ export function InvitationsTable({
               }))
             }
             maxLength={8}
-            className="font-mono font-bold tracking-widest text-brick-red bg-transparent border-b border-brick-red outline-none w-24"
+            size="small"
+            variant="underlined"
+            className="font-mono font-bold tracking-widest text-brick-red w-24"
           />
         ) : (
-          <button
+          <Button
+            type="text"
             onClick={() => copyToClipboard(inv.code, <span>
               Copiaste el código <span className="font-bold">{inv.code}</span>
             </span>)}
-            className="flex items-center gap-1.5 group font-mono font-bold tracking-widest text-brick-red hover:opacity-70 transition-opacity cursor-pointer"
+            className="group flex items-center gap-1.5 font-mono font-bold tracking-widest text-brick-red hover:opacity-70 transition-opacity p-0 h-auto"
           >
             {inv.code}
             <Copy size={12} className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </button>
+          </Button>
         ),
     },
     {
@@ -127,12 +130,14 @@ export function InvitationsTable({
       ...recipientFilter,
       render: (_, inv) =>
         editingId === inv.id ? (
-          <input
+          <Input
             value={editValues.recipient}
             onChange={(e) =>
               setEditValues((v) => ({ ...v, recipient: e.target.value }))
             }
-            className="text-deep-space-blue bg-transparent border-b border-muted-olive-700 focus:border-brick-red outline-none py-0.5 font-sans text-sm w-40"
+            size="small"
+            variant="underlined"
+            className="text-deep-space-blue font-sans text-sm w-40"
           />
         ) : (
           <span className="text-deep-space-blue">{inv.recipient}</span>
@@ -146,22 +151,15 @@ export function InvitationsTable({
       onFilter: (value, record) => record.maxGuests === value,
       render: (_, inv) =>
         editingId === inv.id ? (
-          <select
+          <Select
             value={editValues.maxGuests}
-            onChange={(e) =>
-              setEditValues((v) => ({
-                ...v,
-                maxGuests: Number(e.target.value),
-              }))
+            onChange={(val) =>
+              setEditValues((v) => ({ ...v, maxGuests: val }))
             }
-            className="bg-transparent border-b border-muted-olive-700 focus:border-brick-red outline-none py-0.5 font-sans text-sm text-deep-space-blue"
-          >
-            {SEAT_OPTIONS.map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
-          </select>
+            size="small"
+            options={SEAT_OPTIONS.map((n) => ({ label: n, value: n }))}
+            className="w-20 font-sans text-sm"
+          />
         ) : (
           <span className="text-deep-space-blue-400">{inv.maxGuests}</span>
         ),
@@ -194,29 +192,29 @@ export function InvitationsTable({
         return (
           <div>
             {editingId === inv.id ? (
-              <div className="flex gap-3">
-                <button
+              <div className="flex gap-1">
+                <Button
+                  type="text"
+                  icon={<Save size={16} />}
                   onClick={() => saveEdit(inv.id)}
                   disabled={isPending}
-                  className="font-sans text-xs text-muted-olive-300 hover:text-muted-olive transition-colors disabled:opacity-50"
-                >
-                  <Save className="cursor-pointer" size={16} />
-                </button>
-                <button
+                  className="text-muted-olive-300 hover:text-muted-olive! disabled:opacity-50"
+                />
+                <Button
+                  type="text"
+                  icon={<Ban size={16} />}
                   onClick={cancelEdit}
-                  className="font-sans text-xs text-deep-space-blue-400 hover:text-deep-space-blue transition-colors"
-                >
-                  <Ban className="cursor-pointer" size={16} />
-                </button>
+                  className="text-deep-space-blue-400 hover:text-deep-space-blue!"
+                />
               </div>
             ) : (
-              <div className="flex gap-3">
-                <button
+              <div className="flex gap-1">
+                <Button
+                  type="text"
+                  icon={<Pencil size={16} />}
                   onClick={() => startEdit(inv)}
-                  className="font-sans text-xs text-deep-space-blue-400 hover:text-deep-space-blue transition-colors"
-                >
-                  <Pencil className="cursor-pointer" size={16} />
-                </button>
+                  className="text-deep-space-blue-400 hover:text-deep-space-blue!"
+                />
                 <Popconfirm
                   title="¿Eliminar este pase?"
                   description={
@@ -230,12 +228,12 @@ export function InvitationsTable({
                   okButtonProps={{ danger: true }}
                   disabled={isPending}
                 >
-                  <button
+                  <Button
+                    type="text"
+                    icon={<Trash size={16} />}
                     disabled={isPending}
-                    className="font-sans text-xs text-brick-red-300 hover:text-brick-red transition-colors disabled:opacity-50"
-                  >
-                    <Trash className="cursor-pointer" size={16} />
-                  </button>
+                    className="text-brick-red-300 hover:text-brick-red! disabled:opacity-50"
+                  />
                 </Popconfirm>
               </div>
             )}

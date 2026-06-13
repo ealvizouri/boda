@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Table, Input, Checkbox, Select } from "antd";
+import { Table, Input, Checkbox, Select, Button } from "antd";
 import type { TableColumnType } from "antd";
 import { useSearchFilter } from "@/hooks/useSearchFilter";
 import { updateRsvp, updateGuest } from "@/app/actions";
@@ -109,12 +109,14 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
       ...nameFilter,
       render: (_, r) =>
         editingRsvpId === r.id ? (
-          <input
+          <Input
             value={rsvpEditValues.name}
             onChange={(e) =>
               setRsvpEditValues((v) => ({ ...v, name: e.target.value }))
             }
-            className="text-deep-space-blue font-medium bg-transparent border-b border-muted-olive-700 focus:border-brick-red outline-none py-0.5 w-36"
+            size="small"
+            variant="underlined"
+            className="text-deep-space-blue font-medium w-36"
           />
         ) : (
           <span className="text-deep-space-blue font-medium">{r.name}</span>
@@ -147,12 +149,14 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
       key: "phone",
       render: (_, r) =>
         editingRsvpId === r.id ? (
-          <input
+          <Input
             value={rsvpEditValues.phone}
             onChange={(e) =>
               setRsvpEditValues((v) => ({ ...v, phone: e.target.value }))
             }
-            className="text-deep-space-blue-400 bg-transparent border-b border-muted-olive-700 focus:border-brick-red outline-none py-0.5 w-28"
+            size="small"
+            variant="underlined"
+            className="text-deep-space-blue-400 w-28"
           />
         ) : (
           <span className="text-deep-space-blue-400">{r.phone || "—"}</span>
@@ -212,28 +216,28 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
       key: "actions",
       render: (_, r) =>
         editingRsvpId === r.id ? (
-          <div className="flex gap-3">
-            <button
+          <div className="flex gap-1">
+            <Button
+              type="text"
+              icon={<Save size={16} />}
               onClick={() => saveRsvp(r.id)}
               disabled={isPending}
-              className="cursor-pointer text-muted-olive-300 hover:text-muted-olive transition-colors disabled:opacity-50"
-            >
-              <Save size={16} />
-            </button>
-            <button
+              className="text-muted-olive-300 hover:text-muted-olive! disabled:opacity-50"
+            />
+            <Button
+              type="text"
+              icon={<Ban size={16} />}
               onClick={cancelEditRsvp}
-              className="cursor-pointer text-deep-space-blue-400 hover:text-deep-space-blue transition-colors"
-            >
-              <Ban size={16} />
-            </button>
+              className="text-deep-space-blue-400 hover:text-deep-space-blue!"
+            />
           </div>
         ) : (
-          <button
+          <Button
+            type="text"
+            icon={<Pencil size={16} />}
             onClick={() => startEditRsvp(r)}
-            className="cursor-pointer text-deep-space-blue-400 hover:text-deep-space-blue transition-colors"
-          >
-            <Pencil size={16} />
-          </button>
+            className="text-deep-space-blue-400 hover:text-deep-space-blue!"
+          />
         ),
     },
   ];
@@ -302,7 +306,7 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
                         <tr key={g.id}>
                           <td className="py-2 pr-4">
                             {isEditing ? (
-                              <input
+                              <Input
                                 value={guestEditValues.name}
                                 onChange={(e) =>
                                   setGuestEditValues((v) => ({
@@ -310,7 +314,9 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
                                     name: e.target.value,
                                   }))
                                 }
-                                className="text-deep-space-blue bg-transparent border-b border-muted-olive-700 focus:border-brick-red outline-none py-0.5 w-32"
+                                size="small"
+                                variant="underlined"
+                                className="text-deep-space-blue w-32"
                               />
                             ) : (
                               <span className="text-deep-space-blue">
@@ -362,28 +368,28 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
                           </td>
                           <td className="py-2">
                             {isEditing ? (
-                              <div className="flex gap-3">
-                                <button
+                              <div className="flex gap-1">
+                                <Button
+                                  type="text"
+                                  icon={<Save size={14} />}
                                   onClick={() => saveGuest(g.id)}
                                   disabled={isPending}
-                                  className="cursor-pointer text-muted-olive-300 hover:text-muted-olive transition-colors disabled:opacity-50"
-                                >
-                                  <Save size={14} />
-                                </button>
-                                <button
+                                  className="text-muted-olive-300 hover:text-muted-olive! disabled:opacity-50"
+                                />
+                                <Button
+                                  type="text"
+                                  icon={<Ban size={14} />}
                                   onClick={cancelEditGuest}
-                                  className="cursor-pointer text-deep-space-blue-400 hover:text-deep-space-blue transition-colors"
-                                >
-                                  <Ban size={14} />
-                                </button>
+                                  className="text-deep-space-blue-400 hover:text-deep-space-blue!"
+                                />
                               </div>
                             ) : (
-                              <button
+                              <Button
+                                type="text"
+                                icon={<Pencil size={14} />}
                                 onClick={() => startEditGuest(g)}
-                                className="cursor-pointer text-deep-space-blue-400 hover:text-deep-space-blue transition-colors"
-                              >
-                                <Pencil size={14} />
-                              </button>
+                                className="text-deep-space-blue-400 hover:text-deep-space-blue!"
+                              />
                             )}
                           </td>
                         </tr>
