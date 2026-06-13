@@ -29,6 +29,34 @@ export async function createInvitation(recipient: string, maxGuests: number) {
   throw new Error("No se pudo generar un código único");
 }
 
+export async function updateInvitation(
+  id: string,
+  data: { code?: string; recipient?: string; maxGuests?: number },
+) {
+  try {
+    await prisma.invitation.update({ where: { id }, data });
+    revalidatePath("/admin");
+  } catch (err: unknown) {
+    if ((err as { code?: string })?.code === "P2002") {
+      throw new Error("Ese código ya está en uso");
+    }
+    throw err;
+  }
+}
+
+export async function deleteInvitation(id: string) {
+  try {
+    await prisma.invitation.delete({ where: { id } });
+    revalidatePath("/admin");
+  } catch (err: unknown) {
+    const e = err as { code?: string };
+    if (e?.code === "P2003" || e?.code === "P2014") {
+      throw new Error("No se puede eliminar: este pase tiene RSVPs registrados");
+    }
+    throw err;
+  }
+}
+
 export async function lookupInvitation(code: string) {
   return prisma.invitation.findUnique({
     where: { code: code.trim().toUpperCase() },

@@ -4,6 +4,7 @@ import { auth, signOut } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { createInvitation } from "@/app/actions";
+import { InvitationsTable } from "./InvitationsTable";
 import React from "react";
 
 export default async function AdminPage({
@@ -149,62 +150,7 @@ export default async function AdminPage({
             </div>
           </form>
 
-          {invitations.length === 0 ? (
-            <p className="font-sans font-light text-deep-space-blue-400 text-center py-4">
-              Aún no hay pases creados.
-            </p>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full font-sans text-sm">
-                <thead>
-                  <tr className="border-b border-muted-olive-800">
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
-                      Código
-                    </th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
-                      Destinatario
-                    </th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
-                      Lugares
-                    </th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
-                      RSVPs
-                    </th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3">
-                      Creado
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {invitations.map((inv) => (
-                    <tr
-                      key={inv.id}
-                      className="border-b border-muted-olive-900 last:border-0"
-                    >
-                      <td className="py-3 pr-4 font-mono font-bold tracking-widest text-brick-red">
-                        {inv.code}
-                      </td>
-                      <td className="py-3 pr-4 text-deep-space-blue">
-                        {inv.recipient}
-                      </td>
-                      <td className="py-3 pr-4 text-deep-space-blue-400">
-                        {inv.maxGuests}
-                      </td>
-                      <td className="py-3 pr-4 text-deep-space-blue-400">
-                        {inv._count.rsvps}
-                      </td>
-                      <td className="py-3 text-deep-space-blue-400 whitespace-nowrap">
-                        {new Date(inv.createdAt).toLocaleDateString("es-MX", {
-                          day: "numeric",
-                          month: "short",
-                        })}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+          <InvitationsTable invitations={invitations} />
         </div>
 
         {/* Full RSVP table */}
