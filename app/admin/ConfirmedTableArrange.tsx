@@ -72,8 +72,7 @@ export function ConfirmedTableArrange({
     ? groups.filter(
         (t) =>
           String(t.tableNumber).includes(needle) ||
-          t.guests.some((g) => g.name.toLowerCase().includes(needle)) ||
-          t.rsvps.some((r) => r.name.toLowerCase().includes(needle)),
+          t.guests.some((g) => g.name.toLowerCase().includes(needle)),
       )
     : groups;
 
@@ -93,13 +92,6 @@ export function ConfirmedTableArrange({
         <span className="text-deep-space-blue-400">{t.guests.length}</span>
       ),
     },
-    {
-      title: "RSVPs",
-      key: "rsvps",
-      render: (_: unknown, t: TableGroup) => (
-        <span className="text-deep-space-blue-400">{t.rsvps.length}</span>
-      ),
-    },
   ];
 
   if (confirmedGuests.length === 0) {
@@ -113,7 +105,7 @@ export function ConfirmedTableArrange({
   return (
     <div className="flex flex-col gap-3">
       <Input
-        placeholder="Buscar por mesa, invitado o RSVP…"
+        placeholder="Buscar por mesa o invitado…"
         value={globalSearch}
         onChange={(e) => setGlobalSearch(e.target.value)}
         allowClear
@@ -129,28 +121,14 @@ export function ConfirmedTableArrange({
         size="small"
         expandable={{
           expandedRowRender: (t) => (
-            <div className="px-4 py-3 flex flex-col gap-4">
-              {t.rsvps.map((rsvp) => (
-                <div key={rsvp.id}>
-                  <p className="font-sans text-xs tracking-widest uppercase text-muted-olive-300 mb-1">
-                    {rsvp.name}
-                    {rsvp.phone && (
-                      <span className="ml-2 normal-case text-deep-space-blue-400">
-                        · {rsvp.phone}
-                      </span>
-                    )}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {rsvp.guests.map((g) => (
-                      <span
-                        key={g.id}
-                        className="font-sans text-xs text-deep-space-blue bg-papaya-whip-800 px-2 py-1"
-                      >
-                        {g.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+            <div className="px-4 py-3 flex flex-wrap gap-2">
+              {t.guests.map((g) => (
+                <span
+                  key={g.id}
+                  className="font-sans text-xs text-deep-space-blue bg-papaya-whip-800 px-2 py-1"
+                >
+                  {g.name}
+                </span>
               ))}
             </div>
           ),
