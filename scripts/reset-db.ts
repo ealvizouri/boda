@@ -3,9 +3,9 @@ import { PrismaClient } from '@prisma/client'
 import fs from 'fs'
 import path from 'path'
 
-const csvPath = process.argv[2]
-if (!csvPath) {
-  console.error('Usage: npx tsx scripts/reset-db.ts <path-to-csv>')
+const csvPath = path.join(__dirname, 'invitations.csv')
+if (!fs.existsSync(csvPath)) {
+  console.error(`CSV file not found: ${csvPath}`)
   console.error('CSV format: code,maxGuests,recipient')
   process.exit(1)
 }

@@ -5,7 +5,8 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { createInvitation } from "@/app/actions";
 import { InvitationsTable } from "./InvitationsTable";
-import React from "react";
+import { RsvpsTable } from "./RsvpsTable";
+import { ConfirmedTableArrange } from "./ConfirmedTableArrange";
 
 export default async function AdminPage({
   searchParams,
@@ -17,7 +18,7 @@ export default async function AdminPage({
 
   const { code: newCode } = await searchParams;
 
-  const [rsvps, invitations] = await Promise.all([
+  const [rsvps, invitations, confirmedGuests] = await Promise.all([
     prisma.rsvp.findMany({
       orderBy: { submittedAt: "desc" },
       include: { guests: true, invitation: true },
@@ -25,6 +26,11 @@ export default async function AdminPage({
     prisma.invitation.findMany({
       orderBy: { createdAt: "desc" },
       include: { _count: { select: { rsvps: true } } },
+    }),
+    prisma.guest.findMany({
+      where: { confirmed: true, tableNumber: { not: null } },
+      include: { rsvp: { select: { id: true, name: true, phone: true } } },
+      orderBy: [{ tableNumber: "asc" }, { name: "asc" }],
     }),
   ]);
 
@@ -64,7 +70,7 @@ export default async function AdminPage({
         >
           <button
             type="submit"
-            className="font-sans text-xs tracking-widest uppercase text-steel-blue-300 hover:text-brick-red transition-colors"
+            className="font-sans text-xs tracking-widest uppercase cursor-pointer text-white hover:text-brick-red transition-colors"
           >
             Salir
           </button>
@@ -154,100 +160,19 @@ export default async function AdminPage({
         </div>
 
         {/* Full RSVP table */}
-        <div className="card">
+        <div className="card mb-8">
           <h2 className="font-display text-2xl font-light text-deep-space-blue mb-6">
             Todas las respuestas
           </h2>
-          {rsvps.length === 0 ? (
-            <p className="font-sans font-light text-deep-space-blue-400 py-8 text-center">
-              Aún no hay respuestas.
-            </p>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full font-sans text-sm">
-                <thead>
-                  <tr className="border-b border-muted-olive-800">
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
-                      Nombre
-                    </th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
-                      Asistencia
-                    </th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
-                      Teléfono
-                    </th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
-                      Invitados
-                    </th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3 pr-4">
-                      Mensaje
-                    </th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-3">
-                      Fecha
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rsvps.map((r) => (
-                    <React.Fragment key={r.id}>
-                      <tr className="border-b border-muted-olive-900">
-                        <td className="py-3 pr-4 text-deep-space-blue font-medium">
-                          {r.name}
-                        </td>
-                        <td className="py-3 pr-4">
-                          <span
-                            className={`inline-block px-2 py-0.5 text-xs tracking-wider uppercase
-                            ${
-                              r.attending
-                                ? "bg-muted-olive-800 text-muted-olive-200"
-                                : "bg-brick-red-900 text-brick-red-600"
-                            }`}
-                          >
-                            {r.attending ? "Asistirá" : "No podrá"}
-                          </span>
-                        </td>
-                        <td className="py-3 pr-4 text-deep-space-blue-400">
-                          {r.phone || "—"}
-                        </td>
-                        <td className="py-3 pr-4 text-deep-space-blue-400">
-                          {r.attending ? r.guests.length : "—"}
-                        </td>
-                        <td className="py-3 pr-4 text-deep-space-blue-400 max-w-xs truncate">
-                          {r.message || "—"}
-                        </td>
-                        <td className="py-3 text-deep-space-blue-400 whitespace-nowrap">
-                          {new Date(r.submittedAt).toLocaleDateString("es-MX", {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          })}
-                        </td>
-                      </tr>
-                      {r.attending && r.guests.length > 0 && (
-                        <tr
-                          key={`${r.id}-guests`}
-                          className="border-b border-muted-olive-900 last:border-0 bg-papaya-whip-800"
-                        >
-                          <td colSpan={6} className="py-2 px-4">
-                            <div className="flex flex-wrap gap-3">
-                              {r.guests.map((g) => (
-                                <span
-                                  key={g.id}
-                                  className="font-sans text-xs text-deep-space-blue"
-                                >
-                                  {g.name}
-                                </span>
-                              ))}
-                            </div>
-                          </td>
-                        </tr>
-                      )}
-                    </React.Fragment>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+          <RsvpsTable rsvps={rsvps} />
+        </div>
+
+        {/* Table arrangement */}
+        <div className="card">
+          <h2 className="font-display text-2xl font-light text-deep-space-blue mb-6">
+            Distribución de mesas
+          </h2>
+          <ConfirmedTableArrange confirmedGuests={confirmedGuests} />
         </div>
       </main>
     </div>

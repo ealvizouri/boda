@@ -44,6 +44,22 @@ export async function updateInvitation(
   }
 }
 
+export async function updateRsvp(
+  id: string,
+  data: { name?: string; phone?: string | null },
+) {
+  await prisma.rsvp.update({ where: { id }, data });
+  revalidatePath("/admin");
+}
+
+export async function updateGuest(
+  id: string,
+  data: { name?: string; tableNumber?: number | null; confirmed?: boolean },
+) {
+  await prisma.guest.update({ where: { id }, data });
+  revalidatePath("/admin");
+}
+
 export async function deleteInvitation(id: string) {
   try {
     await prisma.invitation.delete({ where: { id } });
