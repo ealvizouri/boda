@@ -1,5 +1,6 @@
 'use client'
 
+import { WED_DATE_NORMAL } from '@/lib/constants'
 import { useState, useEffect } from 'react'
 
 const WEDDING_DATE = new Date('2026-09-12T16:00:00')
@@ -61,7 +62,7 @@ export default function Hero() {
         <div className="my-10 flex items-center justify-center gap-4">
           <span className="block h-px w-20 bg-muted-olive" />
           <p className="font-display italic text-steel-blue text-xl md:text-2xl tracking-wider">
-            12 de septiembre de 2026
+            {WED_DATE_NORMAL}
           </p>
           <span className="block h-px w-20 bg-muted-olive" />
         </div>

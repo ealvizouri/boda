@@ -4,6 +4,7 @@ import Hero from '@/components/Hero'
 import Details from '@/components/Details'
 import OurStory from '@/components/OurStory'
 import RsvpForm from '@/components/RsvpForm'
+import { WED_DATE_NORMAL } from '@/lib/constants'
 
 const NAV_LINKS = [
   { href: '#details', label: 'Detalles' },
@@ -49,7 +50,7 @@ export default function Home() {
           Mariano <span className="italic text-brick-red">&amp;</span> Jackie
         </p>
         <p className="font-sans text-xs tracking-[0.3em] uppercase text-steel-blue-300">
-          12 de septiembre de 2026
+          {WED_DATE_NORMAL}
         </p>
         <p className="mt-4 font-sans text-xs text-deep-space-blue-400 tracking-wider">
           #MarianoYJackie2026

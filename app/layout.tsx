@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Raleway } from 'next/font/google'
 import './globals.css'
+import { WED_DATE_FULL, WED_DATE_NORMAL } from '@/lib/constants'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -18,8 +19,8 @@ const raleway = Raleway({
 })
 
 export const metadata: Metadata = {
-  title: 'Mariano & Jackie — 12 de septiembre de 2026',
-  description: 'Te invitamos a celebrar nuestra boda el 12 de septiembre de 2026.',
+  title: `Mariano & Jackie — ${WED_DATE_NORMAL}`,
+  description: `'Te invitamos a celebrar nuestra boda el ${WED_DATE_FULL}.'`,
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

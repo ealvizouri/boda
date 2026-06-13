@@ -1,3 +1,5 @@
+import { WED_DATE_FULL } from "@/lib/constants"
+
 const MapPinIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -75,7 +77,7 @@ export default function Details() {
           </div>
           <h2 className="section-heading">Nuestro Gran Día</h2>
           <p className="mt-4 font-sans font-light text-deep-space-blue-400 tracking-wide max-w-md mx-auto">
-            Sábado, 12 de septiembre de 2026 — no podemos esperar para celebrar con ustedes.
+            {WED_DATE_FULL} — no podemos esperar para celebrar con ustedes!
           </p>
         </div>
 

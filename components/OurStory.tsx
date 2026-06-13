@@ -1,3 +1,5 @@
+import { WED_DATE_NO_YEAR } from "@/lib/constants"
+
 const milestones = [
   {
     year: '2019',
@@ -22,7 +24,7 @@ const milestones = [
   {
     year: '2026',
     title: 'Comienza el Para Siempre',
-    body: 'El 12 de septiembre, rodeados de su familia y amigos más cercanos, Mariano y Jackie comienzan la más grande de todas las aventuras.',
+    body: `El ${WED_DATE_NO_YEAR}, rodeados de su familia y amigos más cercanos, Mariano y Jackie comienzan la más grande de todas las aventuras.`,
   },
 ]
 
