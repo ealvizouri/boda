@@ -19,7 +19,7 @@ const CHAPTERS: StoryChapterProps[] = [
     afterBold:
       'Mariano se bajó los audífonos. Hablaron. Y siguieron hablando, sin tener la menor idea de que esa pequeña conversación de oficina se convertiría en el primer hilo de algo mucho más grande.',
     background: '/assets/home/shared/background_green.png',
-    animation: '/assets/home/section4/animation.gif',
+    animation: '/assets/home/Capitulo1/animation.gif',
     papel: '/assets/home/shared/papel_gif.png',
     flip: false,
   },
@@ -33,7 +33,7 @@ const CHAPTERS: StoryChapterProps[] = [
     afterBold:
       'Hoy, después de ocho años, siguen siendo eso: el mejor amigo del otro.',
     background: '/assets/home/shared/background_red.png',
-    animation: '/assets/home/section5/animation.gif',
+    animation: '/assets/home/Capitulo2/animation.gif',
     papel: '/assets/home/shared/papel_gif.png',
     flip: true,
   },
@@ -45,7 +45,7 @@ const CHAPTERS: StoryChapterProps[] = [
     boldLine:
       'El amor cotidiano — el de los martes por la noche y los domingos sin planes — era exactamente el que querían para siempre.',
     background: '/assets/home/shared/background_blue.png',
-    animation: '/assets/home/section6/animation.gif',
+    animation: '/assets/home/Capitulo3/animation.gif',
     papel: '/assets/home/shared/papel_gif.png',
     flip: false,
   },
