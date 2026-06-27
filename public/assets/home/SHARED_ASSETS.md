@@ -7,6 +7,7 @@ Do **not** copy them back into section folders — always reference the path bel
 |---|---|---|
 | `shared/monograma.svg` | 1, 3, 10 | `Hero.tsx`, `OurStory.tsx`, `Programa.tsx` |
 | `shared/sello_verde.png` | 2, 8 | `Countdown.tsx`, `Details.tsx` |
+| `shared/sello_rojo.png` | 10 | `Programa.tsx` |
 | `shared/background_red.png` | 2, 5 | `Countdown.tsx`, `StoryChapter` (chapter 2) |
 | `shared/background_blue.png` | 3, 6 | `OurStory.tsx`, `StoryChapter` (chapter 3) |
 | `shared/background_green.png` | 4, 7, 12, 13 | `StoryChapter` (chapters 1 & 4), `RsvpForm.tsx` |

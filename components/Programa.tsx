@@ -1,95 +1,150 @@
 import Image from 'next/image'
-import { Sparkles, GlassWater, UtensilsCrossed, Music, Car } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
 
-interface Event {
-  time: string
-  label: string
-  Icon: LucideIcon
-}
-
-const EVENTS: Event[] = [
-  { time: '5:00 PM', label: 'Ceremonia',  Icon: Sparkles },
-  { time: '6:10 PM', label: 'Recepción',  Icon: GlassWater },
-  { time: '6:50 PM', label: 'Cena',       Icon: UtensilsCrossed },
-  { time: '8:55 PM', label: '¡A bailar!', Icon: Music },
-  { time: '3:00 AM', label: 'Bye bye',    Icon: Car },
+const EVENTS = [
+  {
+    time: '5:00 PM',
+    label: 'Ceremonia',
+    icon: '/assets/home/section10/rings.svg',
+  },
+  {
+    time: '6:10 PM',
+    label: 'Recepción',
+    icon: '/assets/home/section10/table.svg',
+  },
+  {
+    time: '6:50 PM',
+    label: 'Cena',
+    icon: '/assets/home/section10/cookwear.svg',
+  },
+  {
+    time: '8:55 PM',
+    label: '¡A bailar!',
+    icon: '/assets/home/section10/crystal_ball.svg',
+  },
+  { time: '3:00 AM', label: 'Bye bye', icon: '/assets/home/section10/car.svg' },
 ]
 
 export default function Programa() {
   return (
-    <section id="programa" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-20 px-4">
-      {/* Dark venue background — photo not yet provided */}
-      <div className="absolute inset-0 bg-[#1e1e1e]" />
-      <div className="absolute inset-0 bg-black/50" />
+    <section
+      id="programa"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 py-20"
+    >
+      <Image
+        src="/assets/home/section10/background.jpeg"
+        alt=""
+        fill
+        className="object-cover object-top-left md:object-center"
+      />
+      {/* <div className="absolute inset-0 bg-black/45" /> */}
 
-      <div className="relative z-10 w-full max-w-[320px] md:max-w-lg mx-auto">
-        <h2 className="font-engravers text-center tracking-[0.5em] text-white text-2xl mb-7">
-          PROGRAMA
-        </h2>
+      <div className="relative z-10 mx-auto w-full max-w-[320px] md:max-w-lg">
+        <div className="mb-8 text-center">
+          <h2 className="font-cormorant text-4xl tracking-[0.15em] text-white text-shadow-2xs">
+            PROGRAMA
+          </h2>
+        </div>
 
-        {/* Red wax seal */}
-        <div className="flex justify-center mb-5">
-          <div className="w-14 h-14 rounded-full bg-[#8b1a1a] flex items-center justify-center shadow-lg ring-2 ring-[#6b1212]">
-            <Image src="/assets/home/shared/monograma.svg" alt="" width={28} height={28} className="opacity-80 invert" />
-          </div>
+        {/* Wax seal overlapping top of card */}
+        <div className="relative z-20 -mb-9 flex justify-center">
+          <Image
+            src="/assets/home/shared/sello_rojo.png"
+            alt=""
+            width={80}
+            height={80}
+            className="drop-shadow-lg"
+          />
         </div>
 
         {/* Timeline card */}
-        <div className="bg-white/95 shadow-2xl px-6 py-8">
-          <div className="relative flex flex-col gap-5">
+        <div className="relative overflow-hidden px-6 pt-14 pb-32 shadow-2xl">
+          <Image
+            src="/assets/home/section10/background_paper.png"
+            alt=""
+            fill
+            className="object-cover"
+          />
+
+          <div className="relative z-10 flex flex-col">
             {/* Vertical center line */}
-            <div className="absolute left-1/2 top-3 bottom-3 w-px bg-gray-300 -translate-x-1/2" />
+            <div className="absolute top-[-10%] bottom-0 left-1/2 h-[10%] w-[0.5px] -translate-x-1/2 bg-[#7d7e74]" />
+            <div className="absolute top-0 bottom-0 left-1/2 w-px -translate-x-1/2 bg-[#7d7e74]" />
+            <div className="absolute top-full bottom-[-10%px] left-1/2 h-[5%] w-[0.5px] -translate-x-1/2 bg-[#7d7e74]" />
 
-            {EVENTS.map(({ time, label, Icon }, i) => {
-              const isEven = i % 2 === 0
-              return (
-                <div key={time} className="relative flex items-center min-h-13">
-                  {/* LEFT SIDE */}
-                  <div className="flex-1 flex justify-end pr-5 md:pr-6">
-                    {/* Mobile: always icon on left */}
-                    {/* Desktop: even=icon, odd=text */}
-                    <div className="md:hidden text-deep-space-blue-300">
-                      <Icon size={28} strokeWidth={1.25} />
-                    </div>
-                    <div className="hidden md:flex items-center">
-                      {isEven
-                        ? <Icon size={30} strokeWidth={1.25} className="text-deep-space-blue-300" />
-                        : (
-                          <div className="text-right">
-                            <p className="font-sans font-semibold text-deep-space-blue text-sm">{time}</p>
-                            <p className="font-sans text-deep-space-blue-400 text-xs">{label}</p>
-                          </div>
-                        )
-                      }
-                    </div>
+            {EVENTS.map(({ time, label, icon }, i) => (
+              <div
+                key={time}
+                className={`relative flex items-center ${i < EVENTS.length - 1 ? 'mb-6' : ''}`}
+              >
+                {/* Icon — left side on mobile, alternates on desktop */}
+                <div className="flex flex-1 justify-end pr-6">
+                  <div className="md:hidden">
+                    <Image
+                      src={icon}
+                      alt={label}
+                      width={80}
+                      height={80}
+                      className=""
+                    />
                   </div>
-
-                  {/* Center dot */}
-                  <div className="w-2.5 h-2.5 rounded-full bg-gray-400 shrink-0 z-10" />
-
-                  {/* RIGHT SIDE */}
-                  <div className="flex-1 pl-5 md:pl-6">
-                    {/* Mobile: always text on right */}
-                    <div className="md:hidden">
-                      <p className="font-sans font-semibold text-deep-space-blue text-sm">{time}</p>
-                      <p className="font-sans text-deep-space-blue-400 text-xs">{label}</p>
-                    </div>
-                    <div className="hidden md:flex items-center">
-                      {isEven
-                        ? (
-                          <div>
-                            <p className="font-sans font-semibold text-deep-space-blue text-sm">{time}</p>
-                            <p className="font-sans text-deep-space-blue-400 text-xs">{label}</p>
-                          </div>
-                        )
-                        : <Icon size={30} strokeWidth={1.25} className="text-deep-space-blue-300" />
-                      }
-                    </div>
+                  <div className="hidden items-center justify-end md:flex">
+                    {i % 2 === 0 ? (
+                      <Image
+                        src={icon}
+                        alt={label}
+                        width={90}
+                        height={90}
+                        className=""
+                      />
+                    ) : (
+                      <div className="text-right">
+                        <p className="font-sans text-sm leading-tight font-semibold text-deep-space-blue">
+                          {time}
+                        </p>
+                        <p className="mt-0.5 font-sans text-xs font-light text-deep-space-blue-400">
+                          {label}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
-              )
-            })}
+
+                {/* Center dot */}
+                <div className="z-10 h-2.5 w-2.5 shrink-0 rounded-full bg-gray-400" />
+
+                {/* Text — right side on mobile, alternates on desktop */}
+                <div className="flex-1 pl-6">
+                  <div className="md:hidden">
+                    <p className="font-sans text-sm leading-tight font-semibold text-deep-space-blue">
+                      {time}
+                    </p>
+                    <p className="mt-0.5 font-sans text-xs font-light text-deep-space-blue-400">
+                      {label}
+                    </p>
+                  </div>
+                  <div className="hidden items-center md:flex">
+                    {i % 2 === 0 ? (
+                      <div>
+                        <p className="font-sans text-sm leading-tight font-semibold text-deep-space-blue">
+                          {time}
+                        </p>
+                        <p className="mt-0.5 font-sans text-xs font-light text-deep-space-blue-400">
+                          {label}
+                        </p>
+                      </div>
+                    ) : (
+                      <Image
+                        src={icon}
+                        alt={label}
+                        width={54}
+                        height={54}
+                        className="opacity-70"
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
