@@ -8,7 +8,7 @@ export default function Hero() {
       className="relative flex h-screen flex-col items-center justify-between overflow-hidden"
     >
       <Image
-        src="/assets/home/section1/background.jpg"
+        src="/assets/home/Hero/background.jpg"
         alt=""
         fill
         className="object-cover object-center"
