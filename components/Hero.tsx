@@ -1,8 +1,12 @@
 import Image from 'next/image'
+import DoubleChevronDown from './DoubleChevronDown'
 
 export default function Hero() {
   return (
-    <section id="home" className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
+    <section
+      id="home"
+      className="relative flex h-screen flex-col items-center justify-between overflow-hidden"
+    >
       <Image
         src="/assets/home/section1/background.jpg"
         alt=""
@@ -10,43 +14,45 @@ export default function Hero() {
         className="object-cover object-center"
         priority
       />
-      <div className="absolute inset-0 bg-black/30" />
+      {/* <div className="absolute inset-0 bg-black/30" /> */}
 
-      <div className="relative z-10 flex flex-col items-center text-center px-6">
-        <h1 className="font-script text-white leading-none mb-6">
-          <span className="block text-[76px] md:text-[110px] leading-[0.9]">Jackie &amp;</span>
-          <span className="block text-[76px] md:text-[110px] leading-[0.9]">Mariano</span>
+      <div className="relative z-10 flex flex-col items-center pt-60 text-center">
+        <h1 className="relative -left-4 mb-6 font-script text-[90px] leading-none text-[#faf1e1] md:text-[130px]">
+          <div className="leading-[0.9]">
+            Jackie
+            <span className="relative top-8 -left-2.5">&amp;</span>
+          </div>
+          <div className="pl-20 leading-[0.9]">
+            <span className="relative -top-1">Mariano</span>
+          </div>
         </h1>
-
-        <div className="my-4 w-14 h-14 opacity-90">
-          <Image
-            src="/assets/home/shared/monograma_white.svg"
-            alt="Monograma M&J"
-            width={56}
-            height={56}
-          />
-        </div>
-
-        <p className="font-engravers text-white/90 tracking-[0.35em] text-[11px] uppercase mb-2">
-          Are Getting Married
-        </p>
-        <p className="font-engravers text-white/75 tracking-[0.2em] text-[11px]">
-          17 &bull; Octubre &bull; 2026
-        </p>
       </div>
 
-      <a
-        href="#countdown"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-white/60 hover:text-white/90 transition-colors"
-        aria-label="Continuar"
-      >
-        <svg width="22" height="13" viewBox="0 0 22 13" fill="none" className="animate-bounce">
-          <path d="M2 2l9 9 9-9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-        <svg width="22" height="13" viewBox="0 0 22 13" fill="none" className="animate-bounce [animation-delay:200ms] -mt-1">
-          <path d="M2 2l9 9 9-9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </a>
+      <div className="relative -top-10 z-10 w-full pb-20">
+        <div className="w-full text-center">
+          <div className="my-4 flex w-full justify-center">
+            <Image
+              src="/assets/home/shared/monograma_white.svg"
+              alt="Monograma M&J"
+              width={60}
+              height={60}
+            />
+          </div>
+
+          <div className="flex flex-col gap-2.5">
+            <p className="font-cormorant text-[18px] font-light text-[#faf1e1]/90 uppercase">
+              Are Getting Married
+            </p>
+            <div className="flex justify-center">
+              <hr className="h-0.5 w-48 bg-white" />
+            </div>
+            <p className="font-cormorant text-[18px] font-bold text-[#faf1e1]/75">
+              17 &bull; OCTUBRE &bull; 2026
+            </p>
+          </div>
+        </div>
+      </div>
+      <DoubleChevronDown className="bottom-5" />
     </section>
   )
 }
