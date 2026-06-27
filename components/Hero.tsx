@@ -51,7 +51,7 @@ export default function Hero() {
           Tienen el honor de ser invitados a celebrar la boda de
         </p>
 
-        <h1 className="font-display font-light text-deep-space-blue leading-none mb-2">
+        <h1 className="font-script text-deep-space-blue leading-none mb-2">
           <span className="block text-6xl md:text-8xl lg:text-9xl">Jackie</span>
           <span className="block font-light italic text-brick-red text-5xl md:text-7xl my-2 md:my-4">
             &amp;

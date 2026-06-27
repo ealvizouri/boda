@@ -1,7 +1,7 @@
+import './globals.css'
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Raleway, Cormorant_SC, Newsreader, Quattrocento, Roboto_Mono } from 'next/font/google'
 import localFont from 'next/font/local'
-import './globals.css'
 import { WED_DATE_FULL, WED_DATE_NORMAL } from '@/lib/constants'
 
 const cormorant = Cormorant_Garamond({
@@ -72,8 +72,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
-      <body className={[
+    <html lang="es" className={[
           cormorant.variable,
           raleway.variable,
           cormorantSC.variable,
@@ -84,6 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           courier.variable,
           engravers.variable,
         ].join(' ')}>
+      <body>
         {children}
       </body>
     </html>
