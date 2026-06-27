@@ -4,24 +4,24 @@ const EVENTS = [
   {
     time: '5:00 PM',
     label: 'Ceremonia',
-    icon: '/assets/home/programa/rings.svg',
+    icon: '/assets/home/Programa/rings.svg',
   },
   {
     time: '6:10 PM',
     label: 'Recepción',
-    icon: '/assets/home/programa/table.svg',
+    icon: '/assets/home/Programa/table.svg',
   },
   {
     time: '6:50 PM',
     label: 'Cena',
-    icon: '/assets/home/programa/cookwear.svg',
+    icon: '/assets/home/Programa/cookwear.svg',
   },
   {
     time: '8:55 PM',
     label: '¡A bailar!',
-    icon: '/assets/home/programa/crystal_ball.svg',
+    icon: '/assets/home/Programa/crystal_ball.svg',
   },
-  { time: '3:00 AM', label: 'Bye bye', icon: '/assets/home/programa/car.svg' },
+  { time: '3:00 AM', label: 'Bye bye', icon: '/assets/home/Programa/car.svg' },
 ]
 
 export default function Programa() {
@@ -31,7 +31,7 @@ export default function Programa() {
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 py-20"
     >
       <Image
-        src="/assets/home/programa/background.jpeg"
+        src="/assets/home/Programa/background.jpeg"
         alt=""
         fill
         className="object-cover object-top-left md:object-center"
@@ -59,7 +59,7 @@ export default function Programa() {
         {/* Timeline card */}
         <div className="relative overflow-hidden px-6 pt-14 pb-32 shadow-2xl">
           <Image
-            src="/assets/home/programa/background_paper.png"
+            src="/assets/home/Programa/background_paper.png"
             alt=""
             fill
             className="object-cover"
