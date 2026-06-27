@@ -7,11 +7,20 @@ export default function Hero() {
       id="home"
       className="relative flex h-screen flex-col items-center justify-between overflow-hidden"
     >
+      {/* Mobile background */}
       <Image
         src="/assets/home/Hero/background.jpg"
         alt=""
         fill
-        className="object-cover object-center"
+        className="object-cover object-center md:hidden"
+        priority
+      />
+      {/* Desktop background */}
+      <Image
+        src="/assets/home/Hero/background_desktop.png"
+        alt=""
+        fill
+        className="hidden object-cover object-center md:block"
         priority
       />
       {/* <div className="absolute inset-0 bg-black/30" /> */}
