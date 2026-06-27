@@ -20,7 +20,7 @@ export default function Hero() {
 
         <div className="my-4 w-14 h-14 opacity-90">
           <Image
-            src="/assets/home/shared/monograma.svg"
+            src="/assets/home/shared/monograma_white.svg"
             alt="Monograma M&J"
             width={56}
             height={56}
