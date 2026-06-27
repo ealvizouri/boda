@@ -106,6 +106,27 @@ Admin is protected via NextAuth v5 credentials provider. There is no user table 
 
 The site uses custom Tailwind color tokens (e.g., `papaya-whip`, `deep-space-blue`, `brick-red`, `muted-olive`, `steel-blue`). These are defined in `app/globals.css`. Use them for any new UI work rather than generic Tailwind colors.
 
+## Styles
+
+For styles use tailwindcss v4
+
 ## Content language
 
 UI copy is in Spanish (the wedding is for a Spanish-speaking audience). Keep all new user-facing text in Spanish.
+
+## Fonts
+
+You can use the following tailwind css classes:
+
+font-display      ->    cormorant
+font-sc:          ->    cormorant-sc
+font-editorial    ->    newsreader
+font-quattro      ->    quattrocento
+font-mono         ->    roboto-mono
+font-courier      ->    courier-new
+font-script       ->    antariskalia
+font-engravers    ->    engravers-gothic
+
+# Icons
+
+Use lucide-react icons
