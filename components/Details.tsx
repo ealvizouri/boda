@@ -22,7 +22,7 @@ export default function Details() {
           {/* Venue sketch */}
           <div className="relative w-full h-36 mb-6 overflow-hidden">
             <Image
-              src="/assets/home/section8/sketch_salon.png"
+              src="/assets/home/Details/sketch_salon.png"
               alt="Salón Evangelina"
               fill
               className="object-contain"

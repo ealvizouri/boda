@@ -14,7 +14,7 @@ const PALETTE = [
 export default function DressCode() {
   return (
     <section id="dresscode" className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 px-6">
-      <Image src="/assets/home/section9/background_beige.png" alt="" fill className="object-cover" />
+      <Image src="/assets/home/DressCode/background_beige.png" alt="" fill className="object-cover" />
       <div className="absolute inset-0 bg-white/15" />
 
       <div className="relative z-10 w-full max-w-sm md:max-w-xl mx-auto text-center">
