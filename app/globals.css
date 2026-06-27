@@ -73,9 +73,15 @@
   --color-muted-olive-800: #dee6c9;
   --color-muted-olive-900: #eff2e4;
 
-  /* fonts — next/font injects --font-cormorant and --font-raleway */
-  --font-display: var(--font-cormorant), Georgia, serif;
-  --font-sans:    var(--font-raleway), system-ui, sans-serif;
+  /* fonts — next/font injects these CSS vars onto <body> */
+  --font-display:    var(--font-cormorant), Georgia, serif;
+  --font-sans:       var(--font-raleway), system-ui, sans-serif;
+  --font-sc:         var(--font-cormorant-sc), Georgia, serif;
+  --font-editorial:  var(--font-newsreader), Georgia, serif;
+  --font-quattro:    var(--font-quattrocento), Georgia, serif;
+  --font-mono:       var(--font-roboto-mono), var(--font-courier), ui-monospace, monospace;
+  --font-script:     var(--font-antariskalia), cursive;
+  --font-engravers:  var(--font-engravers-gothic), serif;
 }
 
 @layer base {
