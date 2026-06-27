@@ -71,7 +71,7 @@ export default function Countdown() {
           <div className="md:flex md:gap-8 md:items-start">
             <div className="relative w-full md:w-1/2 aspect-[4/3] mb-7 md:mb-0 overflow-hidden flex-shrink-0">
               <Image
-                src="/assets/home/section2/foto_reloj_anillo.jpg"
+                src="/assets/home/Countdown/foto_reloj_anillo.jpg"
                 alt="Reloj y anillo"
                 fill
                 className="object-cover"
