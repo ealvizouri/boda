@@ -1,60 +1,64 @@
-import { WED_DATE_NO_YEAR } from "@/lib/constants"
+import Image from 'next/image'
 
-const milestones = [
-  {
-    year: '2019',
-    title: 'El Primer Encuentro',
-    body: 'Dos desconocidos se cruzaron en la reunión de un amigo en común. Ninguno sabía que ese encuentro fortuito cambiaría sus vidas para siempre.',
-  },
-  {
-    year: '2020',
-    title: 'La Primera Cita',
-    body: 'Un paseo por el parque que duró toda la tarde. Las horas pasaron como minutos — y supieron que algo muy especial había comenzado.',
-  },
-  {
-    year: '2022',
-    title: 'Aventuras Juntos',
-    body: 'Desde escapadas de fin de semana hasta viajes espontáneos al extranjero, cada aventura fue más memorable porque la vivieron uno al lado del otro.',
-  },
-  {
-    year: '2025',
-    title: 'La Propuesta',
-    body: 'Bajo las estrellas, con el corazón lleno de amor y un anillo en mano, él hizo la pregunta que llevaba años escrita en su corazón. Ella dijo que sí.',
-  },
-  {
-    year: '2026',
-    title: 'Comienza el Para Siempre',
-    body: `El ${WED_DATE_NO_YEAR}, rodeados de su familia y amigos más cercanos, Mariano y Jackie comienzan la más grande de todas las aventuras.`,
-  },
+// Scattered photo placeholders — replace src values when real photos are added
+const COLLAGE = [
+  { style: { top: '0%',  left: '5%',  width: '46%', paddingBottom: '38%', rotate: '-3deg' } },
+  { style: { top: '2%',  left: '54%', width: '42%', paddingBottom: '52%', rotate: '2deg'  } },
+  { style: { top: '30%', left: '0%',  width: '38%', paddingBottom: '46%', rotate: '-5deg' } },
+  { style: { top: '26%', left: '30%', width: '38%', paddingBottom: '48%', rotate: '1deg'  } },
+  { style: { top: '22%', left: '58%', width: '38%', paddingBottom: '44%', rotate: '4deg'  } },
+  { style: { top: '58%', left: '4%',  width: '36%', paddingBottom: '44%', rotate: '3deg'  } },
+  { style: { top: '56%', left: '34%', width: '38%', paddingBottom: '46%', rotate: '-2deg' } },
+  { style: { top: '60%', left: '62%', width: '36%', paddingBottom: '42%', rotate: '5deg'  } },
 ]
 
 export default function OurStory() {
   return (
-    <section id="story" className="py-24 px-6 bg-deep-space-blue">
-      <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <span className="block h-px w-16 bg-muted-olive opacity-50" />
-            <span className="font-display italic text-muted-olive text-2xl">una historia de amor</span>
-            <span className="block h-px w-16 bg-muted-olive opacity-50" />
+    <section id="story" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-20 px-6">
+      <Image src="/assets/home/shared/background_blue.png" alt="" fill className="object-cover" />
+      <div className="absolute inset-0 bg-black/15" />
+
+      <div className="relative z-10 w-full max-w-sm md:max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-16">
+
+        {/* Photo collage */}
+        <div className="relative w-full md:w-1/2 h-105 md:h-140 shrink-0">
+          {/* Monogram medallion top-right */}
+          <div className="absolute top-1 right-1 z-20 w-10 h-10">
+            <Image src="/assets/home/shared/monograma.svg" alt="" width={40} height={40} className="opacity-75" />
           </div>
-          <h2 className="font-display text-4xl md:text-5xl font-light tracking-widest uppercase text-papaya-whip">
-            Nuestra Historia
-          </h2>
+
+          {COLLAGE.map(({ style }, i) => (
+            <div
+              key={i}
+              className="absolute bg-white/20 border border-white/30 shadow-lg"
+              style={{
+                top: style.top,
+                left: style.left,
+                width: style.width,
+                paddingBottom: style.paddingBottom,
+                transform: `rotate(${style.rotate})`,
+              }}
+            />
+          ))}
+          <p className="absolute inset-0 flex items-center justify-center font-sans text-white/30 text-xs">
+            Fotos próximamente
+          </p>
         </div>
 
-        <ol className="relative border-l border-muted-olive-200 ml-6">
-          {milestones.map(({ year, title, body }, i) => (
-            <li key={i} className="mb-12 ml-8 last:mb-0">
-              <span className="absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full bg-brick-red border-2 border-deep-space-blue" />
-              <span className="font-sans text-xs tracking-[0.3em] uppercase text-muted-olive mb-1 block">
-                {year}
-              </span>
-              <h3 className="font-display text-xl font-light text-papaya-whip mb-2">{title}</h3>
-              <p className="font-sans font-light text-steel-blue-700 leading-relaxed text-sm">{body}</p>
-            </li>
-          ))}
-        </ol>
+        {/* Text */}
+        <div className="text-center md:text-left">
+          <p className="font-display italic text-white/80 text-2xl mb-3">capítulo a capítulo</p>
+          <p className="font-sans text-white/55 text-xs tracking-[0.25em] uppercase mb-5">
+            así llegamos aquí...
+          </p>
+          <h2 className="font-engravers text-brick-red text-4xl md:text-5xl tracking-widest leading-tight mb-5">
+            NUESTRA<br />HISTORIA
+          </h2>
+          <div className="w-16 h-px bg-white/30 mx-auto md:mx-0 mb-5" />
+          <p className="font-display italic text-white/70 text-xl md:text-2xl leading-snug">
+            de mejores amigos,<br />a casa, a siempre...
+          </p>
+        </div>
       </div>
     </section>
   )

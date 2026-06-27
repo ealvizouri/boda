@@ -114,6 +114,10 @@ For styles use tailwindcss v4
 
 UI copy is in Spanish (the wedding is for a Spanish-speaking audience). Keep all new user-facing text in Spanish.
 
+## Assets
+
+Section-specific images live under `public/assets/home/section{N}/`. Assets reused across multiple sections live in `public/assets/home/shared/`. See [`public/assets/home/SHARED_ASSETS.md`](public/assets/home/SHARED_ASSETS.md) for the full list of shared files and which components reference each one.
+
 ## Fonts
 
 You can use the following tailwind css classes:
