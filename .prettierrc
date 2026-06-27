@@ -9,7 +9,7 @@
     "prettier-plugin-tailwindcss"
   ],
   "tailwindFunctions": ["clsx", "cn"],
-  "tailwindStylesheet": "src/app/globals.css",
+  "tailwindStylesheet": "app/globals.css",
   "tabWidth": 2,
   "overrides": [
     {
