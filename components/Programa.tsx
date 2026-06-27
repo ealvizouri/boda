@@ -59,7 +59,7 @@ export default function Programa() {
         {/* Timeline card */}
         <div className="relative overflow-hidden px-6 pt-14 pb-32 shadow-2xl">
           <Image
-            src="/assets/home/Programa/background_paper.png"
+            src="/assets/home/shared/background_paper.png"
             alt=""
             fill
             className="object-cover"

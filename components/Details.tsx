@@ -1,72 +1,106 @@
-import Image from 'next/image'
 import { MapPin } from 'lucide-react'
+import Image from 'next/image'
 
 export default function Details() {
   return (
-    <section id="details" className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 px-4">
-      {/* Background — outdoor venue photo not yet provided; using neutral fallback */}
-      <div className="absolute inset-0 bg-[#7a7a6a]" />
+    <section
+      id="details"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-20"
+    >
+      <Image
+        src="/assets/home/Details/background.jpeg"
+        alt=""
+        fill
+        className="object-top-left md:object-cover"
+      />
 
       {/* Card */}
-      <div className="relative z-10 w-full max-w-[320px] md:max-w-md mx-auto">
-        {/* Wax seal overlapping top */}
-        <div className="flex justify-center -mb-5 relative z-10">
-          <Image src="/assets/home/shared/sello_verde.png" alt="" width={56} height={56} className="drop-shadow-md" />
+      <div className="relative z-10 mx-auto w-full max-w-[320px] md:max-w-md">
+        {/* Drop shadow beneath card */}
+        <div className="absolute -left-21 z-0 h-full w-21">
+          <Image
+            src="/assets/home/Details/shadow.png"
+            alt=""
+            fill
+            className="object-fill"
+          />
         </div>
 
-        <div className="bg-[#f5f0e8] shadow-2xl px-8 py-10">
-          <h2 className="font-engravers text-center tracking-[0.4em] text-deep-space-blue text-2xl mb-7">
-            RECEPCIÓN
-          </h2>
+        {/* Wax seal overlapping top */}
+        <div className="relative top-10 z-18 flex justify-center">
+          <Image
+            src="/assets/home/shared/sello_verde.png"
+            alt=""
+            width={80}
+            height={80}
+            className="drop-shadow-md"
+          />
+        </div>
 
-          {/* Venue sketch */}
-          <div className="relative w-full h-36 mb-6 overflow-hidden">
-            <Image
-              src="/assets/home/Details/sketch_salon.png"
-              alt="Salón Evangelina"
-              fill
-              className="object-contain"
-            />
+        <div className="relative z-10 overflow-hidden px-8 pt-20 pb-10 shadow-2xl">
+          <Image
+            src="/assets/home/shared/background_paper.png"
+            alt=""
+            fill
+            className="object-cover"
+          />
+          <div className="relative z-10">
+            <h2 className="text-center font-quattro text-3xl tracking-[0.2rem] text-[#4b4e40]">
+              RECEPCIÓN
+            </h2>
+
+            {/* Venue sketch */}
+            <div className="relative h-52 w-full overflow-hidden md:h-96">
+              <Image
+                src="/assets/home/Details/sketch_salon.png"
+                alt="Salón Evangelina"
+                fill
+                className="object-fill"
+              />
+            </div>
+
+            <p className="mb-6 text-center font-script text-xl leading-tight text-deep-space-blue">
+              Porque el amor siempre
+              <br />
+              encuentra el camino...
+            </p>
+
+            <div className="mx-auto mb-6 h-px w-14 bg-deep-space-blue/20" />
+
+            <p className="mb-6 text-center font-sans text-sm leading-relaxed font-light text-deep-space-blue-400">
+              Con el corazón lleno de ilusión, deseamos compartir con ustedes el
+              inicio de nuestra nueva etapa el día:
+            </p>
+
+            <p className="mb-1 text-center font-engravers text-[10px] tracking-[0.3em] text-deep-space-blue uppercase">
+              Sábado
+            </p>
+            <p className="mb-6 text-center font-display text-2xl font-light text-deep-space-blue">
+              17 &bull; Octubre &bull; 2026
+            </p>
+
+            <p className="mb-1 text-center font-sans text-sm text-deep-space-blue-400">
+              Ceremonia simbólica a las:
+            </p>
+            <p className="mb-1 text-center font-display text-4xl leading-none font-light text-deep-space-blue">
+              5:00 PM
+            </p>
+            <p className="mb-7 text-center font-sans text-sm text-deep-space-blue">
+              en el <strong>Salón Evangelina</strong>
+            </p>
+
+            <a
+              href="https://maps.google.com/?q=Negrito+Poeta+84,+Tenencia+Sta+Maria+de+Guido,+Morelia,+Michoacan"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-start justify-center gap-1.5 text-brick-red transition-colors hover:text-molten-lava"
+            >
+              <MapPin size={14} className="mt-0.5 shrink-0" />
+              <span className="text-center font-sans text-xs leading-relaxed underline">
+                Negrito Poeta 84, Tenencia Sta Maria de Guido, Morelia, Mich.
+              </span>
+            </a>
           </div>
-
-          <p className="font-script text-center text-deep-space-blue text-xl leading-tight mb-6">
-            Porque el amor siempre<br />encuentra el camino...
-          </p>
-
-          <div className="w-14 h-px bg-deep-space-blue/20 mx-auto mb-6" />
-
-          <p className="font-sans font-light text-center text-deep-space-blue-400 text-sm leading-relaxed mb-6">
-            Con el corazón lleno de ilusión, deseamos compartir con ustedes el inicio de nuestra nueva etapa el día:
-          </p>
-
-          <p className="font-engravers text-center tracking-[0.3em] text-deep-space-blue text-[10px] uppercase mb-1">
-            Sábado
-          </p>
-          <p className="font-display text-center text-deep-space-blue text-2xl font-light mb-6">
-            17 &bull; Octubre &bull; 2026
-          </p>
-
-          <p className="font-sans text-center text-deep-space-blue-400 text-sm mb-1">
-            Ceremonia simbólica a las:
-          </p>
-          <p className="font-display text-center text-deep-space-blue text-4xl font-light leading-none mb-1">
-            5:00 PM
-          </p>
-          <p className="font-sans text-center text-deep-space-blue text-sm mb-7">
-            en el <strong>Salón Evangelina</strong>
-          </p>
-
-          <a
-            href="https://maps.google.com/?q=Negrito+Poeta+84,+Tenencia+Sta+Maria+de+Guido,+Morelia,+Michoacan"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-start justify-center gap-1.5 text-brick-red hover:text-molten-lava transition-colors"
-          >
-            <MapPin size={14} className="mt-0.5 shrink-0" />
-            <span className="font-sans text-xs underline text-center leading-relaxed">
-              Negrito Poeta 84, Tenencia Sta Maria de Guido, Morelia, Mich.
-            </span>
-          </a>
         </div>
       </div>
     </section>
