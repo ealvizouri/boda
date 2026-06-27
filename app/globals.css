@@ -79,7 +79,8 @@
   --font-sc:         var(--font-cormorant-sc), Georgia, serif;
   --font-editorial:  var(--font-newsreader), Georgia, serif;
   --font-quattro:    var(--font-quattrocento), Georgia, serif;
-  --font-mono:       var(--font-roboto-mono), var(--font-courier), ui-monospace, monospace;
+  --font-courier:    var(--font-cour), monospace;
+  --font-mono:       var(--font-roboto-mono), ui-monospace, monospace;
   --font-script:     var(--font-antariskalia), cursive;
   --font-engravers:  var(--font-engravers-gothic), serif;
 }

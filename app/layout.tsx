@@ -55,7 +55,7 @@ const signature = localFont({
 
 const courier = localFont({
   src: './fonts/cour.ttf',
-  variable: '--font-courier',
+  variable: '--font-cour',
   display: 'swap',
 })
 
