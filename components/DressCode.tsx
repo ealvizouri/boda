@@ -14,35 +14,27 @@ export default function DressCode() {
       />
       <div className="absolute inset-0 bg-white/15" />
 
-      <div className="relative z-10 mx-auto w-full max-w-sm text-center md:max-w-xl">
-        <h2 className="mb-7 font-engravers text-3xl leading-snug tracking-[0.5em] text-deep-space-blue md:text-4xl">
-          DRESS CODE
+      <div className="relative z-10 mx-auto w-full max-w-sm text-center text-[#4b4e40] md:max-w-xl">
+        <h2 className="mb-7 font-quattro text-3xl leading-snug tracking-[0.5em] md:text-4xl">
+          CÓDIGO DE VESTIMENTA
         </h2>
 
-        <p className="mb-5 font-cormorant text-2xl text-deep-space-blue italic">
-          Formal elegante
-        </p>
+        <p className="mb-5 font-cormorant text-2xl italic">Formal elegante</p>
 
-        <p className="mx-auto mb-6 max-w-xs font-mono text-sm leading-relaxed font-light text-deep-space-blue-400">
+        <p className="mx-auto mb-6 max-w-xs font-mono text-sm leading-relaxed font-light">
           Te pedimos vestir en tonos oscuros y tierra, vino, verde, azul o negro
         </p>
 
-        <div className="mb-12 flex flex-col gap-2">
+        <div className="mb-12 flex flex-col gap-5">
           <div>
-            <p className="font-cormorant text-base font-semibold text-deep-space-blue">
-              Mujeres
-            </p>
-            <p className="font-mono text-sm font-light text-deep-space-blue-400">
+            <p className="font-cormorant text-base font-semibold">Mujeres</p>
+            <p className="font-mono text-sm font-light">
               Sin blancos, ni colores pastel.
             </p>
           </div>
           <div>
-            <p className="font-cormorant text-base font-semibold text-deep-space-blue">
-              Hombres
-            </p>
-            <p className="font-mono text-sm font-light text-deep-space-blue-400">
-              Sin Azul marino
-            </p>
+            <p className="font-cormorant text-base font-semibold">Hombres</p>
+            <p className="font-mono text-sm font-light">Sin Azul marino</p>
           </div>
         </div>
 
