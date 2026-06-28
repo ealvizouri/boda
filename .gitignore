@@ -6,3 +6,4 @@ dist
 .agents
 .claude
 .DS_Store
+tsconfig.tsbuildinfo
