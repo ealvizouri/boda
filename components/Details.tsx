@@ -17,9 +17,9 @@ export default function Details() {
       {/* Card */}
       <div className="relative z-10 mx-auto w-full max-w-[320px] md:max-w-md">
         {/* Drop shadow beneath card */}
-        <div className="absolute -left-21 z-0 h-full w-21">
+        <div className="absolute top-20 -left-21 z-0 h-[calc(100%-80px)] w-21">
           <Image
-            src="/assets/home/Details/shadow.png"
+            src="/assets/home/shared/shadow.png"
             alt=""
             fill
             className="object-fill"

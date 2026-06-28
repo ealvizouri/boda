@@ -25,7 +25,7 @@ export default function StoryChapter({
       <Image src={background} alt="" fill className="object-cover" />
 
       <div
-        className={`relative z-10 mx-auto flex w-full max-w-sm flex-col items-center gap-8 md:max-w-4xl md:gap-14 ${flip ? 'md:flex-row-reverse' : 'md:flex-row'}`}
+        className={`relative z-10 mx-auto flex w-full max-w-sm flex-col items-center md:max-w-4xl md:gap-14 ${flip ? 'md:flex-row-reverse' : 'md:flex-row'}`}
       >
         {children}
       </div>

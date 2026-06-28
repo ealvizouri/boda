@@ -1,15 +1,16 @@
 import cn from '@/lib/cn'
 
 interface Props {
+  hashtag: string
   className?: string
 }
 
-const DoubleChevronDown = ({ className }: Props) => {
+const DoubleChevronDown = ({ hashtag, className }: Props) => {
   return (
     <a
-      href="#countdown"
+      href={`#${hashtag}`}
       className={cn(
-        'absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center text-white/60 transition-colors hover:text-white/90',
+        'absolute bottom-8 left-1/2 z-100 flex -translate-x-1/2 flex-col items-center text-white/60 transition-colors hover:text-white/90',
         className,
       )}
       aria-label="Continuar"
