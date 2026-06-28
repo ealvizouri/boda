@@ -51,7 +51,7 @@ export default function Countdown() {
       {/* Paper card */}
       <div className="relative z-10 mx-auto w-full max-w-[320px] bg-[#fdf8f2] pb-10 shadow-2xl md:max-w-2xl">
         {/* Drop shadow beneath card */}
-        <div className="absolute -left-21 z-0 h-full w-21">
+        <div className="absolute top-0 -left-21 z-0 h-full w-21">
           <Image
             src="/assets/home/shared/shadow.png"
             alt=""

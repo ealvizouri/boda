@@ -65,7 +65,17 @@ export default function Programa() {
         </div>
 
         {/* Timeline card */}
-        <div className="relative overflow-hidden px-6 pt-14 pb-32 shadow-2xl">
+        <div className="relative px-6 pt-14 pb-32 shadow-2xl">
+          {/* Drop shadow beneath card */}
+          <div className="absolute top-0 -left-21 z-0 h-full w-21">
+            <Image
+              src="/assets/home/shared/shadow.png"
+              alt=""
+              fill
+              className="object-fill"
+            />
+          </div>
+
           <Image
             src="/assets/home/shared/background_paper.png"
             alt=""
