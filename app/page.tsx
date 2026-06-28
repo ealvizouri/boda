@@ -10,7 +10,7 @@ import DressCode from '@/components/DressCode'
 import Hero from '@/components/Hero'
 import OurStory from '@/components/OurStory'
 import Programa from '@/components/Programa'
-import RsvpForm from '@/components/RsvpForm'
+import Rsvp from '@/components/Rsvp'
 
 export default function Page() {
   return (
@@ -25,7 +25,7 @@ export default function Page() {
       <Details />
       <DressCode />
       <Programa />
-      <RsvpForm />
+      <Rsvp />
     </div>
   )
 }
