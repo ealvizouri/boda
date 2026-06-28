@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import MonogramaWhite from '@/public/assets/home/shared/monograma_white.svg'
 import DoubleChevronDown from './DoubleChevronDown'
 
 export default function Hero() {
@@ -40,12 +41,7 @@ export default function Hero() {
       <div className="relative -top-10 z-10 w-full pb-20">
         <div className="w-full text-center">
           <div className="my-4 mb-7 flex w-full justify-center">
-            <Image
-              src="/assets/home/shared/monograma_white.svg"
-              alt="Monograma M&J"
-              width={65}
-              height={65}
-            />
+            <MonogramaWhite width={65} height={65} />
           </div>
 
           <div className="flex flex-col gap-2.5">

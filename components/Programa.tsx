@@ -1,27 +1,36 @@
+import CarIcon from '@/public/assets/home/Programa/car.svg'
+import CookwearIcon from '@/public/assets/home/Programa/cookwear.svg'
+import CrystalBallIcon from '@/public/assets/home/Programa/crystal_ball.svg'
+import RingsIcon from '@/public/assets/home/Programa/rings.svg'
+import TableIcon from '@/public/assets/home/Programa/table.svg'
 import Image from 'next/image'
 
 const EVENTS = [
   {
     time: '5:00 PM',
     label: 'Ceremonia',
-    icon: '/assets/home/Programa/rings.svg',
+    icon: <RingsIcon width={90} height={90} />,
   },
   {
     time: '6:10 PM',
     label: 'Recepción',
-    icon: '/assets/home/Programa/table.svg',
+    icon: <TableIcon width={120} height={120} />,
   },
   {
     time: '6:50 PM',
     label: 'Cena',
-    icon: '/assets/home/Programa/cookwear.svg',
+    icon: <CookwearIcon width={110} height={110} />,
   },
   {
     time: '8:55 PM',
     label: '¡A bailar!',
-    icon: '/assets/home/Programa/crystal_ball.svg',
+    icon: <CrystalBallIcon width={110} height={110} />,
   },
-  { time: '3:00 AM', label: 'Bye bye', icon: '/assets/home/Programa/car.svg' },
+  {
+    time: '3:00 AM',
+    label: 'Bye bye',
+    icon: <CarIcon width={90} height={90} />,
+  },
 ]
 
 export default function Programa() {
@@ -78,30 +87,16 @@ export default function Programa() {
               >
                 {/* Icon — left side on mobile, alternates on desktop */}
                 <div className="flex flex-1 justify-end pr-6">
-                  <div className="md:hidden">
-                    <Image
-                      src={icon}
-                      alt={label}
-                      width={80}
-                      height={80}
-                      className=""
-                    />
-                  </div>
+                  <div className="md:hidden">{icon}</div>
                   <div className="hidden items-center justify-end md:flex">
                     {i % 2 === 0 ? (
-                      <Image
-                        src={icon}
-                        alt={label}
-                        width={90}
-                        height={90}
-                        className=""
-                      />
+                      icon
                     ) : (
-                      <div className="text-right">
-                        <p className="font-mono text-sm leading-tight font-semibold text-deep-space-blue">
+                      <div className="text-right text-[#4b4e40]">
+                        <p className="font-quattro text-sm leading-tight font-semibold">
                           {time}
                         </p>
-                        <p className="mt-0.5 font-mono text-xs font-light text-deep-space-blue-400">
+                        <p className="mt-0.5 font-mono text-xs font-light">
                           {label}
                         </p>
                       </div>
@@ -110,36 +105,30 @@ export default function Programa() {
                 </div>
 
                 {/* Center dot */}
-                <div className="z-10 h-2.5 w-2.5 shrink-0 rounded-full bg-gray-400" />
+                <div className="z-10 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7d7e74]" />
 
                 {/* Text — right side on mobile, alternates on desktop */}
                 <div className="flex-1 pl-6">
-                  <div className="md:hidden">
-                    <p className="font-mono text-sm leading-tight font-semibold text-deep-space-blue">
+                  <div className="text-center text-[#4b4e40] md:hidden">
+                    <p className="font-quattro text-sm leading-tight font-semibold">
                       {time}
                     </p>
-                    <p className="mt-0.5 font-mono text-xs font-light text-deep-space-blue-400">
+                    <p className="mt-0.5 font-mono text-xs font-light">
                       {label}
                     </p>
                   </div>
                   <div className="hidden items-center md:flex">
                     {i % 2 === 0 ? (
-                      <div>
-                        <p className="font-mono text-sm leading-tight font-semibold text-deep-space-blue">
+                      <div className="text-[#4b4e40]">
+                        <p className="font-mono text-sm leading-tight font-semibold">
                           {time}
                         </p>
-                        <p className="mt-0.5 font-mono text-xs font-light text-deep-space-blue-400">
+                        <p className="mt-0.5 font-mono text-xs font-light">
                           {label}
                         </p>
                       </div>
                     ) : (
-                      <Image
-                        src={icon}
-                        alt={label}
-                        width={54}
-                        height={54}
-                        className="opacity-70"
-                      />
+                      icon
                     )}
                   </div>
                 </div>

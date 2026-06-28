@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
   images: {
     contentDispositionType: 'inline',
   },
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
 }
 
 export default nextConfig
