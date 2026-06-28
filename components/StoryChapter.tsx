@@ -28,7 +28,6 @@ export default function StoryChapter({
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-20">
       <Image src={background} alt="" fill className="object-cover" />
-      <div className="absolute inset-0 bg-black/15" />
 
       <div
         className={`relative z-10 mx-auto flex w-full max-w-sm flex-col items-center gap-8 md:max-w-4xl md:gap-14 ${flip ? 'md:flex-row-reverse' : 'md:flex-row'}`}
