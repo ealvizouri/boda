@@ -1,44 +1,44 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { Form, Input, Button } from "antd";
+import { Button, Form, Input } from 'antd'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export default function LoginPage() {
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const [form] = Form.useForm();
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const [form] = Form.useForm()
 
   async function handleFinish(values: { username: string; password: string }) {
-    setLoading(true);
-    setError(false);
-    const result = await signIn("credentials", {
+    setLoading(true)
+    setError(false)
+    const result = await signIn('credentials', {
       username: values.username,
       password: values.password,
       redirect: false,
-    });
-    setLoading(false);
+    })
+    setLoading(false)
     if (result?.ok) {
-      router.push("/admin");
-      router.refresh();
+      router.push('/admin')
+      router.refresh()
     } else {
-      setError(true);
+      setError(true)
     }
   }
 
   return (
-    <div className="min-h-screen bg-papaya-whip-900 flex items-center justify-center px-6">
+    <div className="flex min-h-screen items-center justify-center bg-papaya-whip-900 px-6">
       <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
+        <div className="mb-8 text-center">
           <a
             href="/"
-            className="font-display text-2xl text-deep-space-blue tracking-wide"
+            className="font-cormorant text-2xl tracking-wide text-deep-space-blue"
           >
             M <span className="text-brick-red italic">&amp;</span> J
           </a>
-          <p className="mt-2 font-sans text-xs tracking-[0.3em] uppercase text-muted-olive-300">
+          <p className="mt-2 font-mono text-xs tracking-[0.3em] text-muted-olive-300 uppercase">
             Panel de administración
           </p>
         </div>
@@ -46,14 +46,14 @@ export default function LoginPage() {
         <Form
           form={form}
           onFinish={handleFinish}
-          initialValues={{ username: "admin", password: "p4ssword" }}
+          initialValues={{ username: 'admin', password: 'p4ssword' }}
           layout="vertical"
           className="card flex flex-col gap-5"
         >
           <Form.Item
             name="username"
             label={
-              <span className="font-sans text-xs tracking-widest uppercase text-muted-olive-300">
+              <span className="font-mono text-xs tracking-widest text-muted-olive-300 uppercase">
                 Usuario
               </span>
             }
@@ -63,14 +63,14 @@ export default function LoginPage() {
           >
             <Input
               variant="underlined"
-              className="font-sans text-deep-space-blue"
+              className="font-mono text-deep-space-blue"
             />
           </Form.Item>
 
           <Form.Item
             name="password"
             label={
-              <span className="font-sans text-xs tracking-widest uppercase text-muted-olive-300">
+              <span className="font-mono text-xs tracking-widest text-muted-olive-300 uppercase">
                 Contraseña
               </span>
             }
@@ -80,12 +80,12 @@ export default function LoginPage() {
           >
             <Input.Password
               variant="underlined"
-              className="font-sans text-deep-space-blue"
+              className="font-mono text-deep-space-blue"
             />
           </Form.Item>
 
           {error && (
-            <p className="font-sans text-sm text-brick-red-600">
+            <p className="font-mono text-sm text-brick-red-600">
               Credenciales incorrectas.
             </p>
           )}
@@ -95,13 +95,13 @@ export default function LoginPage() {
               htmlType="submit"
               loading={loading}
               block
-              className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {loading ? "Ingresando…" : "Ingresar"}
+              {loading ? 'Ingresando…' : 'Ingresar'}
             </Button>
           </Form.Item>
         </Form>
       </div>
     </div>
-  );
+  )
 }

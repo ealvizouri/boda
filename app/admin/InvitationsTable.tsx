@@ -1,99 +1,99 @@
-"use client";
+'use client'
 
-import { useState, useTransition } from "react";
-import { Table, Input, Popconfirm, Button, Select } from "antd";
-import type { TableColumnType } from "antd";
-import { updateInvitation, deleteInvitation } from "@/app/actions";
-import { useClipboard } from "@/hooks/useClipboard";
-import { useSearchFilter } from "@/hooks/useSearchFilter";
-import { Ban, Check, Copy, Pencil, Save, Search, Trash } from "lucide-react";
+import { deleteInvitation, updateInvitation } from '@/app/actions'
+import { useClipboard } from '@/hooks/useClipboard'
+import { useSearchFilter } from '@/hooks/useSearchFilter'
+import type { TableColumnType } from 'antd'
+import { Button, Input, Popconfirm, Select, Table } from 'antd'
+import { Ban, Copy, Pencil, Save, Search, Trash } from 'lucide-react'
+import { useState, useTransition } from 'react'
 
 type Invitation = {
-  id: string;
-  code: string;
-  recipient: string;
-  maxGuests: number;
-  createdAt: Date;
-  _count: { rsvps: number };
-};
+  id: string
+  code: string
+  recipient: string
+  maxGuests: number
+  createdAt: Date
+  _count: { rsvps: number }
+}
 
-const SEAT_OPTIONS = [1, 2, 3, 4, 5, 6, 8, 10];
+const SEAT_OPTIONS = [1, 2, 3, 4, 5, 6, 8, 10]
 
 export function InvitationsTable({
   invitations,
 }: {
-  invitations: Invitation[];
+  invitations: Invitation[]
 }) {
-  const [globalSearch, setGlobalSearch] = useState("");
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const [globalSearch, setGlobalSearch] = useState('')
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [editValues, setEditValues] = useState({
-    code: "",
-    recipient: "",
+    code: '',
+    recipient: '',
     maxGuests: 2,
-  });
+  })
   const [rowError, setRowError] = useState<{ id: string; msg: string } | null>(
     null,
-  );
-  const [isPending, startTransition] = useTransition();
+  )
+  const [isPending, startTransition] = useTransition()
 
-  const copyToClipboard = useClipboard();
-  const codeFilter = useSearchFilter<Invitation>("code");
-  const recipientFilter = useSearchFilter<Invitation>("recipient");
+  const copyToClipboard = useClipboard()
+  const codeFilter = useSearchFilter<Invitation>('code')
+  const recipientFilter = useSearchFilter<Invitation>('recipient')
 
   function startEdit(inv: Invitation) {
-    setEditingId(inv.id);
+    setEditingId(inv.id)
     setEditValues({
       code: inv.code,
       recipient: inv.recipient,
       maxGuests: inv.maxGuests,
-    });
-    setRowError(null);
+    })
+    setRowError(null)
   }
 
   function cancelEdit() {
-    setEditingId(null);
-    setRowError(null);
+    setEditingId(null)
+    setRowError(null)
   }
 
   function saveEdit(id: string) {
-    const code = editValues.code.trim().toUpperCase();
-    if (!code) return;
+    const code = editValues.code.trim().toUpperCase()
+    if (!code) return
     startTransition(async () => {
       try {
         await updateInvitation(id, {
           code,
           recipient: editValues.recipient.trim(),
           maxGuests: editValues.maxGuests,
-        });
-        setEditingId(null);
-        setRowError(null);
+        })
+        setEditingId(null)
+        setRowError(null)
       } catch (e) {
-        setRowError({ id, msg: (e as Error).message });
+        setRowError({ id, msg: (e as Error).message })
       }
-    });
+    })
   }
 
   function handleDelete(id: string) {
     startTransition(async () => {
       try {
-        await deleteInvitation(id);
+        await deleteInvitation(id)
       } catch (e) {
-        setRowError({ id, msg: (e as Error).message });
+        setRowError({ id, msg: (e as Error).message })
       }
-    });
+    })
   }
 
   const maxGuestsOptions = Array.from(
     new Set(invitations.map((i) => i.maxGuests)),
   )
     .sort((a, b) => a - b)
-    .map((n) => ({ text: String(n), value: n }));
+    .map((n) => ({ text: String(n), value: n }))
 
   const columns: TableColumnType<Invitation>[] = [
     {
-      title: "Código",
-      dataIndex: "code",
-      key: "code",
+      title: 'Código',
+      dataIndex: 'code',
+      key: 'code',
       ...codeFilter,
       render: (_, inv) =>
         editingId === inv.id ? (
@@ -108,25 +108,34 @@ export function InvitationsTable({
             maxLength={8}
             size="small"
             variant="underlined"
-            className="font-mono font-bold tracking-widest text-brick-red w-24"
+            className="w-24 font-mono font-bold tracking-widest text-brick-red"
           />
         ) : (
           <Button
             type="text"
-            onClick={() => copyToClipboard(inv.code, <span>
-              Copiaste el código <span className="font-bold">{inv.code}</span>
-            </span>)}
-            className="group flex items-center gap-1.5 font-mono font-bold tracking-widest text-brick-red hover:opacity-70 transition-opacity p-0 h-auto"
+            onClick={() =>
+              copyToClipboard(
+                inv.code,
+                <span>
+                  Copiaste el código{' '}
+                  <span className="font-bold">{inv.code}</span>
+                </span>,
+              )
+            }
+            className="group flex h-auto items-center gap-1.5 p-0 font-mono font-bold tracking-widest text-brick-red transition-opacity hover:opacity-70"
           >
             {inv.code}
-            <Copy size={12} className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <Copy
+              size={12}
+              className="shrink-0 opacity-0 transition-opacity group-hover:opacity-100"
+            />
           </Button>
         ),
     },
     {
-      title: "Destinatario",
-      dataIndex: "recipient",
-      key: "recipient",
+      title: 'Destinatario',
+      dataIndex: 'recipient',
+      key: 'recipient',
       ...recipientFilter,
       render: (_, inv) =>
         editingId === inv.id ? (
@@ -137,58 +146,56 @@ export function InvitationsTable({
             }
             size="small"
             variant="underlined"
-            className="text-deep-space-blue font-sans text-sm w-40"
+            className="w-40 font-mono text-sm text-deep-space-blue"
           />
         ) : (
           <span className="text-deep-space-blue">{inv.recipient}</span>
         ),
     },
     {
-      title: "Lugares",
-      dataIndex: "maxGuests",
-      key: "maxGuests",
+      title: 'Lugares',
+      dataIndex: 'maxGuests',
+      key: 'maxGuests',
       filters: maxGuestsOptions,
       onFilter: (value, record) => record.maxGuests === value,
       render: (_, inv) =>
         editingId === inv.id ? (
           <Select
             value={editValues.maxGuests}
-            onChange={(val) =>
-              setEditValues((v) => ({ ...v, maxGuests: val }))
-            }
+            onChange={(val) => setEditValues((v) => ({ ...v, maxGuests: val }))}
             size="small"
             options={SEAT_OPTIONS.map((n) => ({ label: n, value: n }))}
-            className="w-20 font-sans text-sm"
+            className="w-20 font-mono text-sm"
           />
         ) : (
           <span className="text-deep-space-blue-400">{inv.maxGuests}</span>
         ),
     },
     {
-      title: "RSVPs",
-      dataIndex: "_count",
-      key: "rsvps",
-      render: (count: Invitation["_count"]) => (
+      title: 'RSVPs',
+      dataIndex: '_count',
+      key: 'rsvps',
+      render: (count: Invitation['_count']) => (
         <span className="text-deep-space-blue-400">{count.rsvps}</span>
       ),
     },
     {
-      title: "Creado",
-      dataIndex: "createdAt",
-      key: "createdAt",
+      title: 'Creado',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
       render: (date: Date) => (
-        <span className="text-deep-space-blue-400 whitespace-nowrap">
-          {new Date(date).toLocaleDateString("es-MX", {
-            day: "numeric",
-            month: "short",
+        <span className="whitespace-nowrap text-deep-space-blue-400">
+          {new Date(date).toLocaleDateString('es-MX', {
+            day: 'numeric',
+            month: 'short',
           })}
         </span>
       ),
     },
     {
-      key: "actions",
+      key: 'actions',
       render: (_, inv) => {
-        const err = rowError?.id === inv.id ? rowError.msg : null;
+        const err = rowError?.id === inv.id ? rowError.msg : null
         return (
           <div>
             {editingId === inv.id ? (
@@ -219,7 +226,7 @@ export function InvitationsTable({
                   title="¿Eliminar este pase?"
                   description={
                     inv._count.rsvps > 0
-                      ? `Tiene ${inv._count.rsvps} RSVP${inv._count.rsvps !== 1 ? "s" : ""} registrado${inv._count.rsvps !== 1 ? "s" : ""}.`
+                      ? `Tiene ${inv._count.rsvps} RSVP${inv._count.rsvps !== 1 ? 's' : ''} registrado${inv._count.rsvps !== 1 ? 's' : ''}.`
                       : undefined
                   }
                   onConfirm={() => handleDelete(inv.id)}
@@ -238,23 +245,23 @@ export function InvitationsTable({
               </div>
             )}
             {err && (
-              <p className="mt-1 font-sans text-xs text-brick-red">{err}</p>
+              <p className="mt-1 font-mono text-xs text-brick-red">{err}</p>
             )}
           </div>
-        );
+        )
       },
     },
-  ];
+  ]
 
   if (invitations.length === 0) {
     return (
-      <p className="font-sans font-light text-deep-space-blue-400 text-center py-4">
+      <p className="py-4 text-center font-mono font-light text-deep-space-blue-400">
         Aún no hay pases creados.
       </p>
-    );
+    )
   }
 
-  const needle = globalSearch.toLowerCase();
+  const needle = globalSearch.toLowerCase()
   const filtered = needle
     ? invitations.filter(
         (inv) =>
@@ -262,7 +269,7 @@ export function InvitationsTable({
           inv.recipient.toLowerCase().includes(needle) ||
           String(inv.maxGuests).includes(needle),
       )
-    : invitations;
+    : invitations
 
   return (
     <div className="flex flex-col gap-3">
@@ -283,5 +290,5 @@ export function InvitationsTable({
         size="small"
       />
     </div>
-  );
+  )
 }

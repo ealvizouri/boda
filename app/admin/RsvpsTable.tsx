@@ -1,111 +1,111 @@
-"use client";
+'use client'
 
-import { useState, useTransition } from "react";
-import { Table, Input, Checkbox, Select, Button } from "antd";
-import type { TableColumnType } from "antd";
-import { useSearchFilter } from "@/hooks/useSearchFilter";
-import { updateRsvp, updateGuest } from "@/app/actions";
-import { Ban, Pencil, Save, Search } from "lucide-react";
+import { updateGuest, updateRsvp } from '@/app/actions'
+import { useSearchFilter } from '@/hooks/useSearchFilter'
+import type { TableColumnType } from 'antd'
+import { Button, Checkbox, Input, Select, Table } from 'antd'
+import { Ban, Pencil, Save, Search } from 'lucide-react'
+import { useState, useTransition } from 'react'
 
 type Guest = {
-  id: string;
-  name: string;
-  tableNumber: number | null;
-  confirmed: boolean;
-};
+  id: string
+  name: string
+  tableNumber: number | null
+  confirmed: boolean
+}
 
 type Rsvp = {
-  id: string;
-  name: string;
-  attending: boolean;
-  phone: string | null;
-  message: string | null;
-  submittedAt: Date;
-  guests: Guest[];
-};
+  id: string
+  name: string
+  attending: boolean
+  phone: string | null
+  message: string | null
+  submittedAt: Date
+  guests: Guest[]
+}
 
 export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
-  const [globalSearch, setGlobalSearch] = useState("");
+  const [globalSearch, setGlobalSearch] = useState('')
 
-  const [editingRsvpId, setEditingRsvpId] = useState<string | null>(null);
-  const [rsvpEditValues, setRsvpEditValues] = useState({ name: "", phone: "" });
+  const [editingRsvpId, setEditingRsvpId] = useState<string | null>(null)
+  const [rsvpEditValues, setRsvpEditValues] = useState({ name: '', phone: '' })
 
-  const [editingGuestId, setEditingGuestId] = useState<string | null>(null);
+  const [editingGuestId, setEditingGuestId] = useState<string | null>(null)
   const [guestEditValues, setGuestEditValues] = useState<{
-    name: string;
-    tableNumber: number | null;
-    confirmed: boolean;
-  }>({ name: "", tableNumber: null, confirmed: false });
+    name: string
+    tableNumber: number | null
+    confirmed: boolean
+  }>({ name: '', tableNumber: null, confirmed: false })
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isPending, startTransition] = useTransition();
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [isPending, startTransition] = useTransition()
 
-  const nameFilter = useSearchFilter<Rsvp>("name");
+  const nameFilter = useSearchFilter<Rsvp>('name')
 
   function startEditRsvp(r: Rsvp) {
-    setEditingRsvpId(r.id);
-    setRsvpEditValues({ name: r.name, phone: r.phone ?? "" });
-    setErrors({});
+    setEditingRsvpId(r.id)
+    setRsvpEditValues({ name: r.name, phone: r.phone ?? '' })
+    setErrors({})
   }
 
   function cancelEditRsvp() {
-    setEditingRsvpId(null);
-    setErrors({});
+    setEditingRsvpId(null)
+    setErrors({})
   }
 
   function saveRsvp(id: string) {
-    const name = rsvpEditValues.name.trim();
-    if (!name) return;
+    const name = rsvpEditValues.name.trim()
+    if (!name) return
     startTransition(async () => {
       try {
         await updateRsvp(id, {
           name,
           phone: rsvpEditValues.phone.trim() || null,
-        });
-        setEditingRsvpId(null);
+        })
+        setEditingRsvpId(null)
       } catch (e) {
-        setErrors((prev) => ({ ...prev, [id]: (e as Error).message }));
+        setErrors((prev) => ({ ...prev, [id]: (e as Error).message }))
       }
-    });
+    })
   }
 
   function startEditGuest(g: Guest) {
-    setEditingGuestId(g.id);
+    setEditingGuestId(g.id)
     setGuestEditValues({
       name: g.name,
       tableNumber: g.tableNumber,
       confirmed: g.confirmed,
-    });
-    setErrors({});
+    })
+    setErrors({})
   }
 
   function cancelEditGuest() {
-    setEditingGuestId(null);
-    setErrors({});
+    setEditingGuestId(null)
+    setErrors({})
   }
 
   function saveGuest(id: string) {
-    const name = guestEditValues.name.trim();
-    if (!name) return;
+    const name = guestEditValues.name.trim()
+    if (!name) return
     startTransition(async () => {
       try {
         await updateGuest(id, {
           name,
           tableNumber: guestEditValues.tableNumber,
           confirmed: guestEditValues.confirmed,
-        });
-        setEditingGuestId(null);
+        })
+        setEditingGuestId(null)
       } catch (e) {
-        setErrors((prev) => ({ ...prev, [id]: (e as Error).message }));
+        setErrors((prev) => ({ ...prev, [id]: (e as Error).message }))
       }
-    });
+    })
   }
 
   const columns: TableColumnType<Rsvp>[] = [
     {
-      title: "Nombre",
-      dataIndex: "name",
-      key: "name",
+      title: 'Nombre',
+      dataIndex: 'name',
+      key: 'name',
       ...nameFilter,
       render: (_, r) =>
         editingRsvpId === r.id ? (
@@ -116,37 +116,37 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
             }
             size="small"
             variant="underlined"
-            className="text-deep-space-blue font-medium w-36"
+            className="w-36 font-medium text-deep-space-blue"
           />
         ) : (
-          <span className="text-deep-space-blue font-medium">{r.name}</span>
+          <span className="font-medium text-deep-space-blue">{r.name}</span>
         ),
     },
     {
-      title: "Asistencia",
-      dataIndex: "attending",
-      key: "attending",
+      title: 'Asistencia',
+      dataIndex: 'attending',
+      key: 'attending',
       filters: [
-        { text: "Asistirá", value: true },
-        { text: "No podrá", value: false },
+        { text: 'Asistirá', value: true },
+        { text: 'No podrá', value: false },
       ],
       onFilter: (value, record) => record.attending === value,
       render: (attending: boolean) => (
         <span
           className={`inline-block px-2 py-0.5 text-xs tracking-wider uppercase ${
             attending
-              ? "bg-muted-olive-800 text-muted-olive-200"
-              : "bg-brick-red-900 text-brick-red-600"
+              ? 'bg-muted-olive-800 text-muted-olive-200'
+              : 'bg-brick-red-900 text-brick-red-600'
           }`}
         >
-          {attending ? "Asistirá" : "No podrá"}
+          {attending ? 'Asistirá' : 'No podrá'}
         </span>
       ),
     },
     {
-      title: "Teléfono",
-      dataIndex: "phone",
-      key: "phone",
+      title: 'Teléfono',
+      dataIndex: 'phone',
+      key: 'phone',
       render: (_, r) =>
         editingRsvpId === r.id ? (
           <Input
@@ -156,64 +156,64 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
             }
             size="small"
             variant="underlined"
-            className="text-deep-space-blue-400 w-28"
+            className="w-28 text-deep-space-blue-400"
           />
         ) : (
-          <span className="text-deep-space-blue-400">{r.phone || "—"}</span>
+          <span className="text-deep-space-blue-400">{r.phone || '—'}</span>
         ),
     },
     {
-      title: "Confirmados",
-      key: "confirmed",
+      title: 'Confirmados',
+      key: 'confirmed',
       filters: [
-        { text: "Todos confirmados", value: "all" },
-        { text: "Algunos confirmados", value: "some" },
-        { text: "Ninguno confirmado", value: "none" },
+        { text: 'Todos confirmados', value: 'all' },
+        { text: 'Algunos confirmados', value: 'some' },
+        { text: 'Ninguno confirmado', value: 'none' },
       ],
       onFilter: (value, r) => {
-        if (!r.attending || r.guests.length === 0) return value === "none";
-        const count = r.guests.filter((g) => g.confirmed).length;
-        if (value === "all") return count === r.guests.length;
-        if (value === "some") return count > 0 && count < r.guests.length;
-        return count === 0;
+        if (!r.attending || r.guests.length === 0) return value === 'none'
+        const count = r.guests.filter((g) => g.confirmed).length
+        if (value === 'all') return count === r.guests.length
+        if (value === 'some') return count > 0 && count < r.guests.length
+        return count === 0
       },
       render: (_: unknown, r: Rsvp) => {
         if (!r.attending || r.guests.length === 0)
-          return <span className="text-deep-space-blue-400">—</span>;
-        const count = r.guests.filter((g) => g.confirmed).length;
+          return <span className="text-deep-space-blue-400">—</span>
+        const count = r.guests.filter((g) => g.confirmed).length
         return (
           <span className="text-deep-space-blue-400">
             {count}/{r.guests.length}
           </span>
-        );
+        )
       },
     },
     {
-      title: "Mensaje",
-      dataIndex: "message",
-      key: "message",
+      title: 'Mensaje',
+      dataIndex: 'message',
+      key: 'message',
       render: (message: string | null) => (
-        <span className="text-deep-space-blue-400 max-w-xs truncate block">
-          {message || "—"}
+        <span className="block max-w-xs truncate text-deep-space-blue-400">
+          {message || '—'}
         </span>
       ),
     },
     {
-      title: "Fecha",
-      dataIndex: "submittedAt",
-      key: "submittedAt",
+      title: 'Fecha',
+      dataIndex: 'submittedAt',
+      key: 'submittedAt',
       render: (date: Date) => (
-        <span className="text-deep-space-blue-400 whitespace-nowrap">
-          {new Date(date).toLocaleDateString("es-MX", {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
+        <span className="whitespace-nowrap text-deep-space-blue-400">
+          {new Date(date).toLocaleDateString('es-MX', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
           })}
         </span>
       ),
     },
     {
-      key: "actions",
+      key: 'actions',
       render: (_, r) =>
         editingRsvpId === r.id ? (
           <div className="flex gap-1">
@@ -240,26 +240,26 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
           />
         ),
     },
-  ];
+  ]
 
   if (rsvps.length === 0) {
     return (
-      <p className="font-sans font-light text-deep-space-blue-400 py-8 text-center">
+      <p className="py-8 text-center font-mono font-light text-deep-space-blue-400">
         Aún no hay respuestas.
       </p>
-    );
+    )
   }
 
-  const needle = globalSearch.toLowerCase();
+  const needle = globalSearch.toLowerCase()
   const filtered = needle
     ? rsvps.filter(
         (r) =>
           r.name.toLowerCase().includes(needle) ||
-          (r.phone ?? "").toLowerCase().includes(needle) ||
-          (r.message ?? "").toLowerCase().includes(needle) ||
+          (r.phone ?? '').toLowerCase().includes(needle) ||
+          (r.message ?? '').toLowerCase().includes(needle) ||
           r.guests.some((g) => g.name.toLowerCase().includes(needle)),
       )
-    : rsvps;
+    : rsvps
 
   return (
     <div className="flex flex-col gap-3">
@@ -285,13 +285,13 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-muted-olive-900">
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-2 pr-4 font-normal">
+                    <th className="pr-4 pb-2 text-left text-xs font-normal tracking-widest text-muted-olive-300 uppercase">
                       Nombre
                     </th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-2 pr-4 font-normal">
+                    <th className="pr-4 pb-2 text-left text-xs font-normal tracking-widest text-muted-olive-300 uppercase">
                       Mesa
                     </th>
-                    <th className="text-left text-xs tracking-widest uppercase text-muted-olive-300 pb-2 pr-4 font-normal">
+                    <th className="pr-4 pb-2 text-left text-xs font-normal tracking-widest text-muted-olive-300 uppercase">
                       Confirmado
                     </th>
                     <th className="pb-2" />
@@ -299,8 +299,8 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
                 </thead>
                 <tbody>
                   {r.guests.map((g) => {
-                    const isEditing = editingGuestId === g.id;
-                    const err = errors[g.id];
+                    const isEditing = editingGuestId === g.id
+                    const err = errors[g.id]
                     return (
                       <>
                         <tr key={g.id}>
@@ -316,7 +316,7 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
                                 }
                                 size="small"
                                 variant="underlined"
-                                className="text-deep-space-blue w-32"
+                                className="w-32 text-deep-space-blue"
                               />
                             ) : (
                               <span className="text-deep-space-blue">
@@ -345,7 +345,7 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
                               />
                             ) : (
                               <span className="text-deep-space-blue-400">
-                                {g.tableNumber ?? "—"}
+                                {g.tableNumber ?? '—'}
                               </span>
                             )}
                           </td>
@@ -362,7 +362,7 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
                               />
                             ) : (
                               <span className="text-deep-space-blue-400">
-                                {g.confirmed ? "✓" : "—"}
+                                {g.confirmed ? '✓' : '—'}
                               </span>
                             )}
                           </td>
@@ -397,19 +397,19 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
                           <tr key={`${g.id}-err`}>
                             <td
                               colSpan={4}
-                              className="pb-2 font-sans text-xs text-brick-red"
+                              className="pb-2 font-mono text-xs text-brick-red"
                             >
                               {err}
                             </td>
                           </tr>
                         )}
                       </>
-                    );
+                    )
                   })}
                 </tbody>
               </table>
               {errors[r.id] && (
-                <p className="mt-1 font-sans text-xs text-brick-red">
+                <p className="mt-1 font-mono text-xs text-brick-red">
                   {errors[r.id]}
                 </p>
               )}
@@ -418,5 +418,5 @@ export function RsvpsTable({ rsvps }: { rsvps: Rsvp[] }) {
         }}
       />
     </div>
-  );
+  )
 }

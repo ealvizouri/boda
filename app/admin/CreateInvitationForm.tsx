@@ -1,23 +1,26 @@
-"use client";
+'use client'
 
-import { useTransition } from "react";
-import { useRouter } from "next/navigation";
-import { Form, Input, Select, Button } from "antd";
-import { createInvitation } from "@/app/actions";
+import { createInvitation } from '@/app/actions'
+import { Button, Form, Input, Select } from 'antd'
+import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
 
-const SEAT_OPTIONS = [1, 2, 3, 4, 5, 6, 8, 10];
+const SEAT_OPTIONS = [1, 2, 3, 4, 5, 6, 8, 10]
 
 export function CreateInvitationForm() {
-  const [form] = Form.useForm<{ recipient: string; maxGuests: number }>();
-  const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const [form] = Form.useForm<{ recipient: string; maxGuests: number }>()
+  const [isPending, startTransition] = useTransition()
+  const router = useRouter()
 
   function handleFinish(values: { recipient: string; maxGuests: number }) {
     startTransition(async () => {
-      const inv = await createInvitation(values.recipient.trim(), values.maxGuests);
-      form.resetFields();
-      router.push(`/admin?code=${inv.code}`);
-    });
+      const inv = await createInvitation(
+        values.recipient.trim(),
+        values.maxGuests,
+      )
+      form.resetFields()
+      router.push(`/admin?code=${inv.code}`)
+    })
   }
 
   return (
@@ -26,40 +29,40 @@ export function CreateInvitationForm() {
       onFinish={handleFinish}
       initialValues={{ maxGuests: 2 }}
       layout="vertical"
-      className="flex flex-wrap items-end gap-3 mb-6 pb-6 border-b border-muted-olive-800"
+      className="mb-6 flex flex-wrap items-end gap-3 border-b border-muted-olive-800 pb-6"
     >
       <Form.Item
         name="recipient"
         label={
-          <span className="font-sans text-xs tracking-widest uppercase text-muted-olive-300">
+          <span className="font-mono text-xs tracking-widest text-muted-olive-300 uppercase">
             Destinatario
           </span>
         }
-        rules={[{ required: true, message: "" }]}
+        rules={[{ required: true, message: '' }]}
         colon={false}
-        className="flex-1 min-w-40 mb-0"
+        className="mb-0 min-w-40 flex-1"
       >
         <Input
           placeholder="Familia García"
           variant="underlined"
-          className="font-sans text-sm text-deep-space-blue"
+          className="font-mono text-sm text-deep-space-blue"
         />
       </Form.Item>
 
       <Form.Item
         name="maxGuests"
         label={
-          <span className="font-sans text-xs tracking-widest uppercase text-muted-olive-300">
+          <span className="font-mono text-xs tracking-widest text-muted-olive-300 uppercase">
             Lugares
           </span>
         }
         rules={[{ required: true }]}
         colon={false}
-        className="w-28 mb-0"
+        className="mb-0 w-28"
       >
         <Select
           options={SEAT_OPTIONS.map((n) => ({ label: n, value: n }))}
-          className="w-full font-sans text-sm"
+          className="w-full font-mono text-sm"
         />
       </Form.Item>
 
@@ -67,11 +70,11 @@ export function CreateInvitationForm() {
         <Button
           htmlType="submit"
           loading={isPending}
-          className="btn-primary py-1.5! px-4! text-xs! h-auto!"
+          className="btn-primary h-auto! px-4! py-1.5! text-xs!"
         >
           Crear pase
         </Button>
       </Form.Item>
     </Form>
-  );
+  )
 }

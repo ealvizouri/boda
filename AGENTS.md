@@ -4,16 +4,16 @@ Wedding website for Mariano & Jackie (September 12, 2026). Single-page public si
 
 ## Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript 5 |
-| Styling | Tailwind CSS v4 + custom design tokens |
-| Database ORM | Prisma 6 (PostgreSQL) |
-| Auth | NextAuth v5 (`next-auth@5.0.0-beta.31`) — credentials only |
-| UI components | Ant Design 6, Lucide React icons |
-| Forms | react-hook-form |
-| Hosting | Vercel (inferred from Prisma Neon adapter + build script) |
+| Layer         | Technology                                                 |
+| ------------- | ---------------------------------------------------------- |
+| Framework     | Next.js 16 (App Router)                                    |
+| Language      | TypeScript 5                                               |
+| Styling       | Tailwind CSS v4 + custom design tokens                     |
+| Database ORM  | Prisma 6 (PostgreSQL)                                      |
+| Auth          | NextAuth v5 (`next-auth@5.0.0-beta.31`) — credentials only |
+| UI components | Ant Design 6, Lucide React icons                           |
+| Forms         | react-hook-form                                            |
+| Hosting       | Vercel (inferred from Prisma Neon adapter + build script)  |
 
 ## Project structure
 
@@ -81,12 +81,12 @@ Invitation codes are generated as 5 random uppercase letters in `app/actions.ts:
 
 Copy `.env.local.example` to `.env.local` and fill in:
 
-| Variable | Purpose |
-|---|---|
-| `DATABASE_URL` | PostgreSQL connection string (Neon/Vercel Postgres) |
-| `AUTH_SECRET` | NextAuth secret — generate with `openssl rand -base64 32` |
-| `ADMIN_USERNAME` | Username for the admin panel |
-| `ADMIN_PASSWORD` | Password for the admin panel |
+| Variable         | Purpose                                                   |
+| ---------------- | --------------------------------------------------------- |
+| `DATABASE_URL`   | PostgreSQL connection string (Neon/Vercel Postgres)       |
+| `AUTH_SECRET`    | NextAuth secret — generate with `openssl rand -base64 32` |
+| `ADMIN_USERNAME` | Username for the admin panel                              |
+| `ADMIN_PASSWORD` | Password for the admin panel                              |
 
 ## Common commands
 
@@ -122,14 +122,14 @@ Section-specific images live under `public/assets/home/{ComponentName}/` (e.g. `
 
 You can use the following tailwind css classes:
 
-font-display      ->    cormorant
-font-sc:          ->    cormorant-sc
-font-editorial    ->    newsreader
-font-quattro      ->    quattrocento
-font-mono         ->    roboto-mono
-font-courier      ->    courier-new
-font-script       ->    antariskalia
-font-engravers    ->    engravers-gothic
+font-cormorant -> cormorant-sc
+font-rale -> raleway
+font-news -> newsreader
+font-quattro -> quattrocento
+font-mono -> roboto-mono
+font-courier -> courier
+font-antarisk -> antariskalia
+font-engravers -> engravers-gothic
 
 # Icons
 

@@ -1,105 +1,110 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { Table, Input } from "antd";
-import type { TableColumnType } from "antd";
-import { Search } from "lucide-react";
+import type { TableColumnType } from 'antd'
+import { Input, Table } from 'antd'
+import { Search } from 'lucide-react'
+import { useState } from 'react'
 
 type GuestWithRsvp = {
-  id: string;
-  name: string;
-  tableNumber: number | null;
+  id: string
+  name: string
+  tableNumber: number | null
   rsvp: {
-    id: string;
-    name: string;
-    phone: string | null;
-  };
-};
+    id: string
+    name: string
+    phone: string | null
+  }
+}
 
 type TableGroup = {
-  tableNumber: number;
-  guests: GuestWithRsvp[];
+  tableNumber: number
+  guests: GuestWithRsvp[]
   rsvps: Array<{
-    id: string;
-    name: string;
-    phone: string | null;
-    guests: GuestWithRsvp[];
-  }>;
-};
+    id: string
+    name: string
+    phone: string | null
+    guests: GuestWithRsvp[]
+  }>
+}
 
 function groupByTable(guests: GuestWithRsvp[]): TableGroup[] {
-  const map = new Map<number, GuestWithRsvp[]>();
+  const map = new Map<number, GuestWithRsvp[]>()
   for (const g of guests) {
-    if (g.tableNumber === null) continue;
-    const list = map.get(g.tableNumber) ?? [];
-    list.push(g);
-    map.set(g.tableNumber, list);
+    if (g.tableNumber === null) continue
+    const list = map.get(g.tableNumber) ?? []
+    list.push(g)
+    map.set(g.tableNumber, list)
   }
   return Array.from(map.entries())
     .sort(([a], [b]) => a - b)
     .map(([tableNumber, gs]) => {
       const rsvpMap = new Map<
         string,
-        { id: string; name: string; phone: string | null; guests: GuestWithRsvp[] }
-      >();
+        {
+          id: string
+          name: string
+          phone: string | null
+          guests: GuestWithRsvp[]
+        }
+      >()
       for (const g of gs) {
         const entry = rsvpMap.get(g.rsvp.id) ?? {
           ...g.rsvp,
           guests: [],
-        };
-        entry.guests.push(g);
-        rsvpMap.set(g.rsvp.id, entry);
+        }
+        entry.guests.push(g)
+        rsvpMap.set(g.rsvp.id, entry)
       }
       return {
         tableNumber,
         guests: gs,
         rsvps: Array.from(rsvpMap.values()),
-      };
-    });
+      }
+    })
 }
 
 export function ConfirmedTableArrange({
   confirmedGuests,
 }: {
-  confirmedGuests: GuestWithRsvp[];
+  confirmedGuests: GuestWithRsvp[]
 }) {
-  const [globalSearch, setGlobalSearch] = useState("");
+  const [globalSearch, setGlobalSearch] = useState('')
 
-  const groups = groupByTable(confirmedGuests);
+  const groups = groupByTable(confirmedGuests)
 
-  const needle = globalSearch.toLowerCase();
+  const needle = globalSearch.toLowerCase()
   const filtered = needle
     ? groups.filter(
         (t) =>
           String(t.tableNumber).includes(needle) ||
           t.guests.some((g) => g.name.toLowerCase().includes(needle)),
       )
-    : groups;
+    : groups
 
   const columns: TableColumnType<TableGroup>[] = [
     {
-      title: "Mesa",
-      dataIndex: "tableNumber",
-      key: "tableNumber",
+      title: 'Mesa',
+      dataIndex: 'tableNumber',
+      key: 'tableNumber',
       render: (n: number) => (
         <span className="font-mono font-bold text-brick-red">#{n}</span>
       ),
     },
     {
-      title: "Invitados confirmados",
-      key: "count",
+      title: 'Invitados confirmados',
+      key: 'count',
       render: (_: unknown, t: TableGroup) => (
         <span className="text-deep-space-blue-400">{t.guests.length}</span>
       ),
     },
-  ];
+  ]
 
   if (confirmedGuests.length === 0) {
     return (
-      <p className="font-sans font-light text-deep-space-blue-400 py-8 text-center">
+      <p className="py-8 text-center font-mono font-light text-deep-space-blue-400">
         Aún no hay invitados confirmados con mesa asignada.
       </p>
-    );
+    )
   }
 
   return (
@@ -121,11 +126,11 @@ export function ConfirmedTableArrange({
         size="small"
         expandable={{
           expandedRowRender: (t) => (
-            <div className="px-4 py-3 flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 px-4 py-3">
               {t.guests.map((g) => (
                 <span
                   key={g.id}
-                  className="font-sans text-xs text-deep-space-blue bg-papaya-whip-800 px-2 py-1"
+                  className="bg-papaya-whip-800 px-2 py-1 font-mono text-xs text-deep-space-blue"
                 >
                   {g.name}
                 </span>
@@ -135,5 +140,5 @@ export function ConfirmedTableArrange({
         }}
       />
     </div>
-  );
+  )
 }

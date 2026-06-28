@@ -74,14 +74,13 @@
   --color-muted-olive-900: #eff2e4;
 
   /* fonts — next/font injects these CSS vars onto <body> */
-  --font-display: var(--font-cormorant), Georgia, serif;
-  --font-sans: var(--font-raleway), system-ui, sans-serif;
+  --font-rale: var(--font-raleway), Georgia, serif;
   --font-cormorant: var(--font-cormorant-sc), Georgia, serif;
-  --font-editorial: var(--font-newsreader), Georgia, serif;
+  --font-news: var(--font-newsreader), Georgia, serif;
   --font-quattro: var(--font-quattrocento), Georgia, serif;
   --font-courier: var(--font-cour), monospace;
   --font-mono: var(--font-roboto-mono), ui-monospace, monospace;
-  --font-script: var(--font-antariskalia), cursive;
+  --font-antarisk: var(--font-antariskalia), cursive;
   --font-engravers: var(--font-engravers-gothic), serif;
 }
 
@@ -97,7 +96,7 @@
 
 @layer components {
   .section-heading {
-    @apply font-display text-4xl font-light tracking-widest text-deep-space-blue uppercase md:text-5xl;
+    @apply font-cormorant text-4xl font-light tracking-widest text-deep-space-blue uppercase md:text-5xl;
   }
 
   .ornament {

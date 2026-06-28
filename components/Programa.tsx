@@ -98,10 +98,10 @@ export default function Programa() {
                       />
                     ) : (
                       <div className="text-right">
-                        <p className="font-sans text-sm leading-tight font-semibold text-deep-space-blue">
+                        <p className="font-mono text-sm leading-tight font-semibold text-deep-space-blue">
                           {time}
                         </p>
-                        <p className="mt-0.5 font-sans text-xs font-light text-deep-space-blue-400">
+                        <p className="mt-0.5 font-mono text-xs font-light text-deep-space-blue-400">
                           {label}
                         </p>
                       </div>
@@ -115,20 +115,20 @@ export default function Programa() {
                 {/* Text — right side on mobile, alternates on desktop */}
                 <div className="flex-1 pl-6">
                   <div className="md:hidden">
-                    <p className="font-sans text-sm leading-tight font-semibold text-deep-space-blue">
+                    <p className="font-mono text-sm leading-tight font-semibold text-deep-space-blue">
                       {time}
                     </p>
-                    <p className="mt-0.5 font-sans text-xs font-light text-deep-space-blue-400">
+                    <p className="mt-0.5 font-mono text-xs font-light text-deep-space-blue-400">
                       {label}
                     </p>
                   </div>
                   <div className="hidden items-center md:flex">
                     {i % 2 === 0 ? (
                       <div>
-                        <p className="font-sans text-sm leading-tight font-semibold text-deep-space-blue">
+                        <p className="font-mono text-sm leading-tight font-semibold text-deep-space-blue">
                           {time}
                         </p>
-                        <p className="mt-0.5 font-sans text-xs font-light text-deep-space-blue-400">
+                        <p className="mt-0.5 font-mono text-xs font-light text-deep-space-blue-400">
                           {label}
                         </p>
                       </div>

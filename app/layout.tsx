@@ -1,8 +1,15 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import { Cormorant_Garamond, Raleway, Cormorant_SC, Newsreader, Quattrocento, Roboto_Mono } from 'next/font/google'
-import localFont from 'next/font/local'
 import { WED_DATE_FULL, WED_DATE_NORMAL } from '@/lib/constants'
+import type { Metadata } from 'next'
+import {
+  Cormorant_Garamond,
+  Cormorant_SC,
+  Newsreader,
+  Quattrocento,
+  Raleway,
+  Roboto_Mono,
+} from 'next/font/google'
+import localFont from 'next/font/local'
+import './globals.css'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -70,22 +77,27 @@ export const metadata: Metadata = {
   description: `'Te invitamos a celebrar nuestra boda el ${WED_DATE_FULL}.'`,
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="es" className={[
-          cormorant.variable,
-          raleway.variable,
-          cormorantSC.variable,
-          newsreader.variable,
-          quattrocento.variable,
-          robotoMono.variable,
-          signature.variable,
-          courier.variable,
-          engravers.variable,
-        ].join(' ')}>
-      <body>
-        {children}
-      </body>
+    <html
+      lang="es"
+      className={[
+        cormorant.variable,
+        raleway.variable,
+        cormorantSC.variable,
+        newsreader.variable,
+        quattrocento.variable,
+        robotoMono.variable,
+        signature.variable,
+        courier.variable,
+        engravers.variable,
+      ].join(' ')}
+    >
+      <body>{children}</body>
     </html>
   )
 }

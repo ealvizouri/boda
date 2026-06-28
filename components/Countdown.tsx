@@ -1,11 +1,15 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 const WEDDING_DATE = new Date('2026-10-17T17:00:00')
 
-interface Countdown { days: number; hours: number; minutes: number }
+interface Countdown {
+  days: number
+  hours: number
+  minutes: number
+}
 
 function getCountdown(): Countdown {
   const diff = WEDDING_DATE.getTime() - Date.now()
@@ -33,33 +37,50 @@ export default function Countdown() {
   ]
 
   return (
-    <section id="countdown" className="relative min-h-screen flex items-center justify-center py-20 px-4">
-      <Image src="/assets/home/shared/background_red.png" alt="" fill className="object-cover" />
+    <section
+      id="countdown"
+      className="relative flex min-h-screen items-center justify-center px-4 py-20"
+    >
+      <Image
+        src="/assets/home/shared/background_red.png"
+        alt=""
+        fill
+        className="object-cover"
+      />
 
       {/* Paper card */}
-      <div className="relative z-10 w-full max-w-[320px] md:max-w-2xl mx-auto bg-[#fdf8f2] shadow-2xl pb-10">
+      <div className="relative z-10 mx-auto w-full max-w-[320px] bg-[#fdf8f2] pb-10 shadow-2xl md:max-w-2xl">
         {/* Wax seal overlapping top edge */}
-        <div className="flex justify-center -mt-9 mb-6 relative z-10">
-          <Image src="/assets/home/shared/sello_verde.png" alt="" width={72} height={72} className="drop-shadow-md" />
+        <div className="relative z-10 -mt-9 mb-6 flex justify-center">
+          <Image
+            src="/assets/home/shared/sello_verde.png"
+            alt=""
+            width={72}
+            height={72}
+            className="drop-shadow-md"
+          />
         </div>
 
         <div className="px-8 md:px-14">
-          <p className="font-engravers text-center tracking-[0.55em] text-[10px] text-deep-space-blue-400 uppercase mb-5">
+          <p className="mb-5 text-center font-cormorant text-[10px] tracking-[0.55em] text-[#790c30] uppercase">
             Faltan
           </p>
 
           {/* Countdown row */}
-          <div className="flex items-start justify-center mb-8">
+          <div className="mb-8 flex items-start justify-center">
             {units.map(({ value, label }, i) => (
-              <div key={label} className="flex items-start">
+              <div key={label} className="flex items-start text-[#790c30]">
                 {i > 0 && (
-                  <div className="w-px bg-deep-space-blue/20 mx-4 md:mx-6" style={{ height: '52px', marginTop: '4px' }} />
+                  <div
+                    className="mx-4 w-px bg-[#790c30] md:mx-6"
+                    style={{ height: '52px', marginTop: '4px' }}
+                  />
                 )}
-                <div className="flex flex-col items-center min-w-[58px] md:min-w-[72px]">
-                  <span className="font-display text-5xl md:text-6xl font-light text-deep-space-blue leading-none">
+                <div className="flex min-w-14.5 flex-col items-center md:min-w-18">
+                  <span className="font-cormorant text-5xl leading-none font-light md:text-6xl">
                     {value}
                   </span>
-                  <span className="font-sans text-[10px] tracking-widest uppercase text-deep-space-blue-400 mt-1">
+                  <span className="mt-1 font-mono text-[10px] tracking-widest uppercase">
                     {label}
                   </span>
                 </div>
@@ -68,8 +89,8 @@ export default function Countdown() {
           </div>
 
           {/* Photo + text — stack on mobile, side-by-side on desktop */}
-          <div className="md:flex md:gap-8 md:items-start">
-            <div className="relative w-full md:w-1/2 aspect-[4/3] mb-7 md:mb-0 overflow-hidden flex-shrink-0">
+          <div className="md:flex md:items-start md:gap-8">
+            <div className="relative mb-7 aspect-4/3 w-full shrink-0 overflow-hidden md:mb-0 md:w-1/2">
               <Image
                 src="/assets/home/Countdown/foto_reloj_anillo.jpg"
                 alt="Reloj y anillo"
@@ -78,13 +99,14 @@ export default function Countdown() {
               />
             </div>
 
-            <div className="md:w-1/2 flex flex-col justify-center">
-              <p className="font-display italic text-center md:text-left text-deep-space-blue text-xl md:text-2xl leading-snug mb-5">
+            <div className="flex flex-col justify-center md:w-1/2">
+              <p className="mb-5 text-center font-cormorant text-xl leading-snug text-[#790c30] italic md:text-left md:text-2xl">
                 ¡Preparen sus mejores pasos de baile para nuestro gran día!
               </p>
-              <div className="w-16 h-px bg-brick-red mx-auto md:mx-0 mb-5" />
-              <p className="font-sans font-light text-center md:text-left text-deep-space-blue-400 text-sm leading-relaxed">
-                Con inmensa alegría, queremos invitarlos a celebrar el inicio de nuestro capítulo más bonito.
+              <div className="mx-auto mb-5 h-px w-full bg-[#670626] md:mx-0" />
+              <p className="text-center font-mono text-sm leading-relaxed font-light text-[#790c30] md:text-left">
+                Con inmensa alegría, queremos invitarlos a celebrar el inicio de
+                nuestro capítulo más bonito.
               </p>
             </div>
           </div>

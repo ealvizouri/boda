@@ -1,102 +1,102 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
-import { auth, signOut } from "@/auth";
-import { redirect } from "next/navigation";
-import { prisma } from "@/lib/prisma";
-import { InvitationsTable } from "./InvitationsTable";
-import { RsvpsTable } from "./RsvpsTable";
-import { ConfirmedTableArrange } from "./ConfirmedTableArrange";
-import { CreateInvitationForm } from "./CreateInvitationForm";
-import { Button } from "antd";
+import { auth, signOut } from '@/auth'
+import { prisma } from '@/lib/prisma'
+import { Button } from 'antd'
+import { redirect } from 'next/navigation'
+import { ConfirmedTableArrange } from './ConfirmedTableArrange'
+import { CreateInvitationForm } from './CreateInvitationForm'
+import { InvitationsTable } from './InvitationsTable'
+import { RsvpsTable } from './RsvpsTable'
 
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ code?: string }>;
+  searchParams: Promise<{ code?: string }>
 }) {
-  const session = await auth();
-  if (!session) redirect("/admin/login");
+  const session = await auth()
+  if (!session) redirect('/admin/login')
 
-  const { code: newCode } = await searchParams;
+  const { code: newCode } = await searchParams
 
   const [rsvps, invitations, confirmedGuests] = await Promise.all([
     prisma.rsvp.findMany({
-      orderBy: { submittedAt: "desc" },
+      orderBy: { submittedAt: 'desc' },
       include: { guests: true, invitation: true },
     }),
     prisma.invitation.findMany({
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
       include: { _count: { select: { rsvps: true } } },
     }),
     prisma.guest.findMany({
       where: { confirmed: true, tableNumber: { not: null } },
       include: { rsvp: { select: { id: true, name: true, phone: true } } },
-      orderBy: [{ tableNumber: "asc" }, { name: "asc" }],
+      orderBy: [{ tableNumber: 'asc' }, { name: 'asc' }],
     }),
-  ]);
+  ])
 
-  const attending = rsvps.filter((r) => r.attending);
-  const notAttending = rsvps.filter((r) => !r.attending);
-  const totalGuests = attending.reduce((acc, r) => acc + r.guests.length, 0);
+  const attending = rsvps.filter((r) => r.attending)
+  const notAttending = rsvps.filter((r) => !r.attending)
+  const totalGuests = attending.reduce((acc, r) => acc + r.guests.length, 0)
 
   return (
     <div className="min-h-screen bg-papaya-whip-900">
       {/* Header */}
-      <header className="bg-deep-space-blue px-6 py-4 flex items-center justify-between">
+      <header className="flex items-center justify-between bg-deep-space-blue px-6 py-4">
         <div>
           <a
             href="/"
-            className="font-display text-xl text-papaya-whip tracking-wide"
+            className="font-cormorant text-xl tracking-wide text-papaya-whip"
           >
             M <span className="text-brick-red italic">&amp;</span> J
           </a>
-          <span className="ml-3 font-sans text-xs tracking-[0.3em] uppercase text-steel-blue-300">
+          <span className="ml-3 font-mono text-xs tracking-[0.3em] text-steel-blue-300 uppercase">
             Admin
           </span>
         </div>
         <form
           action={async () => {
-            "use server";
-            await signOut({ redirectTo: "/admin/login" });
+            'use server'
+            await signOut({ redirectTo: '/admin/login' })
           }}
         >
           <Button
             htmlType="submit"
             type="text"
-            className="font-sans text-xs tracking-widest uppercase text-white! hover:text-brick-red! transition-colors p-0! h-auto!"
+            className="h-auto! p-0! font-mono text-xs tracking-widest text-white! uppercase transition-colors hover:text-brick-red!"
           >
             Salir
           </Button>
         </form>
       </header>
 
-      <main className="max-w-5xl mx-auto px-6 py-12">
+      <main className="mx-auto max-w-5xl px-6 py-12">
         {/* New code banner */}
         {newCode && (
-          <div className="mb-8 card border-l-4 border-muted-olive bg-muted-olive-900">
-            <p className="font-sans text-sm text-deep-space-blue">
-              Código creado:{" "}
+          <div className="card mb-8 border-l-4 border-muted-olive bg-muted-olive-900">
+            <p className="font-mono text-sm text-deep-space-blue">
+              Código creado:{' '}
               <strong className="font-mono text-lg tracking-widest text-brick-red">
                 {newCode}
-              </strong>{" "}
+              </strong>{' '}
               — compártelo con tus invitados.
             </p>
           </div>
         )}
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        <div className="mb-12 grid grid-cols-2 gap-4 md:grid-cols-4">
           {[
-            { label: "Total RSVPs", value: rsvps.length },
-            { label: "Asistirán", value: attending.length },
-            { label: "No asistirán", value: notAttending.length },
-            { label: "Total invitados", value: totalGuests },
+            { label: 'Total RSVPs', value: rsvps.length },
+            { label: 'Asistirán', value: attending.length },
+            { label: 'No asistirán', value: notAttending.length },
+            { label: 'Total invitados', value: totalGuests },
           ].map(({ label, value }) => (
-            <div key={label} className="card text-center py-6">
-              <p className="font-display text-4xl font-light text-brick-red">
+            <div key={label} className="card py-6 text-center">
+              <p className="font-cormorant text-4xl font-light text-brick-red">
                 {value}
               </p>
-              <p className="mt-1 font-sans text-xs tracking-widest uppercase text-muted-olive-300">
+              <p className="mt-1 font-mono text-xs tracking-widest text-muted-olive-300 uppercase">
                 {label}
               </p>
             </div>
@@ -105,7 +105,7 @@ export default async function AdminPage({
 
         {/* Invitations */}
         <div className="card mb-8">
-          <h2 className="font-display text-2xl font-light text-deep-space-blue mb-6">
+          <h2 className="mb-6 font-cormorant text-2xl font-light text-deep-space-blue">
             Pases de Invitación
           </h2>
 
@@ -116,7 +116,7 @@ export default async function AdminPage({
 
         {/* Full RSVP table */}
         <div className="card mb-8">
-          <h2 className="font-display text-2xl font-light text-deep-space-blue mb-6">
+          <h2 className="mb-6 font-cormorant text-2xl font-light text-deep-space-blue">
             Todas las respuestas
           </h2>
           <RsvpsTable rsvps={rsvps} />
@@ -124,12 +124,12 @@ export default async function AdminPage({
 
         {/* Table arrangement */}
         <div className="card">
-          <h2 className="font-display text-2xl font-light text-deep-space-blue mb-6">
+          <h2 className="mb-6 font-cormorant text-2xl font-light text-deep-space-blue">
             Distribución de mesas
           </h2>
           <ConfirmedTableArrange confirmedGuests={confirmedGuests} />
         </div>
       </main>
     </div>
-  );
+  )
 }

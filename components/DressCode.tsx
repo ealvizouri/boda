@@ -19,28 +19,28 @@ export default function DressCode() {
           DRESS CODE
         </h2>
 
-        <p className="mb-5 font-display text-2xl text-deep-space-blue italic">
+        <p className="mb-5 font-cormorant text-2xl text-deep-space-blue italic">
           Formal elegante
         </p>
 
-        <p className="mx-auto mb-6 max-w-xs font-sans text-sm leading-relaxed font-light text-deep-space-blue-400">
+        <p className="mx-auto mb-6 max-w-xs font-mono text-sm leading-relaxed font-light text-deep-space-blue-400">
           Te pedimos vestir en tonos oscuros y tierra, vino, verde, azul o negro
         </p>
 
         <div className="mb-12 flex flex-col gap-2">
           <div>
-            <p className="font-display text-base font-semibold text-deep-space-blue">
+            <p className="font-cormorant text-base font-semibold text-deep-space-blue">
               Mujeres
             </p>
-            <p className="font-sans text-sm font-light text-deep-space-blue-400">
+            <p className="font-mono text-sm font-light text-deep-space-blue-400">
               Sin blancos, ni colores pastel.
             </p>
           </div>
           <div>
-            <p className="font-display text-base font-semibold text-deep-space-blue">
+            <p className="font-cormorant text-base font-semibold text-deep-space-blue">
               Hombres
             </p>
-            <p className="font-sans text-sm font-light text-deep-space-blue-400">
+            <p className="font-mono text-sm font-light text-deep-space-blue-400">
               Sin Azul marino
             </p>
           </div>

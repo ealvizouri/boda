@@ -26,7 +26,7 @@ export default function Hero() {
       {/* <div className="absolute inset-0 bg-black/30" /> */}
 
       <div className="relative z-10 flex flex-col items-center pt-60 text-center">
-        <h1 className="relative -left-4 mb-6 font-script text-[90px] leading-none text-[#faf1e1] md:text-[130px]">
+        <h1 className="relative -left-4 mb-6 font-antarisk text-[90px] leading-none text-[#faf1e1] md:text-[130px]">
           <div className="leading-[0.9]">
             Jackie
             <span className="relative top-8 -left-2.5">&amp;</span>
