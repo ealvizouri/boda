@@ -59,47 +59,55 @@ export default function Details() {
               />
             </div>
 
-            <p className="mb-6 text-center font-antarisk text-xl leading-tight text-deep-space-blue">
+            <p className="mb-6 text-center font-antarisk text-3xl leading-tight tracking-[0.2rem] text-[#4b4e40]/75">
               Porque el amor siempre
               <br />
               encuentra el camino...
             </p>
 
-            <div className="mx-auto mb-6 h-px w-14 bg-deep-space-blue/20" />
+            <div className="mx-auto mb-6 h-[0.5px] w-full bg-[#7d7e74]" />
 
-            <p className="mb-6 text-center font-mono text-sm leading-relaxed font-light text-deep-space-blue-400">
-              Con el corazón lleno de ilusión, deseamos compartir con ustedes el
-              inicio de nuestra nueva etapa el día:
-            </p>
+            <div className="font-quattro text-[#4b4e40]">
+              <p className="mb-6 text-center text-xs leading-3.5 font-extralight tracking-widest">
+                Con el corazón lleno de ilusión, deseamos compartir con ustedes
+                el inicio de nuestra nueva etapa el día:
+              </p>
 
-            <p className="mb-1 text-center font-engravers text-[10px] tracking-[0.3em] text-deep-space-blue uppercase">
-              Sábado
-            </p>
-            <p className="mb-6 text-center font-cormorant text-2xl font-light text-deep-space-blue">
-              17 &bull; Octubre &bull; 2026
-            </p>
+              <p className="mb-1 text-center text-[10px] font-bold tracking-[0.2rem] uppercase">
+                Sábado
+              </p>
+              <p className="mb-6 text-center text-2xl font-bold">
+                17&bull;Octubre&bull;2026
+              </p>
 
-            <p className="mb-1 text-center font-mono text-sm text-deep-space-blue-400">
-              Ceremonia simbólica a las:
-            </p>
-            <p className="mb-1 text-center font-cormorant text-4xl leading-none font-light text-deep-space-blue">
-              5:00 PM
-            </p>
-            <p className="mb-7 text-center font-mono text-sm text-deep-space-blue">
-              en el <strong>Salón Evangelina</strong>
-            </p>
+              <p className="mb-1 text-center text-xs font-light tracking-widest">
+                Ceremonia simbólica a las:
+              </p>
+              <p className="mb-4 text-center text-xl leading-none font-bold">
+                5:00 PM
+              </p>
+              <p className="mb-1 text-center text-xs font-light tracking-widest">
+                recepción:
+              </p>
+              <p className="mb-4 text-center text-xl leading-none font-bold">
+                6:10 PM
+              </p>
+              <p className="mb-7 text-center text-sm tracking-widest">
+                en el <strong>Salón Evangelina</strong>
+              </p>
 
-            <a
-              href="https://maps.google.com/?q=Negrito+Poeta+84,+Tenencia+Sta+Maria+de+Guido,+Morelia,+Michoacan"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-start justify-center gap-1.5 text-brick-red transition-colors hover:text-molten-lava"
-            >
-              <MapPin size={14} className="mt-0.5 shrink-0" />
-              <span className="text-center font-mono text-xs leading-relaxed underline">
-                Negrito Poeta 84, Tenencia Sta Maria de Guido, Morelia, Mich.
-              </span>
-            </a>
+              <a
+                href="https://maps.app.goo.gl/zX9az9QHZqYrYchZ6"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1.5 font-mono hover:font-bold"
+              >
+                <MapPin size={16} className="shrink-0" />
+                <span className="text-center font-mono text-xs leading-relaxed underline">
+                  Negrito Poeta 84, Tenencia Sta Maria de Guido, Morelia, Mich.
+                </span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
