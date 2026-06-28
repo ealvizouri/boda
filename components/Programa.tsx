@@ -45,7 +45,6 @@ export default function Programa() {
         fill
         className="object-cover object-top-left md:object-center"
       />
-      {/* <div className="absolute inset-0 bg-black/45" /> */}
 
       <div className="relative z-10 mx-auto w-full max-w-[320px] md:max-w-lg">
         <div className="mb-8 text-center">
@@ -105,7 +104,8 @@ export default function Programa() {
                 </div>
 
                 {/* Center dot */}
-                <div className="z-10 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7d7e74]" />
+                <div></div>
+                <div className="absolute left-1/2 z-10 h-2.5 w-2.5 shrink-0 -translate-x-1/2 rounded-full bg-[#7d7e74]" />
 
                 {/* Text — right side on mobile, alternates on desktop */}
                 <div className="flex-1 pl-6">
