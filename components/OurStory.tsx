@@ -8,7 +8,7 @@ export default function OurStory() {
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-20"
     >
       <Image
-        src="/assets/home/OurStory/background_crema.png"
+        src="/assets/home/shared/background_crema.png"
         alt=""
         fill
         className="object-cover"
