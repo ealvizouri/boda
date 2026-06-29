@@ -1,10 +1,10 @@
 import dayjs from 'dayjs'
+import 'dayjs/locale/es'
 import isLeapYear from 'dayjs/plugin/isLeapYear'
 import isoWeek from 'dayjs/plugin/isoWeek'
 import isoWeeksInYear from 'dayjs/plugin/isoWeeksInYear'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
-import 'dayjs/locale/es'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)

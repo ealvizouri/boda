@@ -3,12 +3,12 @@
 import cn from '@/lib/cn'
 import Image from 'next/image'
 import { useState } from 'react'
-import type { InvitationData, Step } from './types'
 import RsvpCode from './RsvpCode'
 import RsvpFormStep from './RsvpFormStep'
 import RsvpGate from './RsvpGate'
 import RsvpSuccess from './RsvpSuccess'
 import RsvpTitle from './RsvpTitle'
+import type { InvitationData, Step } from './types'
 
 const BG_GREEN = '/assets/home/shared/background_green.png'
 
@@ -45,7 +45,12 @@ export default function Rsvp() {
       )}
     >
       <Image src={BG_GREEN} alt="" fill className="object-cover" />
-      <div className={cn('absolute inset-0', darkOverlay ? 'bg-black/35' : 'bg-black/25')} />
+      <div
+        className={cn(
+          'absolute inset-0',
+          darkOverlay ? 'bg-black/35' : 'bg-black/25',
+        )}
+      />
 
       <div
         className={cn(

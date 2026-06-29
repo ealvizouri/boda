@@ -34,7 +34,9 @@ export default function RsvpGate({
       <p className="mb-3 font-mono text-xs leading-relaxed font-light text-white/55">
         Nos encantan los pequeños pero en esta ocasión hemos decidido que la
         celebración sea{' '}
-        <strong className="font-semibold text-white/75">solo para adultos</strong>
+        <strong className="font-semibold text-white/75">
+          solo para adultos
+        </strong>
       </p>
       <p className="font-mono text-xs leading-relaxed font-light text-white/45">
         Agradecemos tu comprensión y esperamos que este día sea una oportunidad

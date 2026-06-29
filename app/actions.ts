@@ -1,32 +1,32 @@
-"use server";
+'use server'
 
-import { revalidatePath } from "next/cache";
-import { prisma } from "@/lib/prisma";
+import { prisma } from '@/lib/prisma'
+import { revalidatePath } from 'next/cache'
 
 function generateCode(length = 5): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
   return Array.from(
     { length },
     () => chars[Math.floor(Math.random() * 26)],
-  ).join("");
+  ).join('')
 }
 
 export async function createInvitation(recipient: string, maxGuests: number) {
-  let code = generateCode();
+  let code = generateCode()
   for (let i = 0; i < 10; i++) {
     try {
       return await prisma.invitation.create({
         data: { code, recipient, maxGuests },
-      });
+      })
     } catch (err: unknown) {
-      if ((err as { code?: string })?.code === "P2002") {
-        code = generateCode();
+      if ((err as { code?: string })?.code === 'P2002') {
+        code = generateCode()
       } else {
-        throw err;
+        throw err
       }
     }
   }
-  throw new Error("No se pudo generar un código único");
+  throw new Error('No se pudo generar un código único')
 }
 
 export async function updateInvitation(
@@ -34,13 +34,13 @@ export async function updateInvitation(
   data: { code?: string; recipient?: string; maxGuests?: number },
 ) {
   try {
-    await prisma.invitation.update({ where: { id }, data });
-    revalidatePath("/admin");
+    await prisma.invitation.update({ where: { id }, data })
+    revalidatePath('/admin')
   } catch (err: unknown) {
-    if ((err as { code?: string })?.code === "P2002") {
-      throw new Error("Ese código ya está en uso");
+    if ((err as { code?: string })?.code === 'P2002') {
+      throw new Error('Ese código ya está en uso')
     }
-    throw err;
+    throw err
   }
 }
 
@@ -48,28 +48,28 @@ export async function updateRsvp(
   id: string,
   data: { name?: string; phone?: string | null },
 ) {
-  await prisma.rsvp.update({ where: { id }, data });
-  revalidatePath("/admin");
+  await prisma.rsvp.update({ where: { id }, data })
+  revalidatePath('/admin')
 }
 
 export async function updateGuest(
   id: string,
   data: { name?: string; tableNumber?: number | null; confirmed?: boolean },
 ) {
-  await prisma.guest.update({ where: { id }, data });
-  revalidatePath("/admin");
+  await prisma.guest.update({ where: { id }, data })
+  revalidatePath('/admin')
 }
 
 export async function deleteInvitation(id: string) {
   try {
-    await prisma.invitation.delete({ where: { id } });
-    revalidatePath("/admin");
+    await prisma.invitation.delete({ where: { id } })
+    revalidatePath('/admin')
   } catch (err: unknown) {
-    const e = err as { code?: string };
-    if (e?.code === "P2003" || e?.code === "P2014") {
-      throw new Error("No se puede eliminar: este pase tiene RSVPs registrados");
+    const e = err as { code?: string }
+    if (e?.code === 'P2003' || e?.code === 'P2014') {
+      throw new Error('No se puede eliminar: este pase tiene RSVPs registrados')
     }
-    throw err;
+    throw err
   }
 }
 
@@ -83,34 +83,34 @@ export async function lookupInvitation(code: string) {
         include: { guests: true },
       },
     },
-  });
+  })
 }
 
 export interface GuestPayload {
-  name: string;
+  name: string
 }
 
 export interface RsvpPayload {
-  invitationId?: string;
-  name: string;
-  phone?: string;
-  attending: boolean;
-  message: string;
-  guests: GuestPayload[];
+  invitationId?: string
+  name: string
+  phone?: string
+  attending: boolean
+  message: string
+  guests: GuestPayload[]
 }
 
 export async function submitRsvp(data: RsvpPayload) {
   if (data.invitationId) {
     const invitation = await prisma.invitation.findUnique({
       where: { id: data.invitationId },
-    });
-    if (!invitation) throw new Error("Código de invitación inválido");
+    })
+    if (!invitation) throw new Error('Código de invitación inválido')
     if (data.attending && data.guests.length > invitation.maxGuests) {
       throw new Error(
-        `Tu invitación permite máximo ${invitation.maxGuests} persona${invitation.maxGuests !== 1 ? "s" : ""}`,
-      );
+        `Tu invitación permite máximo ${invitation.maxGuests} persona${invitation.maxGuests !== 1 ? 's' : ''}`,
+      )
     }
-    await prisma.rsvp.deleteMany({ where: { invitationId: data.invitationId } });
+    await prisma.rsvp.deleteMany({ where: { invitationId: data.invitationId } })
   }
 
   await prisma.rsvp.create({
@@ -129,7 +129,6 @@ export async function submitRsvp(data: RsvpPayload) {
             }
           : undefined,
     },
-  });
-  revalidatePath("/");
+  })
+  revalidatePath('/')
 }
-

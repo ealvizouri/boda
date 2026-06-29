@@ -25,11 +25,7 @@ export default function Intro() {
               srcSet="/assets/home/Intro/intro_desktop.png"
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/assets/home/Intro/intro.png"
-              alt=""
-              className="w-full"
-            />
+            <img src="/assets/home/Intro/intro.png" alt="" className="w-full" />
           </picture>
         </div>
 

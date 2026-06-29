@@ -1,15 +1,15 @@
-"use client";
+'use client'
 
-import { useRef } from "react";
-import { Input, Button, Space } from "antd";
-import type { InputRef, TableColumnType } from "antd";
-import type { FilterDropdownProps } from "antd/es/table/interface";
-import { Search } from "lucide-react";
+import type { InputRef, TableColumnType } from 'antd'
+import { Button, Input, Space } from 'antd'
+import type { FilterDropdownProps } from 'antd/es/table/interface'
+import { Search } from 'lucide-react'
+import { useRef } from 'react'
 
 export function useSearchFilter<T>(
   dataIndex: keyof T,
-): Pick<TableColumnType<T>, "filterDropdown" | "filterIcon" | "onFilter"> {
-  const searchInput = useRef<InputRef>(null);
+): Pick<TableColumnType<T>, 'filterDropdown' | 'filterIcon' | 'onFilter'> {
+  const searchInput = useRef<InputRef>(null)
 
   return {
     filterDropdown: ({
@@ -18,7 +18,7 @@ export function useSearchFilter<T>(
       confirm,
       clearFilters,
     }: FilterDropdownProps) => (
-      <div className="p-2 flex flex-col gap-2">
+      <div className="flex flex-col gap-2 p-2">
         <Input
           ref={searchInput}
           placeholder="Buscar…"
@@ -36,8 +36,8 @@ export function useSearchFilter<T>(
           </Button>
           <Button
             onClick={() => {
-              clearFilters?.();
-              confirm();
+              clearFilters?.()
+              confirm()
             }}
             size="small"
           >
@@ -49,12 +49,12 @@ export function useSearchFilter<T>(
     filterIcon: (filtered: boolean) => (
       <Search
         size={13}
-        className={filtered ? "text-brick-red" : "text-muted-olive-400"}
+        className={filtered ? 'text-brick-red' : 'text-muted-olive-400'}
       />
     ),
     onFilter: (value, record) =>
       String(record[dataIndex])
         .toLowerCase()
         .includes(String(value).toLowerCase()),
-  };
+  }
 }
