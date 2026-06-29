@@ -8,6 +8,7 @@ import Countdown from '@/components/Countdown'
 import Details from '@/components/Details'
 import DressCode from '@/components/DressCode'
 import Hero from '@/components/Hero'
+import Intro from '@/components/Intro'
 import OurStory from '@/components/OurStory'
 import Programa from '@/components/Programa'
 import Rsvp from '@/components/Rsvp'
@@ -16,6 +17,7 @@ export default function Page() {
   return (
     <div>
       <Hero />
+      <Intro />
       <Countdown />
       <OurStory />
       <ChapterOne />
