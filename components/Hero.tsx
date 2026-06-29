@@ -1,5 +1,4 @@
 import MonogramaWhite from '@/public/assets/home/shared/monograma_white.svg'
-import Image from 'next/image'
 import DoubleChevronDown from './DoubleChevronDown'
 
 export default function Hero() {
@@ -8,23 +7,19 @@ export default function Hero() {
       id="home"
       className="relative flex h-screen flex-col items-center justify-between overflow-hidden"
     >
-      {/* Mobile background */}
-      <Image
-        src="/assets/home/Hero/background.jpg"
-        alt=""
-        fill
-        className="object-cover object-center md:hidden"
-        priority
-      />
-      {/* Desktop background */}
-      <Image
-        src="/assets/home/Hero/background_desktop.png"
-        alt=""
-        fill
-        className="hidden object-cover object-center md:block"
-        priority
-      />
-      {/* <div className="absolute inset-0 bg-black/30" /> */}
+      <picture>
+        <source
+          media="(min-width: 768px)"
+          srcSet="/assets/home/Hero/background_desktop.png"
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/assets/home/Hero/background.jpg"
+          alt=""
+          fetchPriority="high"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+        />
+      </picture>
 
       <div className="relative z-10 flex flex-col items-center pt-40 text-center md:pt-28">
         <h1 className="mb-6 font-antarisk text-[90px] leading-none text-[#faf1e1] md:text-[130px]">
