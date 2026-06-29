@@ -7,7 +7,7 @@ export default function DressCode() {
       className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-20"
     >
       <Image
-        src="/assets/home/DressCode/background_beige.png"
+        src="/assets/home/DressCode/background_crema_dress_code.png"
         alt=""
         fill
         className="object-cover"
