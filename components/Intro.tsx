@@ -5,7 +5,7 @@ export default function Intro() {
   return (
     <section
       id="story"
-      className="relative min-h-screen overflow-hidden px-6 py-20"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-20"
     >
       <Image
         src="/assets/home/shared/background_crema.png"
@@ -14,7 +14,7 @@ export default function Intro() {
         className="object-cover"
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-sm flex-col items-center gap-12 md:max-w-5xl md:gap-16">
+      <div className="relative z-10 flex w-full max-w-sm flex-col items-center gap-12 md:max-w-5xl md:gap-16">
         {/* Photo collage */}
         <div className="relative w-full shrink-0 md:w-1/2">
           <Image
