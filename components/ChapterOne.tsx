@@ -4,6 +4,7 @@ import StoryChapter from './StoryChapter'
 export default function ChapterOne() {
   return (
     <StoryChapter
+      id="chapter-one"
       background="/assets/home/shared/background_green.png"
       className="text-[#faf1e1]"
     >
@@ -12,10 +13,7 @@ export default function ChapterOne() {
           Capítulo 1
         </h2>
         <p className="mb-5 font-news text-lg italic">El comienzo</p>
-        <ChapterIllustration
-          papel="/assets/home/shared/papel_gif.png"
-          animation="/assets/home/Capitulo1/animation.gif"
-        />
+        <ChapterIllustration animation="/assets/home/Capitulo1/animation.gif" />
       </div>
 
       <div className="flex-1 text-center font-quattro text-sm md:text-left">

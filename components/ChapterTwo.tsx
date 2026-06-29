@@ -4,6 +4,7 @@ import StoryChapter from './StoryChapter'
 export default function ChapterTwo() {
   return (
     <StoryChapter
+      id="chapter-two"
       background="/assets/home/shared/background_red.png"
       flip
       className="text-[#faf1e1]"
@@ -13,11 +14,7 @@ export default function ChapterTwo() {
           Capítulo 2
         </h2>
         <p className="mb-5 font-news text-base italic">Dos años de amistad</p>
-        <ChapterIllustration
-          papel="/assets/home/shared/papel_gif.png"
-          animation="/assets/home/Capitulo2/animation.gif"
-          animationClassName="w-[70%] h-[70%]"
-        />
+        <ChapterIllustration animation="/assets/home/Capitulo2/animation.gif" />
       </div>
 
       <div className="flex-1 text-center font-quattro text-sm md:text-left">

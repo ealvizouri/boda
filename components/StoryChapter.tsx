@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { ReactNode } from 'react'
 
 interface StoryChapterProps {
+  id: string
   background: string
   flip?: boolean
   className?: string
@@ -10,6 +11,7 @@ interface StoryChapterProps {
 }
 
 export default function StoryChapter({
+  id,
   background,
   flip = false,
   className,
@@ -17,6 +19,7 @@ export default function StoryChapter({
 }: StoryChapterProps) {
   return (
     <section
+      id={id}
       className={cn(
         'relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-10',
         className,
