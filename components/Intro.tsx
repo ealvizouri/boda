@@ -4,7 +4,7 @@ import DoubleChevronDown from './DoubleChevronDown'
 export default function Intro() {
   return (
     <section
-      id="story"
+      id="intro"
       className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-20"
     >
       <Image
@@ -28,7 +28,7 @@ export default function Intro() {
 
         <div className="flex justify-center">
           <DoubleChevronDown
-            hashtag="chapter-one"
+            hashtag="countdown"
             className="position static text-[#670626]/75 hover:text-[#670626]"
           />
         </div>

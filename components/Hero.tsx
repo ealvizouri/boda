@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import MonogramaWhite from '@/public/assets/home/shared/monograma_white.svg'
+import Image from 'next/image'
 import DoubleChevronDown from './DoubleChevronDown'
 
 export default function Hero() {
@@ -57,7 +57,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      <DoubleChevronDown hashtag="countdown" className="bottom-16" />
+      <DoubleChevronDown hashtag="intro" className="bottom-16" />
     </section>
   )
 }
