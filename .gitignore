@@ -4,6 +4,5 @@ dist
 .env
 .env.local
 .agents
-.claude
 .DS_Store
 tsconfig.tsbuildinfo
