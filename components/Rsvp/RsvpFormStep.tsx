@@ -94,8 +94,8 @@ export default function RsvpFormStep({
           {invitation.maxGuests} lugar{invitation.maxGuests !== 1 ? 'es' : ''}
         </p>
         {invitation.existingRsvp && (
-          <p className="mt-1 font-mono text-xs text-brick-red-400">
-            Editando respuesta anterior
+          <p className="mt-1 font-mono text-xs text-white">
+            Editando invitación
           </p>
         )}
       </div>
