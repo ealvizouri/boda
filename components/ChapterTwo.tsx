@@ -18,6 +18,7 @@ export default function ChapterTwo() {
       </div>
 
       <div className="flex-1 text-center font-quattro text-sm md:text-left">
+        <div className="font-antarisk text-3xl">2018</div>
         <p className="mb-5 text-xl font-semibold">
           Primero, los mejores amigos
         </p>
@@ -26,12 +27,22 @@ export default function ChapterTwo() {
           Durante dos años se conocieron sin filtros, sin poses, sin el peso de
           impresionar al otro.
         </p>
-        <p className="mb-4 font-bold">
+        <p className="mb-4 leading-relaxed">
           Construyeron una amistad tan sólida que cuando el amor llegó, ya tenía
-          raíces profundas.
+          raíces profundas y{' '}
+          <span className="font-bold">
+            dos años después de aquel primer encuentro, comenzaron oficialmente
+            su noviazgo
+          </span>
+          .
         </p>
         <p className="leading-relaxed">
-          Hoy, después de ocho años, siguen siendo eso: el mejor amigo del otro.
+          Hoy, tras ocho años compartiendo la vida, la fórmula sigue siendo la
+          misma:
+          <br />
+          <span className="font-bold">
+            antes que nada, son el mejor amigo del otro.
+          </span>
         </p>
       </div>
     </StoryChapter>

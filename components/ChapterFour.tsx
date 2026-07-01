@@ -18,6 +18,8 @@ export default function ChapterFour() {
       </div>
 
       <div className="flex-1 text-center font-quattro text-sm md:text-left">
+        <div className="font-antarisk text-3xl">2025</div>
+
         <p className="mb-5 text-xl font-semibold">
           Cuando el universo se alineó
         </p>

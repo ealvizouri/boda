@@ -17,16 +17,24 @@ export default function ChapterThree() {
       </div>
 
       <div className="flex-1 text-center font-mono text-sm md:text-left">
+        <div className="font-antarisk text-3xl">2020</div>
         <p className="mb-5 text-xl font-semibold">Un hogar construido juntos</p>
         <p className="mb-4 leading-relaxed">
-          Dos años de amistad se convirtieron en amor — y dos años después de
-          ser novios, decidieron dar el siguiente paso: compartir el mismo
-          techo. Cinco años y medio más tarde, ese hogar sigue siendo el lugar
-          favorito de los dos.
+          Dos años después de ser novios, decidieron dar el siguiente paso:
+          <br />
+          <span className="font-bold">compartir el mismo techo.</span>
         </p>
-        <p className="text-base font-bold italic">
-          El amor cotidiano — el de los martes por la noche y los domingos sin
-          planes — era exactamente el que querían para siempre.
+        <p className="mb-4 leading-relaxed">
+          Cinco años llenos de complicidad y crecimiento consolidaron ese
+          espacio como el lugar favorito de los dos.
+        </p>
+        <p className="">
+          <span className="font-bold">El amor cotidiano — </span>el de los
+          martes por la noche y los domingos sin planes{' '}
+          <span className="font-bold">
+            — era exactamente el que querían para siempre
+          </span>
+          .
         </p>
       </div>
     </StoryChapter>

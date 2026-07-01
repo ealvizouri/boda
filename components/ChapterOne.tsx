@@ -17,31 +17,24 @@ export default function ChapterOne() {
       </div>
 
       <div className="flex-1 text-center font-quattro text-sm md:text-left">
+        <div className="font-antarisk text-3xl">2016</div>
         <p className="mb-5 text-xl font-semibold">El chico de los audífonos</p>
         <p className="mb-4 leading-relaxed">
-          Eran sus primeros días en la oficina y el aburrimiento ya se hacía
-          notar, un render interminable es capaz de eso.
+          Apenas eran sus primeros días en la oficina y el aburrimiento ya se
+          hacía notar, cortesía de un render eterno. Para matar el tiempo,
+          Jackie giró la vista hacia el escritorio de al lado. Ahí estaba él:
+          con los audífonos puestos y la mirada fija en un mar de gráficas
+          bursátiles, completamente desconectado del entorno.
         </p>
         <p className="mb-4 leading-relaxed">
-          Fue entonces cuando se fijó en el chico de al lado: llevaba los
-          audífonos puestos y miraba fijamente una pantalla llena de números y
-          gráficas de la bolsa de valores, completamente perdido en su propio
-          mundo.
-        </p>
-        <p className="mb-4 leading-relaxed">
-          Mientras Jackie esperaba a que la barra de carga avanzara, la
-          curiosidad terminó por ganar.
-        </p>
-        <p className="mb-2 text-white">
-          <span className="font-bold">—¿Qué estás viendo?</span> —preguntó.
-        </p>
-        <p className="mb-4 leading-relaxed">
-          Mariano se bajó los audífonos. Hablaron.
-        </p>
-        <p className="font-bold">
-          Y siguieron hablando, sin tener la menor idea de que esa pequeña
-          conversación de oficina se convertiría en el primer hilo de algo mucho
-          más grande.
+          Con la barra de carga estancada, la curiosidad fue más fuerte. —
+          <span className="font-bold">¿Qué estás viendo?</span> —preguntó
+          Jackie. Mariano se quitó los audífonos. Hablaron.
+          <br />
+          <span className="font-bold">
+            Y no pararon de hacerlo, sin la menor idea de que esa breve charla
+            de oficina estaba tejiendo el inicio de algo mucho más grande
+          </span>
         </p>
       </div>
     </StoryChapter>
