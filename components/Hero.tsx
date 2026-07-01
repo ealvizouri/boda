@@ -21,7 +21,7 @@ export default function Hero() {
         />
       </picture>
 
-      <div className="relative z-10 flex flex-col items-center pt-40 text-center md:pt-28">
+      <div className="relative -top-10 right-4 z-10 flex flex-col items-center text-center md:-top-16 md:right-0">
         <h1 className="mb-6 font-antarisk text-[90px] leading-none text-[#faf1e1] md:text-[130px]">
           <div className="leading-[0.9]">
             Jackie
