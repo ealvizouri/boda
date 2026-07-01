@@ -1,3 +1,9 @@
+import {
+  DRESS_CODE_BACKGROUND,
+  DRESS_CODE_PALETTE_PT1,
+  DRESS_CODE_PALETTE_PT2,
+  DRESS_CODE_PALETTE_TITLE,
+} from '@/lib/images'
 import Image from 'next/image'
 
 export default function DressCode() {
@@ -6,12 +12,7 @@ export default function DressCode() {
       id="dresscode"
       className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-20"
     >
-      <Image
-        src="/assets/home/DressCode/background_crema_dress_code.png"
-        alt=""
-        fill
-        className="object-cover"
-      />
+      <Image src={DRESS_CODE_BACKGROUND} alt="" fill className="object-cover" />
       <div className="absolute inset-0 bg-white/15" />
 
       <div className="relative z-10 mx-auto w-full max-w-sm text-center text-[#4b4e40] md:max-w-xl">
@@ -41,7 +42,7 @@ export default function DressCode() {
         <div className="flex flex-col items-center gap-5">
           <div>
             <Image
-              src="/assets/home/DressCode/palette_title.png"
+              src={DRESS_CODE_PALETTE_TITLE}
               alt="Paleta Sugerida"
               width={200}
               height={200}
@@ -49,14 +50,14 @@ export default function DressCode() {
             />
           </div>
           <Image
-            src="/assets/home/DressCode/palette_pt1.png"
+            src={DRESS_CODE_PALETTE_PT1}
             alt=""
             width={280}
             height={90}
             className="mb-2 h-auto w-full"
           />
           <Image
-            src="/assets/home/DressCode/palette_pt2.png"
+            src={DRESS_CODE_PALETTE_PT2}
             alt=""
             width={280}
             height={90}

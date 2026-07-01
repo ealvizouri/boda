@@ -1,3 +1,4 @@
+import { BG_GREEN, CHAPTER_ONE_ANIMATION } from '@/lib/images'
 import ChapterIllustration from './ChapterIllustration'
 import StoryChapter from './StoryChapter'
 
@@ -5,7 +6,7 @@ export default function ChapterOne() {
   return (
     <StoryChapter
       id="chapter-one"
-      background="/assets/home/shared/background_green.png"
+      background={BG_GREEN}
       className="text-[#faf1e1]"
     >
       <div className="flex w-full shrink-0 flex-col items-center md:w-5/12">
@@ -13,7 +14,7 @@ export default function ChapterOne() {
           Capítulo 1
         </h2>
         <p className="mb-5 font-news text-lg italic">El comienzo</p>
-        <ChapterIllustration animation="/assets/home/Capitulo1/animation.gif" />
+        <ChapterIllustration animation={CHAPTER_ONE_ANIMATION} />
       </div>
 
       <div className="flex-1 text-center font-quattro text-sm md:text-left">

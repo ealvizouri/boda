@@ -1,5 +1,11 @@
 'use client'
 
+import {
+  BG_RED,
+  COUNTDOWN_FOTO_RELOJ_ANILLO,
+  SELLO_VERDE,
+  SHADOW,
+} from '@/lib/images'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
@@ -41,29 +47,19 @@ export default function Countdown() {
       id="countdown"
       className="relative flex min-h-screen items-center justify-center px-4 py-20"
     >
-      <Image
-        src="/assets/home/shared/background_red.png"
-        alt=""
-        fill
-        className="object-cover"
-      />
+      <Image src={BG_RED} alt="" fill className="object-cover" />
 
       {/* Paper card */}
       <div className="relative z-10 mx-auto w-full max-w-[320px] bg-[#fdf8f2] pb-10 shadow-2xl md:max-w-2xl">
         {/* Drop shadow beneath card */}
         <div className="absolute top-0 -left-21 z-0 h-full w-21">
-          <Image
-            src="/assets/home/shared/shadow.png"
-            alt=""
-            fill
-            className="object-fill"
-          />
+          <Image src={SHADOW} alt="" fill className="object-fill" />
         </div>
 
         {/* Wax seal overlapping top edge */}
         <div className="relative z-10 -mt-9 mb-6 flex justify-center">
           <Image
-            src="/assets/home/shared/sello_verde.png"
+            src={SELLO_VERDE}
             alt=""
             width={72}
             height={72}
@@ -102,7 +98,7 @@ export default function Countdown() {
           <div className="md:flex md:items-start md:gap-8">
             <div className="relative mb-7 aspect-4/3 w-full shrink-0 overflow-hidden md:mb-0 md:w-1/2">
               <Image
-                src="/assets/home/Countdown/foto_reloj_anillo.jpg"
+                src={COUNTDOWN_FOTO_RELOJ_ANILLO}
                 alt="Reloj y anillo"
                 fill
                 className="object-cover"

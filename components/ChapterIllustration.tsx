@@ -1,4 +1,5 @@
 import cn from '@/lib/cn'
+import { SHADOW_BOTTOM } from '@/lib/images'
 import Image from 'next/image'
 
 interface ChapterIllustrationProps {
@@ -14,12 +15,7 @@ export default function ChapterIllustration({
     <div className="relative mb-5 flex w-full justify-center">
       {/* Drop shadow beneath card */}
       <div className="absolute -bottom-21 z-10 h-21 w-full">
-        <Image
-          src="/assets/home/shared/shadow_bottom.png"
-          alt=""
-          fill
-          className="object-fill"
-        />
+        <Image src={SHADOW_BOTTOM} alt="" fill className="object-fill" />
       </div>
       <div
         className={cn(

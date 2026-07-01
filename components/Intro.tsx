@@ -1,5 +1,6 @@
 'use client'
 
+import { BG_CREMA, INTRO_DESKTOP, INTRO_MOBILE } from '@/lib/images'
 import Image from 'next/image'
 import DoubleChevronDown from './DoubleChevronDown'
 
@@ -9,23 +10,15 @@ export default function Intro() {
       id="intro"
       className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-20"
     >
-      <Image
-        src="/assets/home/shared/background_crema.png"
-        alt=""
-        fill
-        className="object-cover"
-      />
+      <Image src={BG_CREMA} alt="" fill className="object-cover" />
 
       <div className="relative z-10 flex w-full max-w-sm flex-col items-center gap-12 md:max-w-5xl md:gap-16">
         {/* Photo collage */}
         <div className="w-full">
           <picture>
-            <source
-              media="(min-width: 768px)"
-              srcSet="/assets/home/Intro/intro_desktop.png"
-            />
+            <source media="(min-width: 768px)" srcSet={INTRO_DESKTOP} />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/home/Intro/intro.png" alt="" className="w-full" />
+            <img src={INTRO_MOBILE} alt="" className="w-full" />
           </picture>
         </div>
 

@@ -1,3 +1,4 @@
+import { BG_PAPER, PROGRAMA_BACKGROUND, SELLO_ROJO, SHADOW } from '@/lib/images'
 import CarIcon from '@/public/assets/home/Programa/car.svg'
 import CookwearIcon from '@/public/assets/home/Programa/cookwear.svg'
 import CrystalBallIcon from '@/public/assets/home/Programa/crystal_ball.svg'
@@ -40,7 +41,7 @@ export default function Programa() {
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 py-20"
     >
       <Image
-        src="/assets/home/Programa/background.jpeg"
+        src={PROGRAMA_BACKGROUND}
         alt=""
         fill
         className="object-cover object-top-left md:object-center"
@@ -56,7 +57,7 @@ export default function Programa() {
         {/* Wax seal overlapping top of card */}
         <div className="relative z-20 -mb-9 flex justify-center">
           <Image
-            src="/assets/home/shared/sello_rojo.png"
+            src={SELLO_ROJO}
             alt=""
             width={80}
             height={80}
@@ -68,20 +69,10 @@ export default function Programa() {
         <div className="relative px-6 pt-14 pb-32 shadow-2xl">
           {/* Drop shadow beneath card */}
           <div className="absolute top-0 -left-21 z-0 h-full w-21">
-            <Image
-              src="/assets/home/shared/shadow.png"
-              alt=""
-              fill
-              className="object-fill"
-            />
+            <Image src={SHADOW} alt="" fill className="object-fill" />
           </div>
 
-          <Image
-            src="/assets/home/shared/background_paper.png"
-            alt=""
-            fill
-            className="object-cover"
-          />
+          <Image src={BG_PAPER} alt="" fill className="object-cover" />
 
           <div className="relative z-10 flex flex-col">
             {/* Vertical center line */}

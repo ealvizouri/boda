@@ -1,3 +1,4 @@
+import { BG_RED, CHAPTER_TWO_ANIMATION } from '@/lib/images'
 import ChapterIllustration from './ChapterIllustration'
 import StoryChapter from './StoryChapter'
 
@@ -5,7 +6,7 @@ export default function ChapterTwo() {
   return (
     <StoryChapter
       id="chapter-two"
-      background="/assets/home/shared/background_red.png"
+      background={BG_RED}
       flip
       className="text-[#faf1e1]"
     >
@@ -14,7 +15,7 @@ export default function ChapterTwo() {
           Capítulo 2
         </h2>
         <p className="mb-5 font-news text-base italic">Dos años de amistad</p>
-        <ChapterIllustration animation="/assets/home/Capitulo2/animation.gif" />
+        <ChapterIllustration animation={CHAPTER_TWO_ANIMATION} />
       </div>
 
       <div className="flex-1 text-center font-quattro text-sm md:text-left">

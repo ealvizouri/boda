@@ -1,3 +1,4 @@
+import { HERO_BACKGROUND, HERO_BACKGROUND_DESKTOP } from '@/lib/images'
 import MonogramaWhite from '@/public/assets/home/shared/monograma_white.svg'
 import DoubleChevronDown from './DoubleChevronDown'
 
@@ -8,13 +9,10 @@ export default function Hero() {
       className="relative flex h-screen flex-col items-center justify-between overflow-hidden"
     >
       <picture>
-        <source
-          media="(min-width: 768px)"
-          srcSet="/assets/home/Hero/background_desktop.png"
-        />
+        <source media="(min-width: 768px)" srcSet={HERO_BACKGROUND_DESKTOP} />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/assets/home/Hero/background.jpg"
+          src={HERO_BACKGROUND}
           alt=""
           fetchPriority="high"
           className="absolute inset-0 h-full w-full object-cover object-center"

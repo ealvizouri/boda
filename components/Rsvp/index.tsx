@@ -1,6 +1,7 @@
 'use client'
 
 import cn from '@/lib/cn'
+import { BG_GREEN, BG_RED } from '@/lib/images'
 import Image from 'next/image'
 import { useState } from 'react'
 import RsvpCode from './RsvpCode'
@@ -9,9 +10,6 @@ import RsvpGate from './RsvpGate'
 import RsvpSuccess from './RsvpSuccess'
 import RsvpTitle from './RsvpTitle'
 import type { InvitationData, Step } from './types'
-
-const BG_GREEN = '/assets/home/shared/background_green.png'
-const BG_RED = '/assets/home/shared/background_red.png'
 
 export default function Rsvp() {
   const [step, setStep] = useState<Step>('gate')

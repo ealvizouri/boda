@@ -1,3 +1,10 @@
+import {
+  BG_PAPER,
+  DETAILS_BACKGROUND,
+  DETAILS_SKETCH_SALON,
+  SELLO_VERDE,
+  SHADOW,
+} from '@/lib/images'
 import { MapPin } from 'lucide-react'
 import Image from 'next/image'
 
@@ -8,7 +15,7 @@ export default function Details() {
       className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-20"
     >
       <Image
-        src="/assets/home/Details/background.jpeg"
+        src={DETAILS_BACKGROUND}
         alt=""
         fill
         className="object-top-left md:object-cover"
@@ -18,18 +25,13 @@ export default function Details() {
       <div className="relative z-10 mx-auto w-full max-w-[320px] md:max-w-md">
         {/* Drop shadow beneath card */}
         <div className="absolute top-20 -left-21 z-0 h-[calc(100%-80px)] w-21">
-          <Image
-            src="/assets/home/shared/shadow.png"
-            alt=""
-            fill
-            className="object-fill"
-          />
+          <Image src={SHADOW} alt="" fill className="object-fill" />
         </div>
 
         {/* Wax seal overlapping top */}
         <div className="relative top-10 z-18 flex justify-center">
           <Image
-            src="/assets/home/shared/sello_verde.png"
+            src={SELLO_VERDE}
             alt=""
             width={80}
             height={80}
@@ -38,12 +40,7 @@ export default function Details() {
         </div>
 
         <div className="relative z-10 overflow-hidden px-8 pt-20 pb-10 shadow-2xl">
-          <Image
-            src="/assets/home/shared/background_paper.png"
-            alt=""
-            fill
-            className="object-cover"
-          />
+          <Image src={BG_PAPER} alt="" fill className="object-cover" />
           <div className="relative z-10">
             <h2 className="mb-5 text-center font-quattro text-3xl tracking-[0.2rem] text-[#4b4e40]">
               RECEPCIÓN
@@ -53,7 +50,7 @@ export default function Details() {
               {/* Venue sketch */}
               <div className="relative h-32 overflow-hidden md:h-48">
                 <Image
-                  src="/assets/home/Details/sketch_salon.png"
+                  src={DETAILS_SKETCH_SALON}
                   alt="Salón Evangelina"
                   fill
                   className="object-cover"

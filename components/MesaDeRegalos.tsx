@@ -1,6 +1,7 @@
 'use client'
 
 import { useClipboard } from '@/hooks/useClipboard'
+import { BG_CREMA } from '@/lib/images'
 import { Copy } from 'lucide-react'
 import Image from 'next/image'
 
@@ -56,12 +57,7 @@ export default function MesaDeRegalos() {
       id="mesa-de-regalos"
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-20"
     >
-      <Image
-        src="/assets/home/shared/background_crema.png"
-        alt=""
-        fill
-        className="object-cover"
-      />
+      <Image src={BG_CREMA} alt="" fill className="object-cover" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-[320px] flex-col items-center md:max-w-md">
         <h2 className="mb-8 text-center font-cormorant text-4xl tracking-[0.3em] text-[#4f2d35]">
