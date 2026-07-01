@@ -10,7 +10,7 @@ export default function RsvpTitle({
   return (
     <h2
       className={cn(
-        'mb-10 font-cormorant text-3xl tracking-[0.5em] text-white',
+        'mb-10 font-cormorant text-3xl tracking-[0.25em] text-white md:tracking-[0.5em]',
         className,
       )}
     >

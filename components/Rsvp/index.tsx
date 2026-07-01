@@ -11,6 +11,7 @@ import RsvpTitle from './RsvpTitle'
 import type { InvitationData, Step } from './types'
 
 const BG_GREEN = '/assets/home/shared/background_green.png'
+const BG_RED = '/assets/home/shared/background_red.png'
 
 export default function Rsvp() {
   const [step, setStep] = useState<Step>('gate')
@@ -34,6 +35,7 @@ export default function Rsvp() {
   }
 
   const isForm = step === 'form'
+  const isSuccess = step === 'success'
   const darkOverlay = step === 'success' || isForm
 
   return (
@@ -44,7 +46,12 @@ export default function Rsvp() {
         isForm ? 'items-start px-4' : 'flex-col items-center px-6',
       )}
     >
-      <Image src={BG_GREEN} alt="" fill className="object-cover" />
+      <Image
+        src={isSuccess ? BG_RED : BG_GREEN}
+        alt=""
+        fill
+        className="object-cover"
+      />
       <div
         className={cn(
           'absolute inset-0',
