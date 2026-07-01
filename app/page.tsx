@@ -9,6 +9,7 @@ import Details from '@/components/Details'
 import DressCode from '@/components/DressCode'
 import Hero from '@/components/Hero'
 import Intro from '@/components/Intro'
+import MesaDeRegalos from '@/components/MesaDeRegalos'
 import OurStory from '@/components/OurStory'
 import Programa from '@/components/Programa'
 import Rsvp from '@/components/Rsvp'
@@ -27,6 +28,7 @@ export default function Page() {
       <Details />
       <DressCode />
       <Programa />
+      <MesaDeRegalos />
       <Rsvp />
     </div>
   )
