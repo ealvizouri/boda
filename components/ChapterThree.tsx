@@ -17,7 +17,7 @@ export default function ChapterThree() {
         <ChapterIllustration animation={CHAPTER_THREE_ANIMATION} />
       </div>
 
-      <div className="flex-1 text-center font-mono text-sm md:text-left">
+      <div className="flex-1 text-center font-quattro text-sm md:text-left">
         <div className="font-antarisk text-3xl">2020</div>
         <p className="mb-5 text-xl font-semibold">Un hogar construido juntos</p>
         <p className="mb-4 leading-relaxed">
