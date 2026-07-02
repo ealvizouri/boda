@@ -67,7 +67,7 @@ export default function RsvpCode({
         <button
           onClick={handleCodeLookup}
           disabled={codeLoading || codeInput.trim().length === 0}
-          className="rounded-full bg-white px-14 py-4 font-mono text-sm tracking-[0.2em] text-deep-space-blue transition-colors hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-40"
+          className="cursor-pointer rounded-full bg-white px-14 py-4 font-mono text-sm tracking-[0.2em] text-deep-space-blue transition-colors hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {codeLoading ? '…' : 'Verificar'}
         </button>

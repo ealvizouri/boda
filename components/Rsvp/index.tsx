@@ -5,6 +5,7 @@ import { BG_GREEN, BG_RED } from '@/lib/images'
 import Image from 'next/image'
 import { useState } from 'react'
 import RsvpCode from './RsvpCode'
+import RsvpDeclined from './RsvpDeclined'
 import RsvpFormStep from './RsvpFormStep'
 import RsvpGate from './RsvpGate'
 import RsvpSuccess from './RsvpSuccess'
@@ -18,7 +19,7 @@ export default function Rsvp() {
 
   function handleGateSelect(value: boolean) {
     setAttending(value)
-    setStep('code')
+    setStep(value ? 'code' : 'success')
   }
 
   function handleCodeSuccess(inv: InvitationData) {
@@ -64,7 +65,7 @@ export default function Rsvp() {
           (step === 'gate' || step === 'success') && 'text-center',
         )}
       >
-        <RsvpTitle />
+        <RsvpTitle className="w-full text-center" />
 
         {step === 'gate' && <RsvpGate onSelect={handleGateSelect} />}
         {step === 'code' && <RsvpCode onSuccess={handleCodeSuccess} />}
@@ -75,7 +76,12 @@ export default function Rsvp() {
             onSuccess={() => setStep('success')}
           />
         )}
-        {step === 'success' && <RsvpSuccess onReset={handleReset} />}
+        {step === 'success' &&
+          (attending ? (
+            <RsvpSuccess onReset={handleReset} />
+          ) : (
+            <RsvpDeclined onChangeMyMind={() => handleGateSelect(true)} />
+          ))}
       </div>
     </section>
   )

@@ -19,13 +19,13 @@ export default function RsvpGate({
       <div className="mb-10 flex flex-col gap-4">
         <button
           onClick={() => onSelect(true)}
-          className="w-full rounded-full bg-white py-4 font-mono text-sm tracking-[0.15em] text-deep-space-blue transition-colors hover:bg-white/90"
+          className="w-full cursor-pointer rounded-full bg-white py-4 font-mono text-sm tracking-[0.15em] text-deep-space-blue transition-colors hover:bg-white/90"
         >
           ¡Ahí estaré!
         </button>
         <button
           onClick={() => onSelect(false)}
-          className="w-full rounded-full border border-white/70 py-4 font-mono text-sm tracking-[0.15em] text-white transition-colors hover:bg-white/10"
+          className="w-full cursor-pointer rounded-full border border-white/70 py-4 font-mono text-sm tracking-[0.15em] text-white transition-colors hover:bg-white/10"
         >
           No podré asistir
         </button>
