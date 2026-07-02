@@ -72,9 +72,35 @@ const engravers = localFont({
   display: 'swap',
 })
 
+const siteTitle = `Mariano & Jackie — ${WED_DATE_NORMAL}`
+const siteDescription = `Te invitamos a celebrar nuestra boda el ${WED_DATE_FULL}.`
+
 export const metadata: Metadata = {
-  title: `Mariano & Jackie — ${WED_DATE_NORMAL}`,
-  description: `Te invitamos a celebrar nuestra boda el ${WED_DATE_FULL}.`,
+  metadataBase: new URL('https://jackieymariano.com'),
+  title: siteTitle,
+  description: siteDescription,
+  openGraph: {
+    type: 'website',
+    locale: 'es_MX',
+    url: 'https://jackieymariano.com',
+    siteName: 'Mariano & Jackie',
+    title: siteTitle,
+    description: siteDescription,
+    images: [
+      {
+        url: '/assets/home/Hero/background.jpg',
+        width: 941,
+        height: 1672,
+        alt: 'Mariano & Jackie',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteTitle,
+    description: siteDescription,
+    images: ['/assets/home/Hero/background.jpg'],
+  },
 }
 
 export default function RootLayout({
