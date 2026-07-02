@@ -25,13 +25,17 @@ const EVENTS = [
   {
     time: '8:55 PM',
     label: '¡A bailar!',
-    icon: <CrystalBallIcon width={110} height={110} />,
+    icon: (
+      <span className="relative left-1">
+        <CrystalBallIcon width={110} height={110} />
+      </span>
+    ),
   },
   {
     time: '3:00 AM',
     label: 'Bye bye',
     icon: (
-      <span className="relative -left-1">
+      <span className="relative -left-2">
         <CarIcon width={90} height={90} />
       </span>
     ),
