@@ -74,7 +74,7 @@ const engravers = localFont({
 
 export const metadata: Metadata = {
   title: `Mariano & Jackie — ${WED_DATE_NORMAL}`,
-  description: `'Te invitamos a celebrar nuestra boda el ${WED_DATE_FULL}.'`,
+  description: `Te invitamos a celebrar nuestra boda el ${WED_DATE_FULL}.`,
 }
 
 export default function RootLayout({
