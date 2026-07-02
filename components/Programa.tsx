@@ -30,7 +30,11 @@ const EVENTS = [
   {
     time: '3:00 AM',
     label: 'Bye bye',
-    icon: <CarIcon width={90} height={90} />,
+    icon: (
+      <span className="relative -left-1">
+        <CarIcon width={90} height={90} />
+      </span>
+    ),
   },
 ]
 
