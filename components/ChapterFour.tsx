@@ -25,9 +25,14 @@ export default function ChapterFour() {
           Cuando el universo se alineó
         </p>
         <p className="mb-4 leading-relaxed">
-          21 de enero de 2025. Mariano rentó una cabaña con un telescopio.
-          Jackie miraba el cielo cuando él se arrodilló. Venus, Marte, Júpiter,
-          Saturno, Urano y Neptuno.
+          21 de enero de 2025. Seis planetas alineados en el firmamento: Venus,
+          Marte, Júpiter, Saturno, Urano y Neptuno. Un espectáculo cósmico que
+          no volvería a repetirse en décadas.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Esa misma noche, en una cabaña bajo ese cielo extraordinario, Jackie
+          miraba las estrellas cuando Mariano se arrodilló. El cosmos ya lo
+          tenía planeado, pero faltaba la pregunta más importante:
         </p>
         <p className="font-bold italic">
           &ldquo;La infinidad de estrellas, todas las posibilidades... y aún así
